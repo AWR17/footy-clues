@@ -21,5 +21,17 @@
       "Germany"
     ],
     "flaggedAt": "2026-08-23T09:47:47.668Z"
+  },
+  {
+    "date": "2026-08-23",
+    "playerId": 2734,
+    "playerName": "P. Billing",
+    "reason": "3 stint(s) have an unmapped league tier — clue text will be vague. Consider adding to lib/league-tiers.js.",
+    "clubs": [
+      "Denmark",
+      "Denmark U21",
+      "FC Midtjylland"
+    ],
+    "flaggedAt": "2026-08-23T10:04:19.837Z"
   }
 ]

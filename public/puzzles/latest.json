@@ -1,134 +1,134 @@
 {
   "date": "2026-08-23",
-  "playerId": 18970,
-  "playerName": "P. Groß",
+  "playerId": 2734,
+  "playerName": "P. Billing",
   "difficulty": "medium",
   "theme": null,
   "hint": {
-    "nationality": "Germany",
+    "nationality": "Denmark",
     "position": "Midfielder"
   },
   "clues": [
     {
       "order": 1,
       "points": 100,
-      "year": 2008,
+      "year": 2013,
       "club": null,
-      "league": "an unspecified league",
-      "duration": 2,
-      "goals": 0,
-      "appearances": 5,
-      "discipline": null,
+      "league": "2nd tier, England",
+      "duration": 6,
+      "goals": 5,
+      "appearances": 81,
+      "discipline": {
+        "yellow": 15,
+        "red": 1
+      },
       "honour": null,
       "transferFee": null,
-      "note": null,
-      "text": "2008 · joined a club in an unspecified league · 2 year(s) there · 0 goals in 5 appearances"
+      "note": "promoted",
+      "text": "2013 · joined a club in 2nd tier, England · 6 year(s) there · 5 goals in 81 appearances · 15 yellow, 1 red · Promoted during this spell"
     },
     {
       "order": 2,
       "points": 80,
-      "year": 2010,
+      "year": 2019,
       "club": null,
-      "league": "2nd tier, Germany",
-      "duration": 2,
-      "goals": 3,
-      "appearances": 25,
+      "league": "1st tier, England",
+      "duration": 6,
+      "goals": 28,
+      "appearances": 185,
       "discipline": {
-        "yellow": 6,
-        "red": 0
+        "yellow": 39,
+        "red": 1
       },
       "honour": null,
-      "transferFee": null,
+      "transferFee": "&pound; 15M",
       "note": null,
-      "text": "2010 · joined a club in 2nd tier, Germany · 2 year(s) there · 3 goals in 25 appearances · 6 yellow, 0 red"
+      "text": "2019 · joined a club in 1st tier, England · 6 year(s) there · 28 goals in 185 appearances · 39 yellow, 1 red · signed for &pound; 15M"
     },
     {
       "order": 3,
       "points": 60,
-      "year": 2012,
+      "year": 2019,
       "club": null,
-      "league": "2nd tier, Germany",
-      "duration": 5,
-      "goals": 17,
-      "appearances": 158,
-      "discipline": {
-        "yellow": 25,
-        "red": 0
-      },
-      "honour": null,
-      "transferFee": "Free",
-      "note": "promoted",
-      "text": "2012 · joined a club in 2nd tier, Germany · 5 year(s) there · 17 goals in 158 appearances · 25 yellow, 0 red · signed for Free · Promoted during this spell"
-    },
-    {
-      "order": 4,
-      "points": 40,
-      "year": 2017,
-      "club": null,
-      "league": "1st tier, England",
-      "duration": 10,
-      "goals": 30,
-      "appearances": 231,
-      "discipline": {
-        "yellow": 24,
-        "red": 0
-      },
-      "honour": null,
-      "transferFee": "€ 3M",
-      "note": null,
-      "text": "2017 · joined a club in 1st tier, England · 10 year(s) there · 30 goals in 231 appearances · 24 yellow, 0 red · signed for € 3M"
-    },
-    {
-      "order": 5,
-      "points": 20,
-      "year": 2023,
-      "club": "Germany",
       "league": "an unspecified league",
-      "duration": 3,
-      "goals": 1,
-      "appearances": 8,
+      "duration": 6,
+      "goals": 0,
+      "appearances": 4,
       "discipline": null,
       "honour": null,
       "transferFee": null,
       "note": null,
-      "text": "2023 · joined Germany · 3 year(s) there · 1 goals in 8 appearances"
+      "text": "2019 · joined a club in an unspecified league · 6 year(s) there · 0 goals in 4 appearances"
+    },
+    {
+      "order": 4,
+      "points": 40,
+      "year": 2019,
+      "club": null,
+      "league": "an unspecified league",
+      "duration": 2,
+      "goals": 1,
+      "appearances": 10,
+      "discipline": null,
+      "honour": null,
+      "transferFee": null,
+      "note": null,
+      "text": "2019 · joined a club in an unspecified league · 2 year(s) there · 1 goals in 10 appearances"
+    },
+    {
+      "order": 5,
+      "points": 20,
+      "year": 2025,
+      "club": "FC Midtjylland",
+      "league": "an unspecified league",
+      "duration": 2,
+      "goals": 0,
+      "appearances": 3,
+      "discipline": {
+        "yellow": 1,
+        "red": 0
+      },
+      "honour": null,
+      "transferFee": "Transfer",
+      "note": null,
+      "text": "2025 · joined FC Midtjylland · 2 year(s) there · 0 goals in 3 appearances · 1 yellow, 0 red · signed for Transfer"
     }
   ],
   "fullCareerPath": [
     {
-      "club": "1899 Hoffenheim",
-      "years": 2008,
+      "club": "Huddersfield",
+      "years": 2013,
+      "duration": 6,
+      "goals": 5,
+      "appearances": 81
+    },
+    {
+      "club": "Bournemouth",
+      "years": 2019,
+      "duration": 6,
+      "goals": 28,
+      "appearances": 185
+    },
+    {
+      "club": "Denmark",
+      "years": 2019,
+      "duration": 6,
+      "goals": 0,
+      "appearances": 4
+    },
+    {
+      "club": "Denmark U21",
+      "years": 2019,
+      "duration": 2,
+      "goals": 1,
+      "appearances": 10
+    },
+    {
+      "club": "FC Midtjylland",
+      "years": 2025,
       "duration": 2,
       "goals": 0,
-      "appearances": 5
-    },
-    {
-      "club": "Karlsruher SC",
-      "years": 2010,
-      "duration": 2,
-      "goals": 3,
-      "appearances": 25
-    },
-    {
-      "club": "FC Ingolstadt 04",
-      "years": 2012,
-      "duration": 5,
-      "goals": 17,
-      "appearances": 158
-    },
-    {
-      "club": "Brighton",
-      "years": 2017,
-      "duration": 10,
-      "goals": 30,
-      "appearances": 231
-    },
-    {
-      "club": "Germany",
-      "years": 2023,
-      "duration": 3,
-      "goals": 1,
-      "appearances": 8
+      "appearances": 3
     }
   ]
 }
