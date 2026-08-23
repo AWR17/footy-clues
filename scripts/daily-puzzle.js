@@ -107,11 +107,14 @@ async function getCareerHistory(playerId) {
     // API-Football's /players/teams also returns international caps
     // (e.g. "England") alongside real club history, since it treats a
     // national team as just another "team." A domestic tier doesn't
-    // apply to that, so skip it — this game is specifically about club
-    // career, not international appearances. National teams reliably
-    // have their name match their country (e.g. team.name "England",
-    // team.country "England"), which real clubs essentially never do.
-    if (t.team.name === t.team.country) continue;
+    // apply to that, so it's flagged here rather than tiered — kept in
+    // the data (so it still shows as a nice bonus detail in the final
+    // full-career-path reveal) but excluded from clue selection in
+    // selectClueWorthyStints, where a "tier" is meaningless. National
+    // teams reliably have their name match their country (e.g. team.name
+    // "England", team.country "England"), which real clubs essentially
+    // never do.
+    const isNationalTeam = t.team.name === t.team.country;
 
     let totalApps = 0;
     let totalGoals = 0;
@@ -135,8 +138,12 @@ async function getCareerHistory(playerId) {
     const firstLeagueId = seasonLeagues[0]?.leagueId ?? null;
     const lastLeagueId = seasonLeagues[seasonLeagues.length - 1]?.leagueId ?? null;
 
-    const tier = tierFor(firstLeagueId, t.team.country);
-    const lastTier = tierFor(lastLeagueId, t.team.country);
+    const tier = isNationalTeam
+      ? { label: "national team", unmapped: false }
+      : tierFor(firstLeagueId, t.team.country);
+    const lastTier = isNationalTeam
+      ? { label: "national team", unmapped: false }
+      : tierFor(lastLeagueId, t.team.country);
     const firstRank = tierRank(tier.label);
     const lastRank = tierRank(lastTier.label);
 
@@ -148,6 +155,7 @@ async function getCareerHistory(playerId) {
     stints.push({
       clubName: t.team.name,
       country: t.team.country,
+      isNationalTeam,
       tierLabel: tier.label, // describes the level they joined at, not necessarily where they ended up
       tierUnmapped: Boolean(tier.unmapped),
       tierChangeNote,
@@ -222,7 +230,12 @@ async function attachTrophiesAndTransfers(playerId, stints) {
 
 // ---------- clue selection ----------
 
-function selectClueWorthyStints(stints) {
+function selectClueWorthyStints(allStints) {
+  // National-team caps (flagged in getCareerHistory) stay in the data for
+  // the full-career-path reveal, but a "tier" concept doesn't apply to
+  // them, so they're never eligible to become one of the 5 clues.
+  const stints = allStints.filter((s) => !s.isNationalTeam);
+
   if (stints.length <= 5) return stints;
 
   const first = stints[0];
