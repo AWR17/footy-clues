@@ -1,0 +1,13 @@
+{
+  "name": "footy-clues",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Daily Premier League career-path guessing game — automated puzzle generation from API-Football.",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build-pool": "node scripts/build-player-pool.js",
+    "daily": "node scripts/daily-puzzle.js"
+  }
+}

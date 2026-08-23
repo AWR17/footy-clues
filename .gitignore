@@ -1,0 +1,10 @@
+# Never commit real credentials — API_FOOTBALL_KEY should only ever live
+# in a local .env (untracked) or as a GitHub Actions secret.
+.env
+.env.local
+
+node_modules/
+
+# OS/editor noise
+.DS_Store
+*.log
