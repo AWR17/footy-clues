@@ -1,0 +1,1627 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" id="themeColorMeta" content="#1B1E15" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%BD%3C/text%3E%3C/svg%3E" />
+<title>The Scouting Report — Daily Football Guessing Game</title>
+
+<!--
+  IMPORTANT: replace "https://example.com" below with your real deployed
+  domain once you have one. Social platforms (and Google) read these
+  values from the raw HTML without running JavaScript, so they must be
+  static here — they can't be generated per-puzzle client-side.
+-->
+<meta name="description" content="Guess the mystery Premier League footballer from five career-path clues. One puzzle a day, since 1992. No login, no ads (yet) — just football knowledge." />
+<link rel="canonical" href="https://example.com/" />
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://example.com/" />
+<meta property="og:title" content="The Scouting Report — Daily Football Guessing Game" />
+<meta property="og:description" content="Guess the mystery Premier League footballer from five career-path clues. One puzzle a day, since 1992." />
+<meta property="og:image" content="https://example.com/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="The Scouting Report — Daily Football Guessing Game" />
+<meta name="twitter:description" content="Guess the mystery Premier League footballer from five career-path clues. One puzzle a day, since 1992." />
+<meta name="twitter:image" content="https://example.com/og-image.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pitch-night: #1B1E15;
+    --pitch-night-2: #1B1E15;
+    --paper: #242820;
+    --paper-dark: #A9AE93;
+    --ink: #F2F0DE;
+    --ink-soft: #A9AE93;
+    --redact: #0E0D09;
+    --floodlight: #E0A83D;
+    --turf: #7FAE80;
+    --correct: #7FAE80;
+    --wrong: #E2604B;
+    --line: rgba(242,240,222,0.14);
+    --bg-glow-1: rgba(127,174,128,0.12);
+    --bg-glow-2: rgba(127,174,128,0.08);
+    --text: #F2F0DE;
+    --chip-bg: rgba(0,0,0,0.3);
+    --chip-fill: #2E3327;
+    --chip-ink: #F2F0DE;
+    --clue-card-tint: rgba(242,240,222,0.035);
+    --on-accent: #241F14;
+  }
+
+  html[data-theme="light"] {
+    --pitch-night: #F2F0DE;
+    --pitch-night-2: #F2F0DE;
+    --paper: #FDFCF6;
+    --paper-dark: #736F55;
+    --ink: #2B2A1F;
+    --ink-soft: #736F55;
+    --redact: #2B2A1F;
+    --floodlight: #C98A2E;
+    --turf: #4F7A55;
+    --correct: #4F7A55;
+    --wrong: #B23B2E;
+    --line: rgba(43,42,31,0.14);
+    --bg-glow-1: rgba(79,122,85,0.06);
+    --bg-glow-2: rgba(79,122,85,0.04);
+    --text: #2B2A1F;
+    --chip-bg: rgba(255,255,255,0.6);
+    --chip-fill: #EAE8D2;
+    --chip-ink: #2B2A1F;
+    --clue-card-tint: rgba(43,42,31,0.04);
+    --on-accent: #2B2A1F;
+  }
+
+  * { box-sizing: border-box; overflow-wrap: break-word; }
+
+  html, body {
+    margin: 0;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    min-height: 100vh;
+  }
+
+  .page-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background-color: var(--pitch-night);
+    background-image:
+      radial-gradient(circle at 20% 10%, var(--bg-glow-1), transparent 40%),
+      radial-gradient(circle at 80% 90%, var(--bg-glow-2), transparent 45%);
+    transition: background-color 0.2s ease;
+  }
+
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 24px max(16px, env(safe-area-inset-right)) max(64px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .icon-toggle {
+    position: absolute;
+    top: 0;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 13px;
+    background: transparent;
+    color: var(--paper-dark);
+    border-color: var(--paper-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .icon-toggle-left { left: 0; }
+  .icon-toggle-right { right: 0; }
+
+  .header-meta {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    row-gap: 6px;
+    gap: 8px;
+    align-items: center;
+    margin-top: 8px;
+  }
+
+  .difficulty-badge {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+    border: 1px solid currentColor;
+    background: var(--chip-bg);
+  }
+
+  .difficulty-badge.easy { color: var(--correct); }
+  .difficulty-badge.medium { color: var(--floodlight); }
+  .difficulty-badge.hard { color: var(--wrong); }
+
+  .theme-day-badge {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+    border: 1px solid var(--turf);
+    color: var(--turf);
+    background: var(--chip-bg);
+  }
+
+  .stale-banner {
+    max-width: 640px;
+    margin: 0 auto 16px;
+    padding: 10px 14px;
+    background: rgba(232,163,61,0.12);
+    border: 1px solid var(--floodlight);
+    border-radius: 4px;
+    font-size: 12px;
+    color: var(--floodlight);
+    text-align: center;
+    display: none;
+  }
+
+  .stale-banner.show { display: block; }
+
+  .stale-banner.streak-lost {
+    background: rgba(226,96,75,0.12);
+    border-color: var(--wrong);
+    color: var(--wrong);
+  }
+
+  .week-strip {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+    max-width: 640px;
+    margin: 0 auto 18px;
+  }
+
+  .week-cell {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 2px 7px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+  }
+
+  .week-day-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--paper-dark);
+  }
+
+  .week-day-num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-top: 1px;
+  }
+
+  .week-cell.future { opacity: 0.35; }
+  .week-cell.missed { opacity: 0.55; }
+  .week-cell.today {
+    border-color: var(--floodlight);
+    border-width: 2px;
+  }
+
+  .week-dot {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+  }
+
+  .dot-solved { background: var(--correct); }
+  .dot-failed { background: var(--wrong); }
+  .dot-missed {
+    background: transparent;
+    border: 1.5px solid var(--ink-soft);
+  }
+
+  .guess-wrap {
+    position: relative;
+    flex: 1;
+  }
+
+  .autocomplete-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--chip-fill);
+    border: 1.5px solid var(--ink);
+    border-top: none;
+    border-radius: 0 0 3px 3px;
+    max-height: 160px;
+    overflow-y: auto;
+    z-index: 5;
+    display: none;
+  }
+
+  .autocomplete-list.show { display: block; }
+
+  .autocomplete-item {
+    padding: 8px 12px;
+    font-size: 13px;
+    color: var(--chip-ink);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .autocomplete-empty {
+    padding: 10px 12px;
+    font-size: 12px;
+    color: var(--chip-ink);
+    opacity: 0.6;
+    font-style: italic;
+  }
+
+  .autocomplete-item:hover,
+  .autocomplete-item.active {
+    background: var(--floodlight);
+    color: var(--on-accent);
+  }
+
+  .reveal-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .btn-hint {
+    background: transparent;
+    color: var(--wrong);
+    border: 1.5px dashed var(--wrong);
+    font-size: 11px;
+  }
+
+  .btn-hint:disabled {
+    border-style: solid;
+  }
+
+  .hint-text {
+    font-size: 12px;
+    color: var(--turf);
+    min-height: 16px;
+    margin-top: 8px;
+  }
+
+  .kicker {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    font-size: 11px;
+    color: var(--floodlight);
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: clamp(24px, 7.5vw, 38px);
+    letter-spacing: 0.02em;
+    margin: 6px 0 4px;
+    text-transform: uppercase;
+    color: var(--floodlight);
+  }
+
+  .subhead {
+    font-size: 12px;
+    color: var(--paper-dark);
+    opacity: 0.85;
+  }
+
+  .stat-strip {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    margin: 14px 0 24px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--paper-dark);
+  }
+
+  .stat-strip strong {
+    color: var(--floodlight);
+    font-size: 15px;
+    display: block;
+  }
+
+  .dossier {
+    background: var(--paper);
+    color: var(--ink);
+    border-radius: 4px;
+    padding: 4px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+  }
+
+  .streak-badge {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+    border: 1px solid var(--floodlight);
+    color: var(--floodlight);
+    background: var(--chip-bg);
+  }
+
+  .mode-row {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+
+  .club-mode-toggle {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 20px;
+    border: 1px solid var(--turf);
+    color: var(--turf);
+    background: var(--chip-bg);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .club-mode-toggle:active {
+    opacity: 0.8;
+  }
+
+  .dossier-inner {
+    border: 1.5px solid var(--ink-soft);
+    padding: 18px;
+  }
+
+  .file-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+    font-family: 'Oswald', sans-serif;
+  }
+
+  .file-header .label {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .file-header .file-no {
+    font-size: 13px;
+    font-weight: 600;
+  }
+
+  .clue-card {
+    background: var(--clue-card-tint);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 14px 14px 12px;
+    margin-bottom: 12px;
+  }
+
+  .clue-card:last-child { margin-bottom: 0; }
+
+  .clue-card-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .stamp {
+    flex: 0 0 auto;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid var(--turf);
+    color: var(--turf);
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(-6deg);
+  }
+
+  .clue-card-title {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  .clue-eyebrow {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .clue-year {
+    font-family: 'Oswald', sans-serif;
+    font-size: 19px;
+    font-weight: 600;
+  }
+
+  .clue-points-badge {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--turf);
+    border: 1px solid var(--turf);
+    border-radius: 20px;
+    padding: 3px 10px;
+    white-space: nowrap;
+  }
+
+  .clue-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 8px;
+  }
+
+  .stat-chip {
+    background: var(--chip-fill);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 7px 9px;
+  }
+
+  .stat-chip.club-chip {
+    grid-column: 1 / -1;
+  }
+
+  .chip-label {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--chip-ink);
+    opacity: 0.75;
+    margin-bottom: 2px;
+  }
+
+  .chip-value {
+    display: block;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--chip-ink);
+  }
+
+  .chip-value.redacted {
+    background: var(--redact);
+    color: var(--redact);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    user-select: none;
+    display: inline-block;
+    padding: 1px 4px;
+  }
+
+  .chip-value.note-promoted { color: var(--correct); }
+  .chip-value.note-relegated { color: var(--wrong); }
+
+  .locked {
+    padding: 16px 0;
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+  }
+
+  .controls {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .guess-row {
+    display: flex;
+    gap: 8px;
+  }
+
+  input[type="text"] {
+    flex: 1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--ink);
+    border-radius: 3px;
+    background: var(--chip-fill);
+    color: var(--chip-ink);
+  }
+
+  button {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 12.5px;
+    padding: 10px 16px;
+    border-radius: 3px;
+    border: 1.5px solid var(--on-accent);
+    background: var(--floodlight);
+    color: var(--on-accent);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.08s ease, opacity 0.08s ease;
+  }
+
+  button:active:not(:disabled) {
+    transform: scale(0.97);
+    opacity: 0.85;
+  }
+
+  button.secondary {
+    background: transparent;
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+
+  button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .feedback {
+    font-size: 12px;
+    min-height: 16px;
+    letter-spacing: 0.02em;
+  }
+
+  .feedback.wrong { color: var(--wrong); }
+  .feedback.right { color: var(--correct); font-weight: 600; }
+
+  .attempts {
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+
+  .result-trigger {
+    margin-top: 20px;
+  }
+
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 20;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.18s ease;
+  }
+
+  .modal-backdrop.show {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal-card {
+    background: var(--paper);
+    color: var(--ink);
+    width: 100%;
+    max-width: 480px;
+    max-height: 85vh;
+    overflow-y: auto;
+    border-radius: 6px;
+    padding: 28px 20px 20px;
+    position: relative;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    transform: scale(0.96) translateY(8px);
+    transition: transform 0.18s ease;
+  }
+
+  .modal-backdrop.show .modal-card {
+    transform: scale(1) translateY(0);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--ink);
+    border: 1.5px solid var(--line);
+    font-size: 18px;
+    line-height: 1;
+  }
+
+  .how-to-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 0 0 16px;
+    padding-right: 30px;
+  }
+
+  .how-to-step {
+    margin-bottom: 14px;
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .how-to-step strong {
+    display: block;
+    font-family: 'Oswald', sans-serif;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--floodlight);
+    margin-bottom: 2px;
+  }
+
+  .how-to-step p {
+    margin: 0;
+    color: var(--ink);
+  }
+
+  .result-score {
+    font-family: 'Oswald', sans-serif;
+    font-size: 40px;
+    font-weight: 700;
+    text-align: center;
+    color: var(--floodlight);
+  }
+
+  .result-score span {
+    font-size: 14px;
+    display: block;
+    color: var(--paper-dark);
+    letter-spacing: 0.1em;
+  }
+
+  .path {
+    margin: 16px auto 0;
+    max-width: 480px;
+  }
+
+  .path-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    padding: 6px 0;
+    border-bottom: 1px dashed var(--line);
+    color: var(--ink);
+  }
+
+  .share-grid {
+    text-align: center;
+    font-size: 20px;
+    letter-spacing: 4px;
+    margin: 12px 0;
+  }
+
+  .share-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 14px;
+  }
+
+  .share-btn {
+    display: block;
+    width: 100%;
+    margin: 0;
+  }
+
+  .share-btn.secondary {
+    margin-top: 8px;
+    background: transparent;
+    color: var(--ink);
+  }
+
+  .share-native { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .share-x { background: #14171A; color: #fff; border-color: #14171A; }
+  .share-wa { background: #25D366; color: #0B2E17; border-color: #25D366; }
+  .share-fb { background: #1877F2; color: #fff; border-color: #1877F2; }
+
+  .ad-slot {
+    max-width: 640px;
+    margin: 20px auto 0;
+    min-height: 90px;
+    border: 1px dashed var(--paper-dark);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6;
+  }
+
+  .ad-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--paper-dark);
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 11px;
+    color: var(--paper-dark);
+    opacity: 0.7;
+  }
+
+  /* Narrow phones (e.g. iPhone SE, small Android) — tighten the tightest spots */
+  @media (max-width: 380px) {
+    .wrap { padding-left: 12px; padding-right: 12px; }
+    .week-strip { gap: 4px; }
+    .week-cell { padding: 5px 1px 6px; }
+    .week-day-label { font-size: 7px; }
+    .week-day-num { font-size: 12px; }
+    .stat-strip { gap: 10px; }
+    .header-meta { flex-wrap: wrap; row-gap: 6px; }
+    .clue-stats { grid-template-columns: repeat(auto-fit, minmax(84px, 1fr)); }
+  }
+
+  /* Desktop / larger screens — a little more room and comfort, still a
+     single centered column rather than a distinct multi-column layout */
+  @media (min-width: 768px) {
+    .wrap { max-width: 720px; padding-top: 40px; }
+    body { font-size: 15px; }
+    .dossier-inner { padding: 24px; }
+    .stat-chip { padding: 9px 11px; }
+    button { cursor: pointer; }
+    button:hover:not(:disabled) { filter: brightness(1.08); }
+    .autocomplete-item:hover { cursor: pointer; }
+  }
+</style>
+</head>
+<body>
+<div class="page-bg"></div>
+<div class="wrap">
+  <header>
+    <button class="icon-toggle icon-toggle-left" id="helpToggle" aria-label="How to play">?</button>
+    <button class="icon-toggle icon-toggle-right" id="themeToggle" aria-label="Toggle theme">☾</button>
+    <div class="kicker">Daily Case File</div>
+    <h1>The Scouting Report</h1>
+    <div class="header-meta" id="headerMeta"></div>
+  </header>
+
+  <div class="week-strip" id="weekStrip"></div>
+
+  <div class="stale-banner" id="staleBanner">
+    Today's case file hasn't landed yet — showing the most recent one available.
+  </div>
+
+  <div class="stale-banner streak-lost" id="streakLostBanner"></div>
+
+  <div class="stat-strip">
+    <div>Clue<strong id="clueDisplay">1 / 5</strong></div>
+    <div>On offer<strong id="pointsDisplay">100</strong></div>
+    <div>Time<strong id="timerDisplay">0:00</strong></div>
+  </div>
+
+  <div class="dossier">
+    <div class="dossier-inner">
+      <div class="file-header">
+        <span class="label">Subject file</span>
+        <span class="file-no" id="fileNo">#000</span>
+      </div>
+
+      <div id="cluesList"></div>
+      <div class="locked" id="lockedNotice"></div>
+
+      <div class="controls" id="controls">
+        <div class="mode-row">
+          <button class="club-mode-toggle" id="clubModeToggle">Clubs: Shown</button>
+        </div>
+        <div class="guess-row">
+          <div class="guess-wrap">
+            <input type="text" id="guessInput" placeholder="Name the player…" autocomplete="off" />
+            <div class="autocomplete-list" id="autocompleteList"></div>
+          </div>
+          <button id="guessBtn">Guess</button>
+        </div>
+        <div class="feedback" id="feedback"></div>
+        <div class="reveal-row">
+          <button class="secondary" id="nextClueBtn">Reveal next clue</button>
+          <button class="btn-hint" id="hintBtn">Reveal hint (−15 pts)</button>
+        </div>
+        <div class="hint-text" id="hintText"></div>
+        <div class="attempts" id="attemptsDisplay">8 guesses remaining today</div>
+      </div>
+
+      <div class="result-trigger" id="resultTrigger" style="display:none;">
+        <button id="viewResultBtn" style="width:100%">View Result</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal-card" id="modalCard">
+      <button class="modal-close" id="modalCloseBtn" aria-label="Close">×</button>
+      <div class="result-score" id="resultScore">0<span>points scored</span></div>
+      <div class="path" id="pathList"></div>
+      <div class="share-grid" id="shareGrid"></div>
+      <div class="share-row" id="shareRow">
+        <button class="share-btn share-native" id="nativeShareBtn">Share</button>
+        <button class="share-btn share-x" id="xShareBtn">Post to X</button>
+        <button class="share-btn share-wa" id="waShareBtn">WhatsApp</button>
+        <button class="share-btn share-fb" id="fbShareBtn">Facebook</button>
+      </div>
+      <button class="share-btn secondary" id="shareBtn">Copy result</button>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="howToBackdrop">
+    <div class="modal-card" id="howToCard">
+      <button class="modal-close" id="howToCloseBtn" aria-label="Close">×</button>
+      <h2 class="how-to-title">How to play</h2>
+
+      <div class="how-to-step">
+        <strong>1. One player, five clues.</strong>
+        <p>Each clue is a real stint from the player's career — the year, league level, time there, goals, and appearances. The club name stays hidden until the final clue.</p>
+      </div>
+
+      <div class="how-to-step">
+        <strong>2. Guess whenever you like.</strong>
+        <p>You don't have to wait for all five clues. Type a name and hit Guess after any clue — you're not forced to reveal more first.</p>
+      </div>
+
+      <div class="how-to-step">
+        <strong>3. Earlier is worth more.</strong>
+        <p>Clue 1 is worth 100 points, dropping to 80, 60, 40, then 20 on the final clue. The fewer clues you need, the higher your score.</p>
+      </div>
+
+      <div class="how-to-step">
+        <strong>4. Hints cost points.</strong>
+        <p>Stuck? Reveal a hint (nationality + position) for −15 points off your eventual score. It doesn't use up a clue.</p>
+      </div>
+
+      <div class="how-to-step">
+        <strong>5. Limited guesses.</strong>
+        <p>You get 8 guesses per day. Wrong guesses don't cost points, but running out ends the puzzle.</p>
+      </div>
+
+      <div class="how-to-step">
+        <strong>6. Come back daily.</strong>
+        <p>One new player every day. Solve on consecutive days to build a streak — miss a day and it resets.</p>
+      </div>
+
+      <button id="howToDismissBtn" style="width:100%;">Got it — let's play</button>
+    </div>
+  </div>
+
+  <!--
+    Ad slot placeholder. Once approved by a network (e.g. Google AdSense),
+    replace this div's contents with the network's snippet — most networks
+    give you a <script> + a target div/ins element to drop in verbatim.
+    Keep it below the game, not between clues, so it doesn't interrupt play.
+  -->
+  <div class="ad-slot" id="adSlot">
+    <span class="ad-label">Advertisement</span>
+  </div>
+
+  <footer>No login. No tracking beyond this device unless you accept ads/cookies below. New case file every day.</footer>
+</div>
+
+<script>
+(function () {
+  const STORAGE_PREFIX = "scoutingReport:";
+  const MAX_ATTEMPTS = 8;
+
+  // Fallback demo puzzle so the page is inspectable even without the
+  // daily JSON deployed yet — replace by fetching /puzzles/latest.json.
+  const DEMO_PUZZLE = {
+    date: "demo",
+    playerId: 0,
+    playerName: "Jamie Vardy",
+    difficulty: "hard",
+    theme: "Non-League Route Monday",
+    hint: { nationality: "England", position: "Forward" },
+    clues: [
+      { order: 1, year: 2007, club: null, league: "8th tier / non-league, England", duration: 3, goals: 66, appearances: 107, discipline: null, points: 100 },
+      { order: 2, year: 2010, club: null, league: "7th tier / non-league, England", duration: 1, goals: 25, appearances: 37, discipline: null, points: 80 },
+      { order: 3, year: 2011, club: null, league: "5th tier / non-league, England", duration: 1, goals: 31, appearances: 36, discipline: null, points: 60 },
+      { order: 4, year: 2012, club: "Leicester City", league: "1st tier, England", duration: 13, goals: 183, appearances: 440, discipline: { yellow: 11, red: 1 }, honour: "Premier League winner", transferFee: "£1M", note: "promoted", points: 40 }
+    ],
+    fullCareerPath: [
+      { club: "Stocksbridge Park Steels", years: 2007, duration: 3, goals: 66, appearances: 107 },
+      { club: "FC Halifax Town", years: 2010, duration: 1, goals: 25, appearances: 37 },
+      { club: "Fleetwood Town", years: 2011, duration: 1, goals: 31, appearances: 36 },
+      { club: "Leicester City", years: 2012, duration: 13, goals: 183, appearances: 440 }
+    ]
+  };
+
+  let puzzle = null;
+  let state = null;
+  let timerInterval = null;
+  let playerNames = []; // for autocomplete — loaded from players-index.json, falls back below
+  let autocompleteActiveIndex = -1;
+
+  const DEMO_PLAYER_NAMES = [
+    "Jamie Vardy", "Thierry Henry", "Alan Shearer", "Steven Gerrard", "Frank Lampard",
+    "Wayne Rooney", "Ryan Giggs", "Paul Scholes", "Didier Drogba", "Sergio Aguero",
+    "Harry Kane", "Mohamed Salah", "Kevin De Bruyne", "Virgil van Dijk", "Erling Haaland",
+    "Ian Wright", "Peter Crouch", "Emile Heskey", "Robbie Fowler", "Michael Owen"
+  ];
+
+  // ---------- theme (dark/light) ----------
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.style.colorScheme = theme; // native form controls/scrollbars follow too
+    document.getElementById("themeToggle").textContent = theme === "light" ? "☀" : "☾";
+    document.getElementById("themeColorMeta").setAttribute(
+      "content", theme === "light" ? "#F2F0DE" : "#1B1E15"
+    ); // tints the browser address bar/status bar — keep in sync with --pitch-night if the palette changes
+    localStorage.setItem(STORAGE_PREFIX + "theme", theme);
+  }
+
+  function initTheme() {
+    const saved = localStorage.getItem(STORAGE_PREFIX + "theme");
+    const prefersLight = window.matchMedia?.("(prefers-color-scheme: light)").matches;
+    applyTheme(saved || (prefersLight ? "light" : "dark"));
+  }
+
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute("data-theme");
+    applyTheme(current === "light" ? "dark" : "light");
+  }
+
+  function formatElapsed(seconds) {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${String(s).padStart(2, "0")}`;
+  }
+
+  function currentElapsedSeconds() {
+    const activeMs = state.sessionStartTimestamp ? Date.now() - state.sessionStartTimestamp : 0;
+    return Math.floor((state.accumulatedMs + activeMs) / 1000);
+  }
+
+  function startTimerIfNeeded() {
+    if (state.solved || state.gaveUp) return; // frozen — nothing to tick
+    if (document.hidden) return; // don't start a session while the tab isn't visible
+    if (!state.sessionStartTimestamp) {
+      state.sessionStartTimestamp = Date.now();
+      saveState();
+    }
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      document.getElementById("timerDisplay").textContent = formatElapsed(currentElapsedSeconds());
+    }, 1000);
+  }
+
+  function pauseTimer() {
+    // Folds any active session time into the accumulated total, then stops
+    // the clock — called when the tab is hidden, closed, or the puzzle ends.
+    clearInterval(timerInterval);
+    if (state.sessionStartTimestamp) {
+      state.accumulatedMs += Date.now() - state.sessionStartTimestamp;
+      state.sessionStartTimestamp = null;
+      saveState();
+    }
+  }
+
+  function stopTimer() {
+    pauseTimer();
+    if (state.elapsedSeconds === null) {
+      state.elapsedSeconds = Math.floor(state.accumulatedMs / 1000);
+    }
+  }
+
+  async function loadPuzzle() {
+    try {
+      const res = await fetch("./puzzles/latest.json", { cache: "no-store" });
+      if (!res.ok) throw new Error("no puzzle file yet");
+      puzzle = await res.json();
+    } catch (e) {
+      puzzle = DEMO_PUZZLE;
+    }
+  }
+
+  async function loadPlayerNames() {
+    try {
+      const res = await fetch("./players-index.json", { cache: "no-store" });
+      if (!res.ok) throw new Error("no player index yet");
+      const data = await res.json();
+      playerNames = data.map((p) => p.name || p);
+    } catch (e) {
+      playerNames = DEMO_PLAYER_NAMES;
+    }
+    // Always make sure today's answer is findable via autocomplete even if
+    // the index is out of date, so a genuine guess is never blocked.
+    if (puzzle?.playerName && !playerNames.includes(puzzle.playerName)) {
+      playerNames.push(puzzle.playerName);
+    }
+  }
+
+  function checkStale() {
+    if (puzzle.date === "demo") return; // nothing to be "stale" against yet
+    const todayUTC = new Date().toISOString().slice(0, 10);
+    const banner = document.getElementById("staleBanner");
+    banner.classList.toggle("show", puzzle.date !== todayUTC);
+  }
+
+  function loadState() {
+    const key = STORAGE_PREFIX + puzzle.date;
+    const saved = localStorage.getItem(key);
+    if (saved) return JSON.parse(saved);
+    return {
+      revealedUpTo: 1,
+      solved: false,
+      gaveUp: false,
+      score: 0,
+      attemptsUsed: 0,
+      wrongGuesses: [],
+      hintUsed: false,
+      accumulatedMs: 0,
+      sessionStartTimestamp: null,
+      elapsedSeconds: null
+    };
+  }
+
+  function saveState() {
+    localStorage.setItem(STORAGE_PREFIX + puzzle.date, JSON.stringify(state));
+  }
+
+  function getStreak() {
+    return Number(localStorage.getItem(STORAGE_PREFIX + "streak") || 0);
+  }
+
+  // ---------- club reveal mode (Easy = shown, Hard = hidden) ----------
+  // Defaults to "shown" — testing showed hiding the club by default made
+  // the puzzle too hard even once the mechanics were understood. Players
+  // who want the extra challenge can switch to "hidden" and it's remembered.
+
+  function getClubRevealMode() {
+    return localStorage.getItem(STORAGE_PREFIX + "clubRevealMode") || "shown";
+  }
+
+  function toggleClubRevealMode() {
+    const next = getClubRevealMode() === "shown" ? "hidden" : "shown";
+    localStorage.setItem(STORAGE_PREFIX + "clubRevealMode", next);
+    render();
+  }
+
+  function lookupClubForClue(clue) {
+    // The 5 selected clues are a subset of the full career path — match
+    // by year to find the real club name, which is already present in
+    // fullCareerPath (needed anyway for the end-of-game reveal).
+    const match = puzzle.fullCareerPath?.find((p) => p.years === clue.year);
+    return match?.club || null;
+  }
+
+  function previousCalendarDay(dateStr) {
+    const d = new Date(dateStr + "T00:00:00Z");
+    d.setUTCDate(d.getUTCDate() - 1);
+    return d.toISOString().slice(0, 10);
+  }
+
+  function bumpStreakIfNeeded() {
+    const lastSolvedDate = localStorage.getItem(STORAGE_PREFIX + "lastSolvedDate");
+
+    if (lastSolvedDate === puzzle.date) {
+      // Already counted today (e.g. page reloaded after solving) — no change.
+      return;
+    }
+
+    const yesterday = previousCalendarDay(puzzle.date);
+    const streak = lastSolvedDate === yesterday ? getStreak() + 1 : 1;
+
+    localStorage.setItem(STORAGE_PREFIX + "streak", streak);
+    localStorage.setItem(STORAGE_PREFIX + "lastSolvedDate", puzzle.date);
+  }
+
+  function getWeekDates(centerDateStr) {
+    const center = new Date(centerDateStr + "T00:00:00Z");
+    const dow = center.getUTCDay(); // 0=Sun..6=Sat
+    const mondayOffset = dow === 0 ? -6 : 1 - dow;
+    const monday = new Date(center);
+    monday.setUTCDate(center.getUTCDate() + mondayOffset);
+    const dates = [];
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(monday);
+      d.setUTCDate(monday.getUTCDate() + i);
+      dates.push(d.toISOString().slice(0, 10));
+    }
+    return dates;
+  }
+
+  function renderWeekStrip() {
+    const todayStr = puzzle.date === "demo" ? new Date().toISOString().slice(0, 10) : puzzle.date;
+    const dates = getWeekDates(todayStr);
+    const dayLabels = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+
+    const html = dates.map((dateStr, i) => {
+      const isToday = dateStr === todayStr;
+      const isFuture = dateStr > todayStr;
+
+      let status = "future";
+      let dotClass = null; // null = no dot shown at all
+
+      if (!isFuture) {
+        const saved = localStorage.getItem(STORAGE_PREFIX + dateStr);
+        let parsed = null;
+        if (saved) {
+          try { parsed = JSON.parse(saved); } catch (e) { /* ignore malformed entry */ }
+        }
+
+        if (parsed?.solved) {
+          status = "solved";
+          dotClass = "dot-solved";
+        } else if (parsed?.gaveUp) {
+          status = "failed";
+          dotClass = "dot-failed";
+        } else if (isToday) {
+          status = "today"; // still in progress or not yet started — no verdict yet
+        } else {
+          status = "missed"; // day passed with no attempt logged at all
+          dotClass = "dot-missed";
+        }
+      }
+
+      const dayNum = Number(dateStr.slice(8, 10));
+      const dot = dotClass ? `<span class="week-dot ${dotClass}"></span>` : "";
+
+      return `<div class="week-cell ${status}">
+        ${dot}
+        <span class="week-day-label">${dayLabels[i]}</span>
+        <span class="week-day-num">${dayNum}</span>
+      </div>`;
+    }).join("");
+
+    document.getElementById("weekStrip").innerHTML = html;
+  }
+
+  function checkStreakLoss() {
+    // Runs on load, before the player has had a chance to solve today's
+    // puzzle — catches a streak that broke on a day they simply didn't
+    // visit, rather than waiting for their next solve to quietly reset it.
+    if (puzzle.date === "demo") return;
+
+    const lastSolvedDate = localStorage.getItem(STORAGE_PREFIX + "lastSolvedDate");
+    if (!lastSolvedDate || lastSolvedDate === puzzle.date) return; // no history, or already solved today
+
+    const yesterday = previousCalendarDay(puzzle.date);
+    if (lastSolvedDate === yesterday) return; // streak still intact, nothing broken
+
+    const oldStreak = getStreak();
+    if (oldStreak < 2) return; // not worth mourning a 1-day streak
+
+    localStorage.setItem(STORAGE_PREFIX + "streak", 0);
+    const banner = document.getElementById("streakLostBanner");
+    banner.textContent = `Your ${oldStreak}-day streak ended — start a new one today.`;
+    banner.classList.add("show");
+  }
+
+  function normalise(str) {
+    // Decompose accented characters and drop the accent marks (é→e, ñ→n,
+    // etc.) BEFORE stripping non-letters — otherwise an accented name in
+    // the answer gets mangled differently than the same name typed
+    // without accents, and a genuinely correct guess silently fails to
+    // match. Doesn't cover every edge case (e.g. ø isn't decomposable
+    // this way) but handles the vast majority of real footballer names.
+    return str
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .trim().toLowerCase().replace(/[^a-z\s]/g, "");
+  }
+
+  function render() {
+    renderWeekStrip();
+
+    document.getElementById("fileNo").textContent =
+      "#" + (puzzle.date === "demo" ? "000" : puzzle.date.replace(/-/g, ""));
+
+    const metaEl = document.getElementById("headerMeta");
+    const streak = getStreak();
+    const badges = [
+      `<span class="streak-badge">${streak} day${streak === 1 ? "" : "s"} running</span>`,
+    ];
+    const puzzleInfoParts = [puzzle.difficulty, puzzle.theme].filter(Boolean);
+    if (puzzleInfoParts.length > 0) {
+      badges.push(`<span class="difficulty-badge ${puzzle.difficulty || ""}">${puzzleInfoParts.join(" · ")}</span>`);
+    }
+    metaEl.innerHTML = badges.join("");
+
+    const clubMode = getClubRevealMode();
+    document.getElementById("clubModeToggle").textContent = `Clubs: ${clubMode === "shown" ? "Shown" : "Hidden"}`;
+
+    const cluesList = document.getElementById("cluesList");
+    cluesList.innerHTML = "";
+
+    const visibleClues = puzzle.clues.slice(0, state.revealedUpTo);
+    visibleClues.forEach((clue) => {
+      const revealedClubName = clue.club || (clubMode === "shown" ? lookupClubForClue(clue) : null);
+      const clubChip = revealedClubName
+        ? `<div class="stat-chip club-chip"><span class="chip-label">Club</span><span class="chip-value">${revealedClubName}</span></div>`
+        : `<div class="stat-chip club-chip"><span class="chip-label">Club</span><span class="chip-value redacted">██████████</span></div>`;
+
+      const disciplineChip = clue.discipline
+        ? `<div class="stat-chip"><span class="chip-label">Discipline</span><span class="chip-value">${clue.discipline.yellow}Y${clue.discipline.red ? ` / ${clue.discipline.red}R` : ""}</span></div>`
+        : "";
+
+      const honourChip = clue.honour
+        ? `<div class="stat-chip"><span class="chip-label">Honours</span><span class="chip-value note-promoted">🏆 ${clue.honour}</span></div>`
+        : "";
+
+      const feeChip = clue.transferFee
+        ? `<div class="stat-chip"><span class="chip-label">Transfer fee</span><span class="chip-value">${clue.transferFee}</span></div>`
+        : "";
+
+      const noteChip = clue.note
+        ? `<div class="stat-chip club-chip"><span class="chip-label">Status</span><span class="chip-value note-${clue.note}">${clue.note === "promoted" ? "⬆ Promoted this spell" : "⬇ Relegated this spell"}</span></div>`
+        : "";
+
+      const div = document.createElement("div");
+      div.className = "clue-card";
+      div.innerHTML = `
+        <div class="clue-card-head">
+          <div class="stamp">${clue.order}</div>
+          <div class="clue-card-title">
+            <span class="clue-eyebrow">Clue ${clue.order} of ${puzzle.clues.length}</span>
+            <span class="clue-year">${clue.year}</span>
+          </div>
+          <div class="clue-points-badge">${clue.points} pts now</div>
+        </div>
+        <div class="clue-stats">
+          ${clubChip}
+          <div class="stat-chip club-chip"><span class="chip-label">League</span><span class="chip-value">${clue.league}</span></div>
+          <div class="stat-chip"><span class="chip-label">Time there</span><span class="chip-value">${clue.duration} yr${clue.duration === 1 ? "" : "s"}</span></div>
+          <div class="stat-chip"><span class="chip-label">Goals</span><span class="chip-value">${clue.goals}</span></div>
+          <div class="stat-chip"><span class="chip-label">Appearances</span><span class="chip-value">${clue.appearances}</span></div>
+          ${disciplineChip}
+          ${honourChip}
+          ${feeChip}
+          ${noteChip}
+        </div>`;
+      cluesList.appendChild(div);
+    });
+
+    const currentClue = puzzle.clues[state.revealedUpTo - 1];
+    document.getElementById("clueDisplay").textContent = `${state.revealedUpTo} / ${puzzle.clues.length}`;
+    const offer = currentClue ? Math.max(0, currentClue.points - (state.hintUsed ? 15 : 0)) : 0;
+    document.getElementById("pointsDisplay").textContent = offer;
+
+    const finished = state.solved || state.gaveUp;
+    document.getElementById("controls").style.display = finished ? "none" : "flex";
+    document.getElementById("resultTrigger").style.display = finished ? "block" : "none";
+
+    document.getElementById("nextClueBtn").disabled = state.revealedUpTo >= puzzle.clues.length;
+    document.getElementById("attemptsDisplay").textContent =
+      `${MAX_ATTEMPTS - state.attemptsUsed} guesses remaining today`;
+
+    const hintBtn = document.getElementById("hintBtn");
+    const hintTextEl = document.getElementById("hintText");
+    if (state.hintUsed && puzzle.hint) {
+      hintTextEl.textContent = `${puzzle.hint.nationality} · ${puzzle.hint.position}`;
+      hintBtn.disabled = true;
+    } else {
+      hintTextEl.textContent = "";
+      hintBtn.disabled = !puzzle.hint;
+    }
+
+    if (finished) {
+      stopTimer();
+      document.getElementById("timerDisplay").textContent = formatElapsed(state.elapsedSeconds ?? 0);
+      renderResult();
+    } else {
+      document.getElementById("timerDisplay").textContent = formatElapsed(currentElapsedSeconds());
+      startTimerIfNeeded();
+    }
+  }
+
+  function renderResult() {
+    document.getElementById("resultScore").innerHTML =
+      `${state.score}<span>points scored · solved in ${formatElapsed(state.elapsedSeconds ?? 0)}</span>`;
+
+    const pathList = document.getElementById("pathList");
+    pathList.innerHTML = puzzle.fullCareerPath.map(p =>
+      `<div class="path-row"><span>${p.years} · ${p.club}</span><span>${p.goals}g / ${p.appearances}a</span></div>`
+    ).join("");
+
+    const grid = puzzle.clues.map((c, i) => {
+      if (state.solved && i === state.revealedUpTo - 1) return "🟩";
+      if (i < state.revealedUpTo) return "⬛";
+      return "⬜";
+    }).join("");
+    document.getElementById("shareGrid").textContent = grid;
+  }
+
+  function openModal() {
+    renderResult(); // make sure content is current before showing
+    document.getElementById("modalBackdrop").classList.add("show");
+  }
+
+  function closeModal() {
+    document.getElementById("modalBackdrop").classList.remove("show");
+  }
+
+  function openHowTo() {
+    document.getElementById("howToBackdrop").classList.add("show");
+  }
+
+  function closeHowTo() {
+    document.getElementById("howToBackdrop").classList.remove("show");
+    localStorage.setItem(STORAGE_PREFIX + "hasSeenHowTo", "true");
+  }
+
+  function handleGuess() {
+    const input = document.getElementById("guessInput");
+    const value = input.value;
+    if (!value.trim() || state.attemptsUsed >= MAX_ATTEMPTS) return;
+
+    state.attemptsUsed++;
+    const correct = normalise(value) === normalise(puzzle.playerName);
+
+    if (correct) {
+      const clue = puzzle.clues[state.revealedUpTo - 1];
+      state.solved = true;
+      state.score = Math.max(0, clue.points - (state.hintUsed ? 15 : 0));
+      bumpStreakIfNeeded();
+      document.getElementById("feedback").className = "feedback right";
+      document.getElementById("feedback").textContent = `Correct — it was ${puzzle.playerName}.`;
+    } else {
+      state.wrongGuesses.push(value);
+      document.getElementById("feedback").className = "feedback wrong";
+      document.getElementById("feedback").textContent = "Not quite.";
+      if (state.attemptsUsed >= MAX_ATTEMPTS) {
+        state.gaveUp = true;
+      }
+    }
+
+    input.value = "";
+    saveState();
+    render();
+    if (state.solved || state.gaveUp) openModal(); // covers both a correct guess and running out of attempts
+  }
+
+  function handleNextClue() {
+    if (state.revealedUpTo < puzzle.clues.length) {
+      state.revealedUpTo++;
+      saveState();
+      render();
+    }
+  }
+
+  function handleHint() {
+    if (state.hintUsed || !puzzle.hint) return;
+    state.hintUsed = true;
+    saveState();
+    render();
+  }
+
+  // Replace with your real deployed domain once hosted — used to build
+  // share links that actually point back to the game.
+  const SITE_URL = window.location.origin + window.location.pathname;
+
+  function shareText() {
+    const grid = document.getElementById("shareGrid").textContent;
+    const label = puzzle.date === "demo" ? "Demo" : puzzle.date;
+    const timeLine = state.solved ? `\nSolved in ${formatElapsed(state.elapsedSeconds ?? 0)}` : "";
+    return `The Scouting Report — ${label}\n${grid}\nScore: ${state.score}/100${timeLine}\nStreak: ${getStreak()} days`;
+  }
+
+  function handleShare() {
+    const text = `${shareText()}\n${SITE_URL}`;
+    navigator.clipboard?.writeText(text).catch(() => {});
+    const btn = document.getElementById("shareBtn");
+    const original = btn.textContent;
+    btn.textContent = "Copied!";
+    setTimeout(() => (btn.textContent = original), 1500);
+  }
+
+  function handleNativeShare() {
+    if (navigator.share) {
+      navigator.share({ text: shareText(), url: SITE_URL }).catch(() => {});
+    } else {
+      handleShare(); // fallback: copy to clipboard on desktop browsers without Web Share
+    }
+  }
+
+  function handleXShare() {
+    const url = "https://twitter.com/intent/tweet?text=" +
+      encodeURIComponent(shareText() + "\n") + "&url=" + encodeURIComponent(SITE_URL);
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+
+  function handleWaShare() {
+    const url = "https://wa.me/?text=" + encodeURIComponent(shareText() + "\n" + SITE_URL);
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+
+  function handleFbShare() {
+    // Facebook's share dialog only reliably accepts a URL parameter, not
+    // custom text — the grid/score won't appear in the post body itself.
+    const url = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(SITE_URL);
+    window.open(url, "_blank", "noopener,noreferrer");
+  }
+
+  // ---------- autocomplete ----------
+
+  function renderAutocomplete(matches, showEmptyState = false) {
+    const list = document.getElementById("autocompleteList");
+    autocompleteActiveIndex = -1;
+
+    if (matches.length === 0) {
+      if (showEmptyState) {
+        list.innerHTML = `<div class="autocomplete-empty">No matches — you can still guess it</div>`;
+        list.classList.add("show");
+      } else {
+        list.classList.remove("show");
+        list.innerHTML = "";
+      }
+      return;
+    }
+
+    list.innerHTML = matches
+      .map((name, i) => `<div class="autocomplete-item" data-index="${i}">${name}</div>`)
+      .join("");
+    list.classList.add("show");
+    list.querySelectorAll(".autocomplete-item").forEach((el) => {
+      el.addEventListener("mousedown", (e) => {
+        e.preventDefault(); // keep focus in the input so Enter still works
+        selectAutocomplete(el.textContent);
+      });
+    });
+  }
+
+  function handleGuessInput() {
+    const value = document.getElementById("guessInput").value.trim().toLowerCase();
+    if (value.length < 2) {
+      renderAutocomplete([]);
+      return;
+    }
+    const matches = playerNames
+      .filter((name) => name.toLowerCase().includes(value))
+      .slice(0, 6);
+    renderAutocomplete(matches, true);
+  }
+
+  function selectAutocomplete(name) {
+    document.getElementById("guessInput").value = name;
+    renderAutocomplete([]);
+    document.getElementById("guessInput").focus();
+  }
+
+  function handleAutocompleteKeydown(e) {
+    const list = document.getElementById("autocompleteList");
+    const items = [...list.querySelectorAll(".autocomplete-item")];
+    if (items.length === 0 || !list.classList.contains("show")) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      autocompleteActiveIndex = Math.min(autocompleteActiveIndex + 1, items.length - 1);
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      autocompleteActiveIndex = Math.max(autocompleteActiveIndex - 1, 0);
+    } else if (e.key === "Escape") {
+      renderAutocomplete([]);
+      return;
+    } else {
+      return;
+    }
+    items.forEach((el, i) => el.classList.toggle("active", i === autocompleteActiveIndex));
+  }
+
+  async function init() {
+    initTheme();
+    await loadPuzzle();
+    await loadPlayerNames();
+    checkStale();
+    checkStreakLoss();
+    state = loadState();
+    render();
+
+    document.getElementById("themeToggle").addEventListener("click", toggleTheme);
+    document.getElementById("hintBtn").addEventListener("click", handleHint);
+    document.getElementById("clubModeToggle").addEventListener("click", toggleClubRevealMode);
+
+    document.getElementById("guessBtn").addEventListener("click", handleGuess);
+    document.getElementById("guessInput").addEventListener("input", handleGuessInput);
+    document.getElementById("guessInput").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        const list = document.getElementById("autocompleteList");
+        const items = [...list.querySelectorAll(".autocomplete-item")];
+        if (list.classList.contains("show") && autocompleteActiveIndex >= 0 && items[autocompleteActiveIndex]) {
+          e.preventDefault();
+          selectAutocomplete(items[autocompleteActiveIndex].textContent);
+          return;
+        }
+        renderAutocomplete([]);
+        handleGuess();
+      } else {
+        handleAutocompleteKeydown(e);
+      }
+    });
+    document.addEventListener("click", (e) => {
+      if (!e.target.closest(".guess-wrap")) renderAutocomplete([]);
+    });
+
+    document.getElementById("nextClueBtn").addEventListener("click", handleNextClue);
+    document.getElementById("viewResultBtn").addEventListener("click", openModal);
+    document.getElementById("modalCloseBtn").addEventListener("click", closeModal);
+    document.getElementById("modalBackdrop").addEventListener("click", (e) => {
+      if (e.target.id === "modalBackdrop") closeModal(); // only dismiss on backdrop itself, not the card
+    });
+    document.getElementById("shareBtn").addEventListener("click", handleShare);
+    document.getElementById("nativeShareBtn").addEventListener("click", handleNativeShare);
+    document.getElementById("xShareBtn").addEventListener("click", handleXShare);
+    document.getElementById("waShareBtn").addEventListener("click", handleWaShare);
+    document.getElementById("fbShareBtn").addEventListener("click", handleFbShare);
+
+    document.getElementById("helpToggle").addEventListener("click", openHowTo);
+    document.getElementById("howToCloseBtn").addEventListener("click", closeHowTo);
+    document.getElementById("howToDismissBtn").addEventListener("click", closeHowTo);
+    document.getElementById("howToBackdrop").addEventListener("click", (e) => {
+      if (e.target.id === "howToBackdrop") closeHowTo();
+    });
+
+    // Show the how-to-play modal automatically the very first time someone
+    // opens the game on this device — never again after that, unless they
+    // tap the help button themselves.
+    if (!localStorage.getItem(STORAGE_PREFIX + "hasSeenHowTo")) {
+      openHowTo();
+    }
+
+    // Timer only accumulates while this tab is actually visible and open —
+    // switching away, closing, or backgrounding pauses it; returning resumes it.
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        pauseTimer();
+      } else {
+        startTimerIfNeeded();
+      }
+    });
+    window.addEventListener("beforeunload", pauseTimer);
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>

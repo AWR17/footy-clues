@@ -1,0 +1,4 @@
+# No pages need blocking on a single-page site like this.
+# Present mainly so tools like Google Search Console don't flag its absence.
+User-agent: *
+Allow: /
