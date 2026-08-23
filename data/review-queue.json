@@ -1,0 +1,14 @@
+[
+  {
+    "date": "2026-08-23",
+    "playerId": 82340,
+    "playerName": "Stephen  Warnock",
+    "reason": "3 stint(s) have an unmapped league tier — clue text will be vague. Consider adding to lib/league-tiers.js.",
+    "clubs": [
+      "Liverpool",
+      "Blackburn",
+      "England"
+    ],
+    "flaggedAt": "2026-08-23T09:31:39.313Z"
+  }
+]
