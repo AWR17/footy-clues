@@ -1,0 +1,155 @@
+{
+  "date": "2026-08-23",
+  "playerId": 115959,
+  "playerName": "D. Kamara",
+  "difficulty": "hard",
+  "theme": null,
+  "hint": {
+    "nationality": "Senegal",
+    "position": "Attacker"
+  },
+  "clues": [
+    {
+      "order": 1,
+      "points": 100,
+      "year": 2004,
+      "club": null,
+      "league": "an unspecified league",
+      "duration": 4,
+      "goals": 1,
+      "appearances": 16,
+      "discipline": {
+        "yellow": 4,
+        "red": 0
+      },
+      "honour": null,
+      "transferFee": null,
+      "note": null,
+      "text": "2004 · joined a club in an unspecified league · 4 year(s) there · 1 goals in 16 appearances · 4 yellow, 0 red"
+    },
+    {
+      "order": 2,
+      "points": 80,
+      "year": 2004,
+      "club": null,
+      "league": "an unspecified league",
+      "duration": 1,
+      "goals": 4,
+      "appearances": 25,
+      "discipline": null,
+      "honour": null,
+      "transferFee": null,
+      "note": null,
+      "text": "2004 · joined a club in an unspecified league · 1 year(s) there · 4 goals in 25 appearances"
+    },
+    {
+      "order": 3,
+      "points": 60,
+      "year": 2007,
+      "club": null,
+      "league": "an unspecified league",
+      "duration": 3,
+      "goals": 10,
+      "appearances": 49,
+      "discipline": null,
+      "honour": null,
+      "transferFee": "€ 9M",
+      "note": null,
+      "text": "2007 · joined a club in an unspecified league · 3 year(s) there · 10 goals in 49 appearances · signed for € 9M"
+    },
+    {
+      "order": 4,
+      "points": 40,
+      "year": 2011,
+      "club": null,
+      "league": "an unspecified league",
+      "duration": 3,
+      "goals": 28,
+      "appearances": 95,
+      "discipline": {
+        "yellow": 20,
+        "red": 0
+      },
+      "honour": null,
+      "transferFee": "Free",
+      "note": null,
+      "text": "2011 · joined a club in an unspecified league · 3 year(s) there · 28 goals in 95 appearances · 20 yellow, 0 red · signed for Free"
+    },
+    {
+      "order": 5,
+      "points": 20,
+      "year": 2015,
+      "club": "NorthEast United",
+      "league": "an unspecified league",
+      "duration": 1,
+      "goals": 3,
+      "appearances": 12,
+      "discipline": {
+        "yellow": 6,
+        "red": 0
+      },
+      "honour": null,
+      "transferFee": null,
+      "note": null,
+      "text": "2015 · joined NorthEast United · 1 year(s) there · 3 goals in 12 appearances · 6 yellow, 0 red"
+    }
+  ],
+  "fullCareerPath": [
+    {
+      "club": "Senegal",
+      "years": 2004,
+      "duration": 4,
+      "goals": 1,
+      "appearances": 16
+    },
+    {
+      "club": "Portsmouth",
+      "years": 2004,
+      "duration": 1,
+      "goals": 4,
+      "appearances": 25
+    },
+    {
+      "club": "West Brom",
+      "years": 2005,
+      "duration": 2,
+      "goals": 21,
+      "appearances": 59
+    },
+    {
+      "club": "Fulham",
+      "years": 2007,
+      "duration": 3,
+      "goals": 10,
+      "appearances": 49
+    },
+    {
+      "club": "Leicester",
+      "years": 2010,
+      "duration": 1,
+      "goals": 2,
+      "appearances": 7
+    },
+    {
+      "club": "Eskişehirspor",
+      "years": 2011,
+      "duration": 3,
+      "goals": 28,
+      "appearances": 95
+    },
+    {
+      "club": "Catanzaro",
+      "years": 2014,
+      "duration": 1,
+      "goals": 0,
+      "appearances": 1
+    },
+    {
+      "club": "NorthEast United",
+      "years": 2015,
+      "duration": 1,
+      "goals": 3,
+      "appearances": 12
+    }
+  ]
+}
