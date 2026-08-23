@@ -58,6 +58,43 @@ function tierRank(tierLabel) {
   return match ? parseInt(match[1], 10) : null;
 }
 
+// Youth/reserve squads API-Football sometimes tracks as their own "team"
+// (e.g. "Bayern Munich II", "Chelsea U21", "Barcelona B"). These aren't
+// part of a senior career story, so they're filtered out entirely rather
+// than treated as a real stint or merged into the senior club's record.
+const YOUTH_RESERVE_PATTERN = /\b(u1[4-9]|u2[0-3]|youth|reserves?|academy|juniors?)\b/i;
+function isYouthOrReserveTeam(teamName) {
+  if (!teamName) return false;
+  if (YOUTH_RESERVE_PATTERN.test(teamName)) return true;
+  const trimmed = teamName.trim();
+  if (/\sII$/.test(trimmed)) return true; // e.g. "Bayern Munich II"
+  if (/\sB$/.test(trimmed)) return true; // e.g. "Barcelona B"
+  return false;
+}
+
+// Normalizes a club name for MATCHING purposes only (never for display) —
+// strips accents, punctuation, and a small set of common interchangeable
+// prefix/suffix tokens (e.g. "AFC Bournemouth" vs "Bournemouth") so the
+// same real club merges correctly even when different API records name
+// it slightly differently. Deliberately conservative: doesn't strip
+// tokens like "AC" or "SC" that often form a genuine, non-interchangeable
+// part of a club's actual name (e.g. "AC Milan").
+function normalizeClubKey(name) {
+  if (!name) return "";
+  const key = name
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "") // strip accents
+    .toLowerCase()
+    .replace(/[.]/g, "")
+    .trim();
+
+  const genericTokens = ["afc", "fc", "cf"];
+  const words = key.split(/\s+/).filter(Boolean);
+  while (words.length > 1 && genericTokens.includes(words[0])) words.shift();
+  while (words.length > 1 && genericTokens.includes(words[words.length - 1])) words.pop();
+
+  return words.join(" ");
+}
+
 // ---------- helpers ----------
 
 function todayISO(argDate) {
@@ -103,6 +140,10 @@ async function getCareerHistory(playerId) {
   for (const t of teams) {
     const seasons = t.seasons || [];
     if (seasons.length === 0) continue;
+
+    // Skip youth/reserve squads entirely — not a real senior stint, and
+    // unlike national caps, not an interesting bonus detail either.
+    if (isYouthOrReserveTeam(t.team.name)) continue;
 
     // API-Football's /players/teams also returns international caps
     // (e.g. "England") alongside real club history, since it treats a
@@ -187,9 +228,53 @@ async function getCareerHistory(playerId) {
     });
   }
 
+  // API-Football sometimes returns the same real-world club as multiple
+  // separate team entries — e.g. one per competition registration, or
+  // under slightly different name variants (e.g. "AFC Bournemouth" vs
+  // "Bournemouth") — rather than one unified spell. Left unmerged, that
+  // produces several near-identical "clues" for the same club instead
+  // of one accurate one. Merge any stints resolving to the same
+  // normalized club name (and not flagged as a national team) into a
+  // single combined entry before anything else sees them.
+  const mergedByClub = new Map();
+  for (const s of stints) {
+    if (s.isNationalTeam) {
+      mergedByClub.set(Symbol(s.clubName), s); // never merge national team entries into a club
+      continue;
+    }
+    const key = normalizeClubKey(s.clubName);
+    const existing = mergedByClub.get(key);
+    if (!existing) {
+      mergedByClub.set(key, { ...s });
+      continue;
+    }
+    // Combine into the existing entry: earliest start year, summed
+    // totals, and keep whichever tier label AND display name came from
+    // the stint with more appearances (the more representative of the
+    // two — the display name matters here since the two variants may be
+    // spelled differently, e.g. "AFC Bournemouth" vs "Bournemouth").
+    const combinedAppearances = existing.appearances + s.appearances;
+    const moreRepresentative = s.appearances > existing.appearances ? s : existing;
+    mergedByClub.set(key, {
+      ...existing,
+      clubName: moreRepresentative.clubName,
+      country: existing.country || s.country,
+      tierLabel: moreRepresentative.tierLabel,
+      tierUnmapped: moreRepresentative.tierUnmapped,
+      tierChangeNote: existing.tierChangeNote || s.tierChangeNote,
+      yearStart: Math.min(existing.yearStart, s.yearStart),
+      yearsAtClub: Math.max(existing.yearsAtClub, s.yearsAtClub),
+      appearances: combinedAppearances,
+      goals: existing.goals + s.goals,
+      yellowCards: existing.yellowCards + s.yellowCards,
+      redCards: existing.redCards + s.redCards,
+    });
+  }
+  const mergedStints = [...mergedByClub.values()];
+
   // Enrich with trophies/transfer-fee context, then splice in any
   // hand-curated stints (e.g. non-league spells the API misses).
-  const enrichedStints = await attachTrophiesAndTransfers(playerId, stints);
+  const enrichedStints = await attachTrophiesAndTransfers(playerId, mergedStints);
   const manual = MANUAL_STINTS[playerId] || [];
   const allStints = [...manual, ...enrichedStints].sort((a, b) => a.yearStart - b.yearStart);
 
@@ -239,10 +324,21 @@ async function attachTrophiesAndTransfers(playerId, stints) {
       return transferYear === s.yearStart && t.clubIn === s.clubName;
     });
 
+    // API-Football's transfer "type" field is sometimes a real fee
+    // ("€45M"), sometimes a meaningful category ("Free", "Loan") — but
+    // occasionally just the generic word "Transfer" or "N/A", which adds
+    // no information and reads oddly as "signed for Transfer". Only keep
+    // it if it's genuinely informative.
+    const genericFeeValues = ["transfer", "n/a"];
+    const rawFee = transferIn?.fee || null;
+    const meaningfulFee = rawFee && !genericFeeValues.includes(rawFee.trim().toLowerCase())
+      ? rawFee
+      : null;
+
     return {
       ...s,
       honour: wonTrophy ? `${wonTrophy.league} winner` : null,
-      transferFee: transferIn?.fee || null,
+      transferFee: meaningfulFee,
     };
   });
 }
