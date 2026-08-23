@@ -14,7 +14,7 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 
-const { getPlayerTeams, getPlayerSeasonStats, getPlayerProfile, getPlayerTransfers, getPlayerTrophies, sleep } = require("../lib/api-football");
+const { getPlayerTeams, getPlayerSeasonStats, getPlayerSeasonAnyTeamLeague, getPlayerProfile, getPlayerTransfers, getPlayerTrophies, sleep } = require("../lib/api-football");
 const { tierFor, MANUAL_STINTS } = require("../lib/league-tiers");
 
 const POOL_PATH = path.join(__dirname, "../data/player-pool.json");
@@ -132,18 +132,37 @@ async function getCareerHistory(playerId) {
       await sleep(REQUEST_PAUSE_MS);
     }
 
+    // Fallback: if the team-scoped query never found a league for ANY
+    // season in this stint (common for marginal/low-appearance spells,
+    // where the API's team-filtered response comes back thin), try one
+    // broader, non-team-scoped query on the stint's first season instead.
+    // Costs one extra call, but only for stints that would otherwise show
+    // the vaguest possible "unspecified league" text.
+    let fallbackCountry = null;
+    if (!isNationalTeam && seasonLeagues.length === 0 && seasons.length > 0) {
+      try {
+        const fallback = await getPlayerSeasonAnyTeamLeague(playerId, Math.min(...seasons), t.team.id);
+        await sleep(REQUEST_PAUSE_MS);
+        if (fallback.leagueId) seasonLeagues.push({ season: Math.min(...seasons), leagueId: fallback.leagueId });
+        fallbackCountry = fallback.country;
+      } catch (err) {
+        console.warn(`[daily-puzzle] fallback league lookup failed for ${t.team.name}: ${err.message}`);
+      }
+    }
+
     // Determine first/last by season number, not API response order, since
     // the /players/teams seasons array isn't guaranteed to arrive sorted.
     seasonLeagues.sort((a, b) => a.season - b.season);
     const firstLeagueId = seasonLeagues[0]?.leagueId ?? null;
     const lastLeagueId = seasonLeagues[seasonLeagues.length - 1]?.leagueId ?? null;
+    const effectiveCountry = t.team.country || fallbackCountry;
 
     const tier = isNationalTeam
       ? { label: "national team", unmapped: false }
-      : tierFor(firstLeagueId, t.team.country);
+      : tierFor(firstLeagueId, effectiveCountry);
     const lastTier = isNationalTeam
       ? { label: "national team", unmapped: false }
-      : tierFor(lastLeagueId, t.team.country);
+      : tierFor(lastLeagueId, effectiveCountry);
     const firstRank = tierRank(tier.label);
     const lastRank = tierRank(lastTier.label);
 
@@ -154,7 +173,7 @@ async function getCareerHistory(playerId) {
 
     stints.push({
       clubName: t.team.name,
-      country: t.team.country,
+      country: effectiveCountry,
       isNationalTeam,
       tierLabel: tier.label, // describes the level they joined at, not necessarily where they ended up
       tierUnmapped: Boolean(tier.unmapped),
