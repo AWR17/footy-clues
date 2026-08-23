@@ -104,6 +104,15 @@ async function getCareerHistory(playerId) {
     const seasons = t.seasons || [];
     if (seasons.length === 0) continue;
 
+    // API-Football's /players/teams also returns international caps
+    // (e.g. "England") alongside real club history, since it treats a
+    // national team as just another "team." A domestic tier doesn't
+    // apply to that, so skip it — this game is specifically about club
+    // career, not international appearances. National teams reliably
+    // have their name match their country (e.g. team.name "England",
+    // team.country "England"), which real clubs essentially never do.
+    if (t.team.name === t.team.country) continue;
+
     let totalApps = 0;
     let totalGoals = 0;
     let totalYellows = 0;
