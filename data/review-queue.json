@@ -33,5 +33,15 @@
       "FC Midtjylland"
     ],
     "flaggedAt": "2026-08-23T10:04:19.837Z"
+  },
+  {
+    "date": "2026-08-23",
+    "playerId": 22,
+    "playerName": "J. Bruun Larsen",
+    "reason": "1 stint(s) have an unmapped league tier — clue text will be vague. Consider adding to lib/league-tiers.js.",
+    "clubs": [
+      "Denmark"
+    ],
+    "flaggedAt": "2026-08-23T16:35:12.283Z"
   }
 ]
