@@ -10,5 +10,16 @@
       "England"
     ],
     "flaggedAt": "2026-08-23T09:31:39.313Z"
+  },
+  {
+    "date": "2026-08-23",
+    "playerId": 18970,
+    "playerName": "P. Groß",
+    "reason": "2 stint(s) have an unmapped league tier — clue text will be vague. Consider adding to lib/league-tiers.js.",
+    "clubs": [
+      "1899 Hoffenheim",
+      "Germany"
+    ],
+    "flaggedAt": "2026-08-23T09:47:47.668Z"
   }
 ]

@@ -1,155 +1,134 @@
 {
   "date": "2026-08-23",
-  "playerId": 82340,
-  "playerName": "Stephen  Warnock",
+  "playerId": 18970,
+  "playerName": "P. Groß",
   "difficulty": "medium",
   "theme": null,
   "hint": {
-    "nationality": "England",
-    "position": "Defender"
+    "nationality": "Germany",
+    "position": "Midfielder"
   },
   "clues": [
     {
       "order": 1,
       "points": 100,
-      "year": 2004,
+      "year": 2008,
       "club": null,
       "league": "an unspecified league",
       "duration": 2,
-      "goals": 1,
-      "appearances": 39,
+      "goals": 0,
+      "appearances": 5,
       "discipline": null,
       "honour": null,
       "transferFee": null,
       "note": null,
-      "text": "2004 · joined a club in an unspecified league · 2 year(s) there · 1 goals in 39 appearances"
+      "text": "2008 · joined a club in an unspecified league · 2 year(s) there · 0 goals in 5 appearances"
     },
     {
       "order": 2,
       "points": 80,
-      "year": 2006,
+      "year": 2010,
       "club": null,
-      "league": "an unspecified league",
-      "duration": 3,
-      "goals": 5,
-      "appearances": 87,
+      "league": "2nd tier, Germany",
+      "duration": 2,
+      "goals": 3,
+      "appearances": 25,
       "discipline": {
-        "yellow": 19,
+        "yellow": 6,
         "red": 0
       },
       "honour": null,
       "transferFee": null,
       "note": null,
-      "text": "2006 · joined a club in an unspecified league · 3 year(s) there · 5 goals in 87 appearances · 19 yellow, 0 red"
+      "text": "2010 · joined a club in 2nd tier, Germany · 2 year(s) there · 3 goals in 25 appearances · 6 yellow, 0 red"
     },
     {
       "order": 3,
       "points": 60,
-      "year": 2009,
+      "year": 2012,
       "club": null,
-      "league": "1st tier, England",
-      "duration": 3,
-      "goals": 2,
-      "appearances": 84,
+      "league": "2nd tier, Germany",
+      "duration": 5,
+      "goals": 17,
+      "appearances": 158,
       "discipline": {
-        "yellow": 17,
+        "yellow": 25,
         "red": 0
       },
       "honour": null,
-      "transferFee": "9M €",
-      "note": null,
-      "text": "2009 · joined a club in 1st tier, England · 3 year(s) there · 2 goals in 84 appearances · 17 yellow, 0 red · signed for 9M €"
+      "transferFee": "Free",
+      "note": "promoted",
+      "text": "2012 · joined a club in 2nd tier, Germany · 5 year(s) there · 17 goals in 158 appearances · 25 yellow, 0 red · signed for Free · Promoted during this spell"
     },
     {
       "order": 4,
       "points": 40,
-      "year": 2012,
+      "year": 2017,
       "club": null,
-      "league": "2nd tier, England",
-      "duration": 2,
-      "goals": 2,
-      "appearances": 43,
+      "league": "1st tier, England",
+      "duration": 10,
+      "goals": 30,
+      "appearances": 231,
       "discipline": {
-        "yellow": 8,
-        "red": 1
+        "yellow": 24,
+        "red": 0
       },
       "honour": null,
-      "transferFee": null,
+      "transferFee": "€ 3M",
       "note": null,
-      "text": "2012 · joined a club in 2nd tier, England · 2 year(s) there · 2 goals in 43 appearances · 8 yellow, 1 red"
+      "text": "2017 · joined a club in 1st tier, England · 10 year(s) there · 30 goals in 231 appearances · 24 yellow, 0 red · signed for € 3M"
     },
     {
       "order": 5,
       "points": 20,
-      "year": 2017,
-      "club": "Bradford",
-      "league": "3rd tier, England",
-      "duration": 2,
-      "goals": 0,
-      "appearances": 13,
+      "year": 2023,
+      "club": "Germany",
+      "league": "an unspecified league",
+      "duration": 3,
+      "goals": 1,
+      "appearances": 8,
       "discipline": null,
       "honour": null,
       "transferFee": null,
       "note": null,
-      "text": "2017 · joined Bradford · 2 year(s) there · 0 goals in 13 appearances"
+      "text": "2023 · joined Germany · 3 year(s) there · 1 goals in 8 appearances"
     }
   ],
   "fullCareerPath": [
     {
-      "club": "Liverpool",
-      "years": 2004,
-      "duration": 2,
-      "goals": 1,
-      "appearances": 39
-    },
-    {
-      "club": "Blackburn",
-      "years": 2006,
-      "duration": 3,
-      "goals": 5,
-      "appearances": 87
-    },
-    {
-      "club": "England",
+      "club": "1899 Hoffenheim",
       "years": 2008,
-      "duration": 3,
+      "duration": 2,
       "goals": 0,
-      "appearances": 1
+      "appearances": 5
     },
     {
-      "club": "Aston Villa",
-      "years": 2009,
-      "duration": 3,
-      "goals": 2,
-      "appearances": 84
+      "club": "Karlsruher SC",
+      "years": 2010,
+      "duration": 2,
+      "goals": 3,
+      "appearances": 25
     },
     {
-      "club": "Leeds",
+      "club": "FC Ingolstadt 04",
       "years": 2012,
-      "duration": 2,
-      "goals": 2,
-      "appearances": 43
+      "duration": 5,
+      "goals": 17,
+      "appearances": 158
     },
     {
-      "club": "Derby",
-      "years": 2014,
-      "duration": 1,
-      "goals": 0,
-      "appearances": 7
-    },
-    {
-      "club": "Wigan",
-      "years": 2015,
-      "duration": 2,
-      "goals": 0,
-      "appearances": 56
-    },
-    {
-      "club": "Bradford",
+      "club": "Brighton",
       "years": 2017,
-      "duration": 2,
-      "goals": 0,
-      "appearances": 13
+      "duration": 10,
+      "goals": 30,
+      "appearances": 231
+    },
+    {
+      "club": "Germany",
+      "years": 2023,
+      "duration": 3,
+      "goals": 1,
+      "appearances": 8
     }
   ]
 }
