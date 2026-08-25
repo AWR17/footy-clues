@@ -53,5 +53,17 @@
       "Rep. Of Ireland"
     ],
     "flaggedAt": "2026-08-24T05:34:09.381Z"
+  },
+  {
+    "date": "2026-08-25",
+    "playerId": 206254,
+    "playerName": "M. Kerkez",
+    "reason": "3 stint(s) have an unmapped league tier — clue text will be vague. Consider adding to lib/league-tiers.js.",
+    "clubs": [
+      "Gyori ETO FC",
+      "Liverpool",
+      "Hungary"
+    ],
+    "flaggedAt": "2026-08-25T05:26:34.642Z"
   }
 ]
