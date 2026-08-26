@@ -1,155 +1,125 @@
 {
   "date": "2026-08-23",
-  "playerId": 115959,
-  "playerName": "D. Kamara",
+  "playerId": 22,
+  "playerName": "J. Bruun Larsen",
   "difficulty": "hard",
   "theme": null,
   "hint": {
-    "nationality": "Senegal",
+    "nationality": "Denmark",
     "position": "Attacker"
   },
   "clues": [
     {
       "order": 1,
       "points": 100,
-      "year": 2004,
+      "year": 2015,
       "club": null,
-      "league": "an unspecified league",
-      "duration": 4,
-      "goals": 1,
-      "appearances": 16,
-      "discipline": {
-        "yellow": 4,
-        "red": 0
-      },
+      "league": "1st tier, Germany",
+      "duration": 3,
+      "goals": 2,
+      "appearances": 26,
+      "discipline": null,
       "honour": null,
       "transferFee": null,
       "note": null,
-      "text": "2004 · joined a club in an unspecified league · 4 year(s) there · 1 goals in 16 appearances · 4 yellow, 0 red"
+      "text": "2015 · joined a club in 1st tier, Germany · 3 year(s) there · 2 goals in 26 appearances"
     },
     {
       "order": 2,
       "points": 80,
-      "year": 2004,
+      "year": 2017,
       "club": null,
-      "league": "an unspecified league",
-      "duration": 1,
-      "goals": 4,
-      "appearances": 25,
+      "league": "1st tier, Germany",
+      "duration": 2,
+      "goals": 1,
+      "appearances": 19,
       "discipline": null,
       "honour": null,
       "transferFee": null,
       "note": null,
-      "text": "2004 · joined a club in an unspecified league · 1 year(s) there · 4 goals in 25 appearances"
+      "text": "2017 · joined a club in 1st tier, Germany · 2 year(s) there · 1 goals in 19 appearances"
     },
     {
       "order": 3,
       "points": 60,
-      "year": 2007,
+      "year": 2019,
       "club": null,
-      "league": "an unspecified league",
-      "duration": 3,
-      "goals": 10,
-      "appearances": 49,
+      "league": "1st tier, Germany",
+      "duration": 4,
+      "goals": 5,
+      "appearances": 50,
       "discipline": null,
       "honour": null,
-      "transferFee": "€ 9M",
+      "transferFee": null,
       "note": null,
-      "text": "2007 · joined a club in an unspecified league · 3 year(s) there · 10 goals in 49 appearances · signed for € 9M"
+      "text": "2019 · joined a club in 1st tier, Germany · 4 year(s) there · 5 goals in 50 appearances"
     },
     {
       "order": 4,
       "points": 40,
-      "year": 2011,
+      "year": 2019,
       "club": null,
       "league": "an unspecified league",
-      "duration": 3,
-      "goals": 28,
-      "appearances": 95,
-      "discipline": {
-        "yellow": 20,
-        "red": 0
-      },
+      "duration": 5,
+      "goals": 1,
+      "appearances": 6,
+      "discipline": null,
       "honour": null,
-      "transferFee": "Free",
+      "transferFee": null,
       "note": null,
-      "text": "2011 · joined a club in an unspecified league · 3 year(s) there · 28 goals in 95 appearances · 20 yellow, 0 red · signed for Free"
+      "text": "2019 · joined a club in an unspecified league · 5 year(s) there · 1 goals in 6 appearances"
     },
     {
       "order": 5,
       "points": 20,
-      "year": 2015,
-      "club": "NorthEast United",
-      "league": "an unspecified league",
-      "duration": 1,
-      "goals": 3,
-      "appearances": 12,
-      "discipline": {
-        "yellow": 6,
-        "red": 0
-      },
+      "year": 2023,
+      "club": "Burnley",
+      "league": "1st tier, England",
+      "duration": 3,
+      "goals": 6,
+      "appearances": 35,
+      "discipline": null,
       "honour": null,
-      "transferFee": null,
+      "transferFee": "Loan",
       "note": null,
-      "text": "2015 · joined NorthEast United · 1 year(s) there · 3 goals in 12 appearances · 6 yellow, 0 red"
+      "text": "2023 · joined Burnley · 3 year(s) there · 6 goals in 35 appearances · signed for Loan"
     }
   ],
   "fullCareerPath": [
     {
-      "club": "Senegal",
-      "years": 2004,
-      "duration": 4,
-      "goals": 1,
-      "appearances": 16
-    },
-    {
-      "club": "Portsmouth",
-      "years": 2004,
-      "duration": 1,
-      "goals": 4,
-      "appearances": 25
-    },
-    {
-      "club": "West Brom",
-      "years": 2005,
-      "duration": 2,
-      "goals": 21,
-      "appearances": 59
-    },
-    {
-      "club": "Fulham",
-      "years": 2007,
-      "duration": 3,
-      "goals": 10,
-      "appearances": 49
-    },
-    {
-      "club": "Leicester",
-      "years": 2010,
-      "duration": 1,
-      "goals": 2,
-      "appearances": 7
-    },
-    {
-      "club": "Eskişehirspor",
-      "years": 2011,
-      "duration": 3,
-      "goals": 28,
-      "appearances": 95
-    },
-    {
-      "club": "Catanzaro",
-      "years": 2014,
-      "duration": 1,
-      "goals": 0,
-      "appearances": 1
-    },
-    {
-      "club": "NorthEast United",
+      "club": "Borussia Dortmund",
       "years": 2015,
-      "duration": 1,
-      "goals": 3,
-      "appearances": 12
+      "duration": 3,
+      "goals": 2,
+      "appearances": 26
+    },
+    {
+      "club": "VfB Stuttgart",
+      "years": 2017,
+      "duration": 2,
+      "goals": 1,
+      "appearances": 19
+    },
+    {
+      "club": "1899 Hoffenheim",
+      "years": 2019,
+      "duration": 4,
+      "goals": 5,
+      "appearances": 50
+    },
+    {
+      "club": "Denmark",
+      "years": 2019,
+      "duration": 5,
+      "goals": 1,
+      "appearances": 6
+    },
+    {
+      "club": "Burnley",
+      "years": 2023,
+      "duration": 3,
+      "goals": 6,
+      "appearances": 35
     }
   ]
 }

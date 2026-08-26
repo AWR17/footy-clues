@@ -1,0 +1,131 @@
+{
+  "date": "2026-08-25",
+  "playerId": 206254,
+  "playerName": "M. Kerkez",
+  "difficulty": "hard",
+  "theme": null,
+  "hint": {
+    "nationality": "Hungary",
+    "position": "Defender"
+  },
+  "clues": [
+    {
+      "order": 1,
+      "points": 100,
+      "year": 2019,
+      "club": null,
+      "league": "an unspecified league",
+      "duration": 2,
+      "goals": 0,
+      "appearances": 16,
+      "discipline": null,
+      "honour": null,
+      "transferFee": null,
+      "note": null,
+      "text": "2019 · joined a club in an unspecified league · 2 year(s) there · 0 goals in 16 appearances"
+    },
+    {
+      "order": 2,
+      "points": 80,
+      "year": 2021,
+      "club": null,
+      "league": "1st tier, Netherlands",
+      "duration": 2,
+      "goals": 3,
+      "appearances": 37,
+      "discipline": null,
+      "honour": null,
+      "transferFee": null,
+      "note": null,
+      "text": "2021 · joined a club in 1st tier, Netherlands · 2 year(s) there · 3 goals in 37 appearances"
+    },
+    {
+      "order": 3,
+      "points": 60,
+      "year": 2023,
+      "club": null,
+      "league": "1st tier, England",
+      "duration": 1,
+      "goals": 0,
+      "appearances": 31,
+      "discipline": {
+        "yellow": 4,
+        "red": 1
+      },
+      "honour": null,
+      "transferFee": "€ 17.9M",
+      "note": null,
+      "text": "2023 · joined a club in 1st tier, England · 1 year(s) there · 0 goals in 31 appearances · 4 yellow, 1 red · signed for € 17.9M"
+    },
+    {
+      "order": 4,
+      "points": 40,
+      "year": 2024,
+      "club": null,
+      "league": "an unspecified league",
+      "duration": 3,
+      "goals": 0,
+      "appearances": 7,
+      "discipline": {
+        "yellow": 3,
+        "red": 0
+      },
+      "honour": null,
+      "transferFee": null,
+      "note": null,
+      "text": "2024 · joined a club in an unspecified league · 3 year(s) there · 0 goals in 7 appearances · 3 yellow, 0 red"
+    },
+    {
+      "order": 5,
+      "points": 20,
+      "year": 2024,
+      "club": "Hungary",
+      "league": "an unspecified league",
+      "duration": 2,
+      "goals": 0,
+      "appearances": 4,
+      "discipline": null,
+      "honour": null,
+      "transferFee": null,
+      "note": null,
+      "text": "2024 · joined Hungary · 2 year(s) there · 0 goals in 4 appearances"
+    }
+  ],
+  "fullCareerPath": [
+    {
+      "club": "Gyori ETO FC",
+      "years": 2019,
+      "duration": 2,
+      "goals": 0,
+      "appearances": 16
+    },
+    {
+      "club": "AZ Alkmaar",
+      "years": 2021,
+      "duration": 2,
+      "goals": 3,
+      "appearances": 37
+    },
+    {
+      "club": "Bournemouth",
+      "years": 2023,
+      "duration": 1,
+      "goals": 0,
+      "appearances": 31
+    },
+    {
+      "club": "Liverpool",
+      "years": 2024,
+      "duration": 3,
+      "goals": 0,
+      "appearances": 7
+    },
+    {
+      "club": "Hungary",
+      "years": 2024,
+      "duration": 2,
+      "goals": 0,
+      "appearances": 4
+    }
+  ]
+}

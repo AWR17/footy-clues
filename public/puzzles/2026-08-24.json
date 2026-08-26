@@ -1,0 +1,148 @@
+{
+  "date": "2026-08-24",
+  "playerId": 18921,
+  "playerName": "R. Brady",
+  "difficulty": "medium",
+  "theme": null,
+  "hint": {
+    "nationality": "Republic of Ireland",
+    "position": "Midfielder"
+  },
+  "clues": [
+    {
+      "order": 1,
+      "points": 100,
+      "year": 2010,
+      "club": null,
+      "league": "1st tier, England",
+      "duration": 1,
+      "goals": 0,
+      "appearances": 0,
+      "discipline": null,
+      "honour": null,
+      "transferFee": null,
+      "note": null,
+      "text": "2010 · joined a club in 1st tier, England · 1 year(s) there · 0 goals in 0 appearances"
+    },
+    {
+      "order": 2,
+      "points": 80,
+      "year": 2011,
+      "club": null,
+      "league": "2nd tier, England",
+      "duration": 4,
+      "goals": 6,
+      "appearances": 83,
+      "discipline": {
+        "yellow": 6,
+        "red": 1
+      },
+      "honour": null,
+      "transferFee": "Loan",
+      "note": "promoted",
+      "text": "2011 · joined a club in 2nd tier, England · 4 year(s) there · 6 goals in 83 appearances · 6 yellow, 1 red · signed for Loan · Promoted during this spell"
+    },
+    {
+      "order": 3,
+      "points": 60,
+      "year": 2015,
+      "club": null,
+      "league": "1st tier, England",
+      "duration": 1,
+      "goals": 3,
+      "appearances": 36,
+      "discipline": null,
+      "honour": null,
+      "transferFee": "€ 9.9M",
+      "note": null,
+      "text": "2015 · joined a club in 1st tier, England · 1 year(s) there · 3 goals in 36 appearances · signed for € 9.9M"
+    },
+    {
+      "order": 4,
+      "points": 40,
+      "year": 2016,
+      "club": null,
+      "league": "1st tier, England",
+      "duration": 5,
+      "goals": 4,
+      "appearances": 81,
+      "discipline": {
+        "yellow": 11,
+        "red": 1
+      },
+      "honour": null,
+      "transferFee": null,
+      "note": null,
+      "text": "2016 · joined a club in 1st tier, England · 5 year(s) there · 4 goals in 81 appearances · 11 yellow, 1 red"
+    },
+    {
+      "order": 5,
+      "points": 20,
+      "year": 2022,
+      "club": "Preston",
+      "league": "2nd tier, England",
+      "duration": 4,
+      "goals": 1,
+      "appearances": 102,
+      "discipline": {
+        "yellow": 21,
+        "red": 0
+      },
+      "honour": null,
+      "transferFee": "Free",
+      "note": null,
+      "text": "2022 · joined Preston · 4 year(s) there · 1 goals in 102 appearances · 21 yellow, 0 red · signed for Free"
+    }
+  ],
+  "fullCareerPath": [
+    {
+      "club": "Manchester United",
+      "years": 2010,
+      "duration": 1,
+      "goals": 0,
+      "appearances": 0
+    },
+    {
+      "club": "Hull City",
+      "years": 2011,
+      "duration": 4,
+      "goals": 6,
+      "appearances": 83
+    },
+    {
+      "club": "Rep. Of Ireland",
+      "years": 2012,
+      "duration": 14,
+      "goals": 4,
+      "appearances": 26
+    },
+    {
+      "club": "Norwich",
+      "years": 2015,
+      "duration": 1,
+      "goals": 3,
+      "appearances": 36
+    },
+    {
+      "club": "Burnley",
+      "years": 2016,
+      "duration": 5,
+      "goals": 4,
+      "appearances": 81
+    },
+    {
+      "club": "Bournemouth",
+      "years": 2021,
+      "duration": 1,
+      "goals": 0,
+      "appearances": 6
+    },
+    {
+      "club": "Preston",
+      "years": 2022,
+      "duration": 4,
+      "goals": 1,
+      "appearances": 102
+    }
+  ]
+}
