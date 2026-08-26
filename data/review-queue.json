@@ -29,5 +29,17 @@
       "Gremio"
     ],
     "flaggedAt": "2026-08-26T16:26:16.434Z"
+  },
+  {
+    "date": "2026-08-26",
+    "playerId": 18819,
+    "playerName": "M. Antonio",
+    "reason": "3 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Cheltenham",
+      "Reading",
+      "Al-Sailiya"
+    ],
+    "flaggedAt": "2026-08-26T16:51:16.405Z"
   }
 ]

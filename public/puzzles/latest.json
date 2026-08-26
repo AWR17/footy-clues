@@ -1,164 +1,157 @@
 {
   "date": "2026-08-26",
-  "playerId": 157,
-  "playerName": "Luis Suárez Díaz",
+  "playerId": 19283,
+  "playerName": "Andreas Weimann",
   "difficulty": "hard",
   "theme": null,
   "hint": {
-    "nationality": "Uruguay",
+    "nationality": "Austria",
     "position": "Attacker",
-    "firstname": "Luis Alberto",
-    "lastname": "Suárez Díaz"
+    "firstname": "Andreas",
+    "lastname": "Weimann"
   },
   "clues": [
     {
       "order": 1,
       "points": 100,
-      "year": 2005,
+      "year": 2009,
       "club": null,
-      "league": "an unspecified league",
-      "duration": 2,
-      "goals": 20,
-      "appearances": 43,
-      "discipline": null,
+      "league": "1st tier, England",
+      "duration": 6,
+      "goals": 17,
+      "appearances": 113,
+      "discipline": {
+        "yellow": 10,
+        "red": 0
+      },
       "honour": null,
       "transferFee": null,
       "note": null,
-      "text": "2005 · joined a club in an unspecified league · 2 year(s) there · 20 goals in 43 appearances"
+      "text": "2009 · joined a club in 1st tier, England · 6 year(s) there · 17 goals in 113 appearances · 10 yellow, 0 red"
     },
     {
       "order": 2,
       "points": 80,
-      "year": 2006,
+      "year": 2015,
       "club": null,
-      "league": "an unspecified league",
-      "duration": 1,
-      "goals": 13,
-      "appearances": 0,
-      "discipline": null,
+      "league": "2nd tier, England",
+      "duration": 3,
+      "goals": 9,
+      "appearances": 84,
+      "discipline": {
+        "yellow": 10,
+        "red": 0
+      },
       "honour": null,
-      "transferFee": "€ 800K",
+      "transferFee": null,
       "note": null,
-      "text": "2006 · joined a club in an unspecified league · 1 year(s) there · 13 goals in 0 appearances · signed for € 800K"
+      "text": "2015 · joined a club in 2nd tier, England · 3 year(s) there · 9 goals in 84 appearances · 10 yellow, 0 red"
     },
     {
       "order": 3,
       "points": 60,
-      "year": 2010,
+      "year": 2018,
       "club": null,
-      "league": "1st tier, England",
-      "duration": 4,
-      "goals": 69,
-      "appearances": 110,
+      "league": "2nd tier, England",
+      "duration": 5,
+      "goals": 49,
+      "appearances": 185,
       "discipline": {
-        "yellow": 23,
+        "yellow": 30,
         "red": 0
       },
       "honour": null,
       "transferFee": null,
       "note": null,
-      "text": "2010 · joined a club in 1st tier, England · 4 year(s) there · 69 goals in 110 appearances · 23 yellow, 0 red"
+      "text": "2018 · joined a club in 2nd tier, England · 5 year(s) there · 49 goals in 185 appearances · 30 yellow, 0 red"
     },
     {
       "order": 4,
       "points": 40,
-      "year": 2014,
+      "year": 2024,
       "club": null,
-      "league": "1st tier, Spain",
-      "duration": 6,
-      "goals": 147,
-      "appearances": 191,
-      "discipline": {
-        "yellow": 36,
-        "red": 0
-      },
+      "league": "2nd tier, England",
+      "duration": 1,
+      "goals": 7,
+      "appearances": 30,
+      "discipline": null,
       "honour": null,
-      "transferFee": "€ 81M",
+      "transferFee": "Free",
       "note": null,
-      "text": "2014 · joined a club in 1st tier, Spain · 6 year(s) there · 147 goals in 191 appearances · 36 yellow, 0 red · signed for € 81M"
+      "text": "2024 · joined a club in 2nd tier, England · 1 year(s) there · 7 goals in 30 appearances · signed for Free"
     },
     {
       "order": 5,
       "points": 20,
-      "year": 2024,
-      "club": "Inter Miami",
-      "league": "1st tier, USA",
-      "duration": 3,
-      "goals": 21,
-      "appearances": 33,
-      "discipline": {
-        "yellow": 7,
-        "red": 0
-      },
+      "year": 2026,
+      "club": "Cheltenham",
+      "league": "4th tier, England",
+      "duration": 1,
+      "goals": 0,
+      "appearances": 2,
+      "discipline": null,
       "honour": null,
-      "transferFee": null,
+      "transferFee": "Free agent",
       "note": null,
-      "text": "2024 · joined Inter Miami · 3 year(s) there · 21 goals in 33 appearances · 7 yellow, 0 red"
+      "text": "2026 · joined Cheltenham · 1 year(s) there · 0 goals in 2 appearances · signed for Free agent"
     }
   ],
   "fullCareerPath": [
     {
-      "club": "Club Nacional",
-      "years": 2005,
-      "duration": 2,
-      "goals": 20,
-      "appearances": 43
-    },
-    {
-      "club": "Groningen",
-      "years": 2006,
-      "duration": 1,
-      "goals": 13,
-      "appearances": 0
-    },
-    {
-      "club": "Ajax",
-      "years": 2007,
-      "duration": 3,
-      "goals": 76,
-      "appearances": 64
-    },
-    {
-      "club": "Uruguay",
-      "years": 2008,
-      "duration": 16,
-      "goals": 23,
-      "appearances": 56
-    },
-    {
-      "club": "Liverpool",
-      "years": 2010,
-      "duration": 4,
-      "goals": 69,
-      "appearances": 110
-    },
-    {
-      "club": "Barcelona",
-      "years": 2014,
+      "club": "Aston Villa",
+      "years": 2009,
       "duration": 6,
-      "goals": 147,
-      "appearances": 191
+      "goals": 17,
+      "appearances": 113
     },
     {
-      "club": "Atletico Madrid",
-      "years": 2020,
-      "duration": 2,
-      "goals": 32,
-      "appearances": 67
+      "club": "Austria",
+      "years": 2012,
+      "duration": 9,
+      "goals": 2,
+      "appearances": 19
     },
     {
-      "club": "Gremio",
+      "club": "Derby",
+      "years": 2015,
+      "duration": 3,
+      "goals": 9,
+      "appearances": 84
+    },
+    {
+      "club": "Bristol City",
+      "years": 2018,
+      "duration": 5,
+      "goals": 49,
+      "appearances": 185
+    },
+    {
+      "club": "West Brom",
       "years": 2023,
       "duration": 1,
-      "goals": 17,
-      "appearances": 32
+      "goals": 2,
+      "appearances": 13
     },
     {
-      "club": "Inter Miami",
+      "club": "Blackburn",
       "years": 2024,
-      "duration": 3,
-      "goals": 21,
-      "appearances": 33
+      "duration": 1,
+      "goals": 7,
+      "appearances": 30
+    },
+    {
+      "club": "Rapid Vienna",
+      "years": 2025,
+      "duration": 1,
+      "goals": 1,
+      "appearances": 17
+    },
+    {
+      "club": "Cheltenham",
+      "years": 2026,
+      "duration": 1,
+      "goals": 0,
+      "appearances": 2
     }
   ]
 }
