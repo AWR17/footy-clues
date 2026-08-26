@@ -14,7 +14,7 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 
-const { getPlayerTeams, getPlayerSeasonStats, getPlayerProfile, getPlayerTransfers, getPlayerTrophies, sleep } = require("../lib/api-football");
+const { getPlayerTeams, getPlayerSeasonStats, getPlayerSeasonAnyTeamLeague, getPlayerProfile, getPlayerTransfers, getPlayerTrophies, sleep } = require("../lib/api-football");
 const { tierFor, MANUAL_STINTS } = require("../lib/league-tiers");
 
 const POOL_PATH = path.join(__dirname, "../data/player-pool.json");
@@ -23,17 +23,10 @@ const PUZZLES_DIR = path.join(__dirname, "../public/puzzles");
 const REVIEW_QUEUE_PATH = path.join(__dirname, "../data/review-queue.json");
 const PLAYERS_INDEX_PATH = path.join(__dirname, "../public/players-index.json");
 
-// See scripts/build-player-pool.js for the per-tier rate-limit reasoning.
-// 300ms is tuned for API-Football Pro (300 req/min); drop to ~6500ms if
-// you're still on the Free plan (10 req/min).
 const REQUEST_PAUSE_MS = 300;
-const MIN_STINTS_TO_PUBLISH = 3; // below this, flag for manual review instead
-const MAX_THEME_ATTEMPTS = 5; // how many candidates to try before giving up on the theme match
+const MIN_STINTS_TO_PUBLISH = 3;
+const MAX_THEME_ATTEMPTS = 5;
 
-// Weekday themes, keyed by UTC day-of-week (0 = Sunday ... 6 = Saturday).
-// Each predicate runs against a candidate's already-fetched stint list —
-// themes can only be *preferred*, not guaranteed, since we don't know a
-// player's career shape until after fetching it.
 const THEME_DAYS = {
   1: {
     label: "Non-League Route Monday",
@@ -52,13 +45,35 @@ function computeDifficulty(candidate) {
 }
 
 function tierRank(tierLabel) {
-  // Extracts the numeric tier from labels like "1st tier, England" or
-  // "8th tier / non-league, England" so we can compare levels numerically.
   const match = tierLabel?.match(/(\d+)(?:st|nd|rd|th) tier/i);
   return match ? parseInt(match[1], 10) : null;
 }
 
-// ---------- helpers ----------
+const YOUTH_RESERVE_PATTERN = /\b(u1[4-9]|u2[0-3]|youth|reserves?|academy|juniors?)\b/i;
+function isYouthOrReserveTeam(teamName) {
+  if (!teamName) return false;
+  if (YOUTH_RESERVE_PATTERN.test(teamName)) return true;
+  const trimmed = teamName.trim();
+  if (/\sII$/.test(trimmed)) return true;
+  if (/\sB$/.test(trimmed)) return true;
+  return false;
+}
+
+function normalizeClubKey(name) {
+  if (!name) return "";
+  const key = name
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .replace(/[.]/g, "")
+    .trim();
+
+  const genericTokens = ["afc", "fc", "cf"];
+  const words = key.split(/\s+/).filter(Boolean);
+  while (words.length > 1 && genericTokens.includes(words[0])) words.shift();
+  while (words.length > 1 && genericTokens.includes(words[words.length - 1])) words.pop();
+
+  return words.join(" ");
+}
 
 function todayISO(argDate) {
   return argDate || new Date().toISOString().slice(0, 10);
@@ -88,12 +103,20 @@ function saveJSON(filePath, data) {
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2));
 }
 
-// ---------- career fetch (cached — a player's history is fetched once, ever) ----------
-
 async function getCareerHistory(playerId) {
   const cachePath = path.join(CACHE_DIR, `${playerId}.json`);
   const cached = loadJSON(cachePath, null);
-  if (cached) return cached;
+  // Only trust the cache if every stint actually has the fields the
+  // current pipeline expects. Earlier versions of this pipeline (before
+  // the national-team exclusion and league-fallback fixes existed)
+  // cached stints without these fields — trusting that blindly here
+  // would silently let a national-team cap through as a real clue, or
+  // serve a career that never got the benefit of the improved league
+  // lookup. Treat anything that doesn't match as a cache miss and
+  // re-fetch fresh instead.
+  const isValidCache = Array.isArray(cached) && cached.length > 0 &&
+    cached.every((s) => typeof s.isNationalTeam === "boolean" && typeof s.tierUnmapped === "boolean");
+  if (isValidCache) return cached;
 
   const teams = await getPlayerTeams(playerId);
   await sleep(REQUEST_PAUSE_MS);
@@ -104,11 +127,15 @@ async function getCareerHistory(playerId) {
     const seasons = t.seasons || [];
     if (seasons.length === 0) continue;
 
+    if (isYouthOrReserveTeam(t.team.name)) continue;
+
+    const isNationalTeam = t.team.name === t.team.country;
+
     let totalApps = 0;
     let totalGoals = 0;
     let totalYellows = 0;
     let totalReds = 0;
-    const seasonLeagues = []; // { season, leagueId } — used to detect tier changes within this stint
+    const seasonLeagues = [];
 
     for (const season of seasons) {
       const stat = await getPlayerSeasonStats(playerId, season, t.team.id);
@@ -120,14 +147,29 @@ async function getCareerHistory(playerId) {
       await sleep(REQUEST_PAUSE_MS);
     }
 
-    // Determine first/last by season number, not API response order, since
-    // the /players/teams seasons array isn't guaranteed to arrive sorted.
+    let fallbackCountry = null;
+    if (!isNationalTeam && seasonLeagues.length === 0 && seasons.length > 0) {
+      try {
+        const fallback = await getPlayerSeasonAnyTeamLeague(playerId, Math.min(...seasons), t.team.id);
+        await sleep(REQUEST_PAUSE_MS);
+        if (fallback.leagueId) seasonLeagues.push({ season: Math.min(...seasons), leagueId: fallback.leagueId });
+        fallbackCountry = fallback.country;
+      } catch (err) {
+        console.warn(`[daily-puzzle] fallback league lookup failed for ${t.team.name}: ${err.message}`);
+      }
+    }
+
     seasonLeagues.sort((a, b) => a.season - b.season);
     const firstLeagueId = seasonLeagues[0]?.leagueId ?? null;
     const lastLeagueId = seasonLeagues[seasonLeagues.length - 1]?.leagueId ?? null;
+    const effectiveCountry = t.team.country || fallbackCountry;
 
-    const tier = tierFor(firstLeagueId, t.team.country);
-    const lastTier = tierFor(lastLeagueId, t.team.country);
+    const tier = isNationalTeam
+      ? { label: "national team", unmapped: false }
+      : tierFor(firstLeagueId, effectiveCountry);
+    const lastTier = isNationalTeam
+      ? { label: "national team", unmapped: false }
+      : tierFor(lastLeagueId, effectiveCountry);
     const firstRank = tierRank(tier.label);
     const lastRank = tierRank(lastTier.label);
 
@@ -138,8 +180,9 @@ async function getCareerHistory(playerId) {
 
     stints.push({
       clubName: t.team.name,
-      country: t.team.country,
-      tierLabel: tier.label, // describes the level they joined at, not necessarily where they ended up
+      country: effectiveCountry,
+      isNationalTeam,
+      tierLabel: tier.label,
       tierUnmapped: Boolean(tier.unmapped),
       tierChangeNote,
       yearStart: Math.min(...seasons),
@@ -151,9 +194,38 @@ async function getCareerHistory(playerId) {
     });
   }
 
-  // Enrich with trophies/transfer-fee context, then splice in any
-  // hand-curated stints (e.g. non-league spells the API misses).
-  const enrichedStints = await attachTrophiesAndTransfers(playerId, stints);
+  const mergedByClub = new Map();
+  for (const s of stints) {
+    if (s.isNationalTeam) {
+      mergedByClub.set(Symbol(s.clubName), s);
+      continue;
+    }
+    const key = normalizeClubKey(s.clubName);
+    const existing = mergedByClub.get(key);
+    if (!existing) {
+      mergedByClub.set(key, { ...s });
+      continue;
+    }
+    const combinedAppearances = existing.appearances + s.appearances;
+    const moreRepresentative = s.appearances > existing.appearances ? s : existing;
+    mergedByClub.set(key, {
+      ...existing,
+      clubName: moreRepresentative.clubName,
+      country: existing.country || s.country,
+      tierLabel: moreRepresentative.tierLabel,
+      tierUnmapped: moreRepresentative.tierUnmapped,
+      tierChangeNote: existing.tierChangeNote || s.tierChangeNote,
+      yearStart: Math.min(existing.yearStart, s.yearStart),
+      yearsAtClub: Math.max(existing.yearsAtClub, s.yearsAtClub),
+      appearances: combinedAppearances,
+      goals: existing.goals + s.goals,
+      yellowCards: existing.yellowCards + s.yellowCards,
+      redCards: existing.redCards + s.redCards,
+    });
+  }
+  const mergedStints = [...mergedByClub.values()];
+
+  const enrichedStints = await attachTrophiesAndTransfers(playerId, mergedStints);
   const manual = MANUAL_STINTS[playerId] || [];
   const allStints = [...manual, ...enrichedStints].sort((a, b) => a.yearStart - b.yearStart);
 
@@ -161,9 +233,6 @@ async function getCareerHistory(playerId) {
   return allStints;
 }
 
-// Matches trophies/transfer fees back onto the stint they belong to. Both
-// endpoints cover a player's whole career in one call, so this runs once
-// per player rather than once per stint.
 async function attachTrophiesAndTransfers(playerId, stints) {
   let trophies = [];
   let transfers = [];
@@ -185,9 +254,6 @@ async function attachTrophiesAndTransfers(playerId, stints) {
   return stints.map((s) => {
     const stintEndYear = s.yearStart + s.yearsAtClub - 1;
 
-    // Only surfacing outright wins, not runner-up finishes, to keep this a
-    // clean positive signal. Matched by season year + country, since the
-    // trophies endpoint doesn't return which club it was won with.
     const wonTrophy = trophies.find((t) => {
       if (t.place !== "Winner") return false;
       const seasonStartYear = parseInt(String(t.season).slice(0, 4), 10);
@@ -195,25 +261,29 @@ async function attachTrophiesAndTransfers(playerId, stints) {
       return seasonStartYear >= s.yearStart && seasonStartYear <= stintEndYear && t.country === s.country;
     });
 
-    // Matched by the year the stint started + the incoming club name,
-    // both of which the transfers endpoint does provide directly.
     const transferIn = transfers.find((t) => {
       if (!t.date || !t.clubIn) return false;
       const transferYear = parseInt(t.date.slice(0, 4), 10);
       return transferYear === s.yearStart && t.clubIn === s.clubName;
     });
 
+    const genericFeeValues = ["transfer", "n/a"];
+    const rawFee = transferIn?.fee || null;
+    const meaningfulFee = rawFee && !genericFeeValues.includes(rawFee.trim().toLowerCase())
+      ? rawFee
+      : null;
+
     return {
       ...s,
       honour: wonTrophy ? `${wonTrophy.league} winner` : null,
-      transferFee: transferIn?.fee || null,
+      transferFee: meaningfulFee,
     };
   });
 }
 
-// ---------- clue selection ----------
+function selectClueWorthyStints(allStints) {
+  const stints = allStints.filter((s) => !s.isNationalTeam);
 
-function selectClueWorthyStints(stints) {
   if (stints.length <= 5) return stints;
 
   const first = stints[0];
@@ -223,29 +293,20 @@ function selectClueWorthyStints(stints) {
     .sort((a, b) => b.appearances - a.appearances)[0];
 
   const mustInclude = [first, biggestPL, last].filter(Boolean);
-  // De-dupe in case first/last/biggestPL overlap (e.g. only one club, or PL club is also last)
   const mustIncludeUnique = [...new Set(mustInclude)];
 
   const remaining = stints.filter((s) => !mustIncludeUnique.includes(s));
   const slotsNeeded = Math.max(0, 5 - mustIncludeUnique.length);
 
-  // Prefer variety: avoid picking a second stint at a club already covered
-  // by a must-include slot (e.g. a player who left and later rejoined the
-  // same club). If avoiding duplicates would leave too few candidates to
-  // fill the remaining slots, fall back to allowing them — a genuine
-  // multi-spell story is better than an incomplete clue set.
   const usedClubNames = new Set(mustIncludeUnique.map((s) => s.clubName));
   const noDupPool = remaining.filter((s) => !usedClubNames.has(s.clubName));
   const remainingPool = noDupPool.length >= slotsNeeded ? noDupPool : remaining;
 
-  // Spread remaining picks evenly across the career timeline, still
-  // preferring not to repeat a club name across the spread picks themselves
   const spread = [];
   if (slotsNeeded > 0 && remainingPool.length > 0) {
     const step = remainingPool.length / slotsNeeded;
     for (let i = 0; i < slotsNeeded; i++) {
       let idx = Math.min(remainingPool.length - 1, Math.floor(i * step));
-      // Nudge forward if this candidate would repeat a club name already chosen
       let attempts = 0;
       while (
         attempts < remainingPool.length &&
@@ -272,7 +333,7 @@ function isNotableDiscipline(stint) {
 }
 
 function formatClue(stint, order, isFinal) {
-  const clubDisplay = isFinal ? stint.clubName : null; // null = redacted in the UI
+  const clubDisplay = isFinal ? stint.clubName : null;
   const notable = isNotableDiscipline(stint);
   const noteText = stint.tierChangeNote
     ? (stint.tierChangeNote === "promoted" ? "Promoted during this spell" : "Relegated during this spell")
@@ -299,12 +360,9 @@ function formatClue(stint, order, isFinal) {
     honour: stint.honour || null,
     transferFee: stint.transferFee || null,
     note: stint.tierChangeNote || null,
-    // Plain-text fallback used for accessibility and any non-visual context
     text: `${stint.yearStart} \u00b7 joined ${isFinal ? stint.clubName : `a club in ${stint.tierLabel}`} \u00b7 ${stint.yearsAtClub} year(s) there \u00b7 ${stint.goals} goals in ${stint.appearances} appearances${extraText ? ` \u00b7 ${extraText}` : ""}`,
   };
 }
-
-// ---------- review queue (for anything that shouldn't auto-publish) ----------
 
 function flagForReview(entry) {
   const queue = loadJSON(REVIEW_QUEUE_PATH, []);
@@ -312,14 +370,12 @@ function flagForReview(entry) {
   saveJSON(REVIEW_QUEUE_PATH, queue);
 }
 
-// ---------- main ----------
-
 async function findCandidateForToday(pool, date) {
   const dayOfWeek = new Date(date + "T00:00:00Z").getUTCDay();
   const themeConfig = THEME_DAYS[dayOfWeek] || null;
 
-  let fallback = null; // best candidate found so far, used if no theme match turns up
-  const rejectedIds = []; // too-few-stints candidates — caller should mark these used
+  let fallback = null;
+  const rejectedIds = [];
 
   for (let attempt = 0; attempt < MAX_THEME_ATTEMPTS; attempt++) {
     const suffix = attempt === 0 ? "" : `-alt${attempt}`;
@@ -334,7 +390,7 @@ async function findCandidateForToday(pool, date) {
         reason: `Only ${stints.length} usable stint(s) found — below minimum of ${MIN_STINTS_TO_PUBLISH}.`,
       });
       rejectedIds.push(candidate.id);
-      continue; // try the next candidate, don't mark this one used yet
+      continue;
     }
 
     if (!fallback) fallback = { candidate, stints };
@@ -344,8 +400,6 @@ async function findCandidateForToday(pool, date) {
     }
   }
 
-  // No theme match found within the attempt budget — publish the first
-  // usable candidate anyway, just without a theme label for the day.
   if (fallback) {
     console.warn(`[daily-puzzle] no theme match found for ${date} after ${MAX_THEME_ATTEMPTS} attempts — publishing without a theme.`);
     return { ...fallback, theme: null, rejectedIds };
@@ -355,7 +409,6 @@ async function findCandidateForToday(pool, date) {
 }
 
 function writePlayersIndex(pool) {
-  // Lightweight name list for frontend autocomplete — id + name only.
   const index = pool.map((p) => ({ id: p.id, name: p.name }));
   saveJSON(PLAYERS_INDEX_PATH, index);
 }
@@ -367,7 +420,7 @@ async function run(dateArg) {
     throw new Error(`No player pool found at ${POOL_PATH}. Run build-player-pool.js first.`);
   }
 
-  writePlayersIndex(pool); // keep autocomplete data fresh regardless of today's pick
+  writePlayersIndex(pool);
 
   const { candidate, stints, theme, rejectedIds } = await findCandidateForToday(pool, date);
   console.log(`[daily-puzzle] ${date}: selected ${candidate.name} (id ${candidate.id})${theme ? ` — ${theme}` : ""}`);
@@ -384,7 +437,6 @@ async function run(dateArg) {
       reason: `${unmapped.length} stint(s) have an unmapped league tier — clue text will be vague. Consider adding to lib/league-tiers.js.`,
       clubs: unmapped.map((s) => s.clubName),
     });
-    // Not a blocker — still publish, just flagged for a later look.
   }
 
   const selected = selectClueWorthyStints(stints);
@@ -393,23 +445,25 @@ async function run(dateArg) {
   );
 
   let hint = null;
+  let displayName = candidate.name;
   try {
-    // Use the player's own most recent career year, not the current
-    // calendar year — querying a season they were never active in
-    // silently returns nothing, which would break hints for anyone
-    // retired or long out of the game (see lib/api-football.js).
     const lastKnownSeason = stints[stints.length - 1]?.yearStart ?? new Date().getFullYear();
     const profile = await getPlayerProfile(candidate.id, lastKnownSeason);
     if (profile.nationality || profile.position) hint = profile;
+
+    const looksAbbreviated = /^[A-Z]\.\s?[A-Z]/.test(candidate.name);
+    if (looksAbbreviated && profile.firstname && profile.lastname) {
+      const firstGivenName = profile.firstname.trim().split(/\s+/)[0];
+      displayName = `${firstGivenName} ${profile.lastname}`.trim();
+    }
   } catch (err) {
     console.warn(`[daily-puzzle] hint profile lookup failed for ${candidate.name}: ${err.message}`);
-    // Non-fatal — hint button just won't be available today.
   }
 
   const puzzle = {
     date,
     playerId: candidate.id,
-    playerName: candidate.name,
+    playerName: displayName,
     difficulty: computeDifficulty(candidate),
     theme,
     hint,
@@ -426,10 +480,6 @@ async function run(dateArg) {
   saveJSON(path.join(PUZZLES_DIR, `${date}.json`), puzzle);
   saveJSON(path.join(PUZZLES_DIR, "latest.json"), puzzle);
 
-  // Mark today's player used, plus anyone rejected along the way for too
-  // few stints — they'll stay skipped until manually reconsidered (e.g.
-  // after adding MANUAL_STINTS data for them and flipping `used` back to
-  // false by hand in data/player-pool.json).
   const usedToday = new Set([candidate.id, ...rejectedIds]);
   const updatedPool = pool.map((p) => (usedToday.has(p.id) ? { ...p, used: true } : p));
   saveJSON(POOL_PATH, updatedPool);
@@ -437,7 +487,7 @@ async function run(dateArg) {
   console.log(`[daily-puzzle] published puzzle for ${date}: ${candidate.name}, ${clues.length} clues, difficulty ${puzzle.difficulty}.`);
 }
 
-const dateArg = process.argv[2]; // optional: node daily-puzzle.js 2026-08-20
+const dateArg = process.argv[2];
 run(dateArg).catch((err) => {
   console.error("[daily-puzzle] fatal error:", err);
   process.exit(1);

@@ -1,0 +1,19 @@
+[
+  {
+    "date": "2026-08-23",
+    "playerId": 115959,
+    "playerName": "D. Kamara",
+    "reason": "8 stint(s) have an unmapped league tier — clue text will be vague. Consider adding to lib/league-tiers.js.",
+    "clubs": [
+      "Senegal",
+      "Portsmouth",
+      "West Brom",
+      "Fulham",
+      "Leicester",
+      "Eskişehirspor",
+      "Catanzaro",
+      "NorthEast United"
+    ],
+    "flaggedAt": "2026-08-23T09:27:47.017Z"
+  }
+]
