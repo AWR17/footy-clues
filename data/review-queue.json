@@ -15,5 +15,19 @@
       "NorthEast United"
     ],
     "flaggedAt": "2026-08-23T09:27:47.017Z"
+  },
+  {
+    "date": "2026-08-26",
+    "playerId": 157,
+    "playerName": "L. Suárez",
+    "reason": "5 stint(s) have an unmapped league tier — clue text will be vague. Consider adding to lib/league-tiers.js.",
+    "clubs": [
+      "Club Nacional",
+      "Groningen",
+      "Ajax",
+      "Uruguay",
+      "Gremio"
+    ],
+    "flaggedAt": "2026-08-26T16:26:16.434Z"
   }
 ]
