@@ -50,6 +50,32 @@ function tierRank(tierLabel) {
 }
 
 const YOUTH_RESERVE_PATTERN = /\b(u1[4-9]|u2[0-3]|youth|reserves?|academy|juniors?)\b/i;
+
+const KNOWN_COUNTRY_NAMES = new Set([
+  "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Argentina", "Armenia",
+  "Australia", "Austria", "Azerbaijan", "Bahrain", "Bangladesh", "Belarus", "Belgium",
+  "Benin", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Bulgaria",
+  "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Chad",
+  "Chile", "China", "Colombia", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus",
+  "Czech Republic", "DR Congo", "Denmark", "Ecuador", "Egypt", "El Salvador",
+  "England", "Equatorial Guinea", "Estonia", "Ethiopia", "Fiji", "Finland", "France",
+  "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Guatemala", "Guinea",
+  "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq",
+  "Ireland", "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan",
+  "Kazakhstan", "Kenya", "Kosovo", "Kuwait", "Latvia", "Lebanon", "Liberia", "Libya",
+  "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Mali", "Malta",
+  "Mexico", "Moldova", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar",
+  "Namibia", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria",
+  "North Korea", "North Macedonia", "Northern Ireland", "Norway", "Oman", "Pakistan",
+  "Panama", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar",
+  "Republic of Ireland", "Romania", "Russia", "Rwanda", "Saudi Arabia", "Scotland",
+  "Senegal", "Serbia", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Somalia",
+  "South Africa", "South Korea", "Spain", "Sri Lanka", "Sudan", "Sweden",
+  "Switzerland", "Syria", "Tanzania", "Thailand", "Togo", "Trinidad and Tobago",
+  "Tunisia", "Turkey", "Uganda", "Ukraine", "United Arab Emirates", "United States",
+  "USA", "Uruguay", "Uzbekistan", "Venezuela", "Vietnam", "Wales", "Zambia", "Zimbabwe",
+]);
+
 function isYouthOrReserveTeam(teamName) {
   if (!teamName) return false;
   if (YOUTH_RESERVE_PATTERN.test(teamName)) return true;
@@ -106,14 +132,6 @@ function saveJSON(filePath, data) {
 async function getCareerHistory(playerId) {
   const cachePath = path.join(CACHE_DIR, `${playerId}.json`);
   const cached = loadJSON(cachePath, null);
-  // Only trust the cache if every stint actually has the fields the
-  // current pipeline expects. Earlier versions of this pipeline (before
-  // the national-team exclusion and league-fallback fixes existed)
-  // cached stints without these fields — trusting that blindly here
-  // would silently let a national-team cap through as a real clue, or
-  // serve a career that never got the benefit of the improved league
-  // lookup. Treat anything that doesn't match as a cache miss and
-  // re-fetch fresh instead.
   const isValidCache = Array.isArray(cached) && cached.length > 0 &&
     cached.every((s) => typeof s.isNationalTeam === "boolean" && typeof s.tierUnmapped === "boolean");
   if (isValidCache) return cached;
@@ -129,7 +147,7 @@ async function getCareerHistory(playerId) {
 
     if (isYouthOrReserveTeam(t.team.name)) continue;
 
-    const isNationalTeam = t.team.name === t.team.country;
+    const isNationalTeam = t.team.name === t.team.country || KNOWN_COUNTRY_NAMES.has(t.team.name);
 
     let totalApps = 0;
     let totalGoals = 0;
@@ -393,10 +411,24 @@ async function findCandidateForToday(pool, date) {
       continue;
     }
 
-    if (!fallback) fallback = { candidate, stints };
+    const selected = selectClueWorthyStints(stints);
+    const unmapped = selected.filter((s) => s.tierUnmapped);
+    if (unmapped.length > 0) {
+      flagForReview({
+        date,
+        playerId: candidate.id,
+        playerName: candidate.name,
+        reason: `${unmapped.length} of the selected clue stint(s) have an unmapped league tier — would show as "unspecified league." Consider adding to lib/league-tiers.js, or this player will keep getting skipped.`,
+        clubs: unmapped.map((s) => s.clubName),
+      });
+      rejectedIds.push(candidate.id);
+      continue;
+    }
+
+    if (!fallback) fallback = { candidate, stints, selected };
 
     if (!themeConfig || themeConfig.predicate(stints)) {
-      return { candidate, stints, theme: themeConfig ? themeConfig.label : null, rejectedIds };
+      return { candidate, stints, selected, theme: themeConfig ? themeConfig.label : null, rejectedIds };
     }
   }
 
@@ -422,24 +454,12 @@ async function run(dateArg) {
 
   writePlayersIndex(pool);
 
-  const { candidate, stints, theme, rejectedIds } = await findCandidateForToday(pool, date);
+  const { candidate, stints, selected, theme, rejectedIds } = await findCandidateForToday(pool, date);
   console.log(`[daily-puzzle] ${date}: selected ${candidate.name} (id ${candidate.id})${theme ? ` — ${theme}` : ""}`);
   if (rejectedIds.length > 0) {
-    console.log(`[daily-puzzle] also retiring ${rejectedIds.length} candidate(s) rejected for too few stints: ${rejectedIds.join(", ")}`);
+    console.log(`[daily-puzzle] also retiring ${rejectedIds.length} candidate(s) rejected for too few stints or an unmapped league in their clues: ${rejectedIds.join(", ")}`);
   }
 
-  const unmapped = stints.filter((s) => s.tierUnmapped);
-  if (unmapped.length > 0) {
-    flagForReview({
-      date,
-      playerId: candidate.id,
-      playerName: candidate.name,
-      reason: `${unmapped.length} stint(s) have an unmapped league tier — clue text will be vague. Consider adding to lib/league-tiers.js.`,
-      clubs: unmapped.map((s) => s.clubName),
-    });
-  }
-
-  const selected = selectClueWorthyStints(stints);
   const clues = selected.map((s, i) =>
     formatClue(s, i + 1, i === selected.length - 1)
   );

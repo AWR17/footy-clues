@@ -3,7 +3,7 @@
 // ONE-TIME (or occasional) setup script — NOT part of the daily job.
 // Walks every Premier League season from 1992/93 to the current one,
 // sums each player's total PL appearances, and writes out the pool of
-// players meeting the eligibility bar (default: 50+ PL appearances).
+// players meeting the eligibility bar (default: 100+ PL appearances).
 //
 // This is slow and rate-limit-heavy by design (hundreds of calls) —
 // run it locally or as a manual GitHub Action, not on a daily schedule.
@@ -18,7 +18,7 @@ const { getPlayersForSeason, sleep } = require("../lib/api-football");
 const PL_LEAGUE_ID = 39;
 const START_SEASON = 1992;
 const CURRENT_SEASON = new Date().getFullYear();
-const MIN_PL_APPEARANCES = 50;
+const MIN_PL_APPEARANCES = 100; // raised from 50 — a higher bar filters toward more established players, who are statistically more likely to have a well-documented career throughout (not just their PL years), reducing how often obscure early-career clubs hit data gaps like "unspecified league"
 // Pause between requests, tuned to your API-Football plan's per-minute
 // rate limit (not the daily cap — a separate, faster-refilling limit).
 // Official limits: Free = 10/min, Pro = 300/min (5/sec), Ultra = 450/min,
