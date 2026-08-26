@@ -65,5 +65,19 @@
       "Hungary"
     ],
     "flaggedAt": "2026-08-25T05:26:34.642Z"
+  },
+  {
+    "date": "2026-08-26",
+    "playerId": 114571,
+    "playerName": "Gilberto Silva",
+    "reason": "5 stint(s) have an unmapped league tier — clue text will be vague. Consider adding to lib/league-tiers.js.",
+    "clubs": [
+      "Brazil",
+      "Arsenal",
+      "Panathinaikos",
+      "Gremio",
+      "Atletico-MG"
+    ],
+    "flaggedAt": "2026-08-26T05:29:20.255Z"
   }
 ]
