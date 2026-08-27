@@ -1,0 +1,50 @@
+[
+  {
+    "clubName": "Newcastle",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "1st tier, England",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2003,
+    "yearsAtClub": 10,
+    "appearances": 128,
+    "goals": 0,
+    "yellowCards": 0,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": null
+  },
+  {
+    "clubName": "Hull City",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "1st tier, England",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2013,
+    "yearsAtClub": 2,
+    "appearances": 23,
+    "goals": 0,
+    "yellowCards": 1,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": null
+  },
+  {
+    "clubName": "Sunderland",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "1st tier, England",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2015,
+    "yearsAtClub": 2,
+    "appearances": 0,
+    "goals": 0,
+    "yellowCards": 0,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": null
+  }
+]

@@ -41,5 +41,48 @@
       "Al-Sailiya"
     ],
     "flaggedAt": "2026-08-26T16:51:16.405Z"
+  },
+  {
+    "date": "2026-08-27",
+    "playerId": 18857,
+    "playerName": "C. Wickham",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Ipswich"
+    ],
+    "flaggedAt": "2026-08-27T16:02:56.126Z"
+  },
+  {
+    "date": "2026-08-27",
+    "playerId": 2922,
+    "playerName": "L. Dendoncker",
+    "reason": "2 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Anderlecht",
+      "Oviedo"
+    ],
+    "flaggedAt": "2026-08-27T16:03:07.159Z"
+  },
+  {
+    "date": "2026-08-27",
+    "playerId": 907,
+    "playerName": "R. Lukaku",
+    "reason": "2 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Anderlecht",
+      "Fenerbahçe"
+    ],
+    "flaggedAt": "2026-08-27T16:03:23.453Z"
+  },
+  {
+    "date": "2026-08-27",
+    "playerId": 2277,
+    "playerName": "R. Green",
+    "reason": "2 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Norwich",
+      "Chelsea"
+    ],
+    "flaggedAt": "2026-08-27T16:03:35.341Z"
   }
 ]

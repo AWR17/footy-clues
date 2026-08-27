@@ -663,7 +663,7 @@
     "id": 907,
     "name": "R. Lukaku",
     "totalPlApps": 276,
-    "used": false
+    "used": true
   },
   {
     "id": 18843,
@@ -777,7 +777,7 @@
     "id": 2277,
     "name": "R. Green",
     "totalPlApps": 267,
-    "used": false
+    "used": true
   },
   {
     "id": 50785,
@@ -2973,7 +2973,7 @@
     "id": 2922,
     "name": "L. Dendoncker",
     "totalPlApps": 148,
-    "used": false
+    "used": true
   },
   {
     "id": 18744,
@@ -4497,7 +4497,7 @@
     "id": 114760,
     "name": "Steve Harper",
     "totalPlApps": 106,
-    "used": false
+    "used": true
   },
   {
     "id": 542,
@@ -4527,7 +4527,7 @@
     "id": 18857,
     "name": "C. Wickham",
     "totalPlApps": 105,
-    "used": false
+    "used": true
   },
   {
     "id": 19281,
