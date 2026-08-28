@@ -84,5 +84,32 @@
       "Chelsea"
     ],
     "flaggedAt": "2026-08-27T16:03:35.341Z"
+  },
+  {
+    "date": "2026-08-28",
+    "playerId": 19996,
+    "playerName": "David  Meyler",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Rep. Of Ireland"
+    ],
+    "flaggedAt": "2026-08-28T17:06:55.760Z"
+  },
+  {
+    "date": "2026-08-28",
+    "playerId": 18973,
+    "playerName": "S. March",
+    "reason": "Only 1 usable stint(s) found — below minimum of 3.",
+    "flaggedAt": "2026-08-28T17:07:03.368Z"
+  },
+  {
+    "date": "2026-08-28",
+    "playerId": 19203,
+    "playerName": "A. Cole",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Arsenal"
+    ],
+    "flaggedAt": "2026-08-28T17:07:18.415Z"
   }
 ]

@@ -1,0 +1,50 @@
+[
+  {
+    "clubName": "Arsenal",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "1st tier, England",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2017,
+    "yearsAtClub": 6,
+    "appearances": 89,
+    "goals": 14,
+    "yellowCards": 6,
+    "redCards": 1,
+    "honour": null,
+    "transferFee": null
+  },
+  {
+    "clubName": "Crystal Palace",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "1st tier, England",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2023,
+    "yearsAtClub": 4,
+    "appearances": 42,
+    "goals": 5,
+    "yellowCards": 3,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": null
+  },
+  {
+    "clubName": "England",
+    "country": null,
+    "isNationalTeam": true,
+    "tierLabel": "national team",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2023,
+    "yearsAtClub": 1,
+    "appearances": 0,
+    "goals": 0,
+    "yellowCards": 0,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": null
+  }
+]
