@@ -111,5 +111,15 @@
       "Arsenal"
     ],
     "flaggedAt": "2026-08-28T17:07:18.415Z"
+  },
+  {
+    "date": "2026-08-30",
+    "playerId": 182,
+    "playerName": "H. Winks",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Cagliari"
+    ],
+    "flaggedAt": "2026-08-30T10:13:52.569Z"
   }
 ]

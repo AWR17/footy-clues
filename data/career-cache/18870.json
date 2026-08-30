@@ -1,0 +1,50 @@
+[
+  {
+    "clubName": "Sheffield Utd",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "3rd tier, England",
+    "tierUnmapped": false,
+    "tierChangeNote": "promoted",
+    "yearStart": 2015,
+    "yearsAtClub": 3,
+    "appearances": 30,
+    "goals": 3,
+    "yellowCards": 5,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": null
+  },
+  {
+    "clubName": "Wales",
+    "country": null,
+    "isNationalTeam": true,
+    "tierLabel": "national team",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2017,
+    "yearsAtClub": 8,
+    "appearances": 24,
+    "goals": 4,
+    "yellowCards": 2,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": null
+  },
+  {
+    "clubName": "Bournemouth",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "1st tier, England",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2018,
+    "yearsAtClub": 9,
+    "appearances": 130,
+    "goals": 17,
+    "yellowCards": 14,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": null
+  }
+]
