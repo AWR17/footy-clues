@@ -1,0 +1,50 @@
+[
+  {
+    "clubName": "England",
+    "country": null,
+    "isNationalTeam": true,
+    "tierLabel": "national team",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 1998,
+    "yearsAtClub": 15,
+    "appearances": 47,
+    "goals": 2,
+    "yellowCards": 4,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": null
+  },
+  {
+    "clubName": "Manchester United",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "1st tier, England",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2002,
+    "yearsAtClub": 12,
+    "appearances": 286,
+    "goals": 7,
+    "yellowCards": 19,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": "€ 46M"
+  },
+  {
+    "clubName": "QPR",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "1st tier, England",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2014,
+    "yearsAtClub": 1,
+    "appearances": 11,
+    "goals": 0,
+    "yellowCards": 2,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": "Free"
+  }
+]

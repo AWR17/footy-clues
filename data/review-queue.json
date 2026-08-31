@@ -121,5 +121,37 @@
       "Cagliari"
     ],
     "flaggedAt": "2026-08-30T10:13:52.569Z"
+  },
+  {
+    "date": "2026-08-31",
+    "playerId": 20500,
+    "playerName": "K. Henry",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Stoke City"
+    ],
+    "flaggedAt": "2026-08-31T11:18:08.090Z"
+  },
+  {
+    "date": "2026-08-31",
+    "playerId": 170,
+    "playerName": "J. Vertonghen",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Anderlecht"
+    ],
+    "flaggedAt": "2026-08-31T11:18:49.019Z"
+  },
+  {
+    "date": "2026-08-31",
+    "playerId": 114822,
+    "playerName": "Kieron  Dyer",
+    "reason": "3 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Newcastle",
+      "West Ham",
+      "Ipswich"
+    ],
+    "flaggedAt": "2026-08-31T11:19:00.715Z"
   }
 ]
