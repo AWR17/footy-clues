@@ -153,5 +153,38 @@
       "Ipswich"
     ],
     "flaggedAt": "2026-08-31T11:19:00.715Z"
+  },
+  {
+    "date": "2026-09-01",
+    "playerId": 111327,
+    "playerName": "Tal Ben Haim",
+    "reason": "3 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Bolton",
+      "Chelsea",
+      "Beitar Jerusalem"
+    ],
+    "flaggedAt": "2026-09-01T09:42:48.428Z"
+  },
+  {
+    "date": "2026-09-01",
+    "playerId": 114769,
+    "playerName": "A. Wilkinson",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Blackpool"
+    ],
+    "flaggedAt": "2026-09-01T09:42:54.087Z"
+  },
+  {
+    "date": "2026-09-01",
+    "playerId": 12753,
+    "playerName": "M. Fellaini",
+    "reason": "2 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Standard Liege",
+      "Shandong Luneng"
+    ],
+    "flaggedAt": "2026-09-01T09:43:07.860Z"
   }
 ]

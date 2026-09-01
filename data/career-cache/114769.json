@@ -1,0 +1,50 @@
+[
+  {
+    "clubName": "Stoke City",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "1st tier, England",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2005,
+    "yearsAtClub": 8,
+    "appearances": 150,
+    "goals": 0,
+    "yellowCards": 29,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": null
+  },
+  {
+    "clubName": "Blackpool",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "an unspecified league",
+    "tierUnmapped": true,
+    "tierChangeNote": null,
+    "yearStart": 2006,
+    "yearsAtClub": 1,
+    "appearances": 7,
+    "goals": 0,
+    "yellowCards": 0,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": "Loan"
+  },
+  {
+    "clubName": "Millwall",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "2nd tier, England",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2014,
+    "yearsAtClub": 1,
+    "appearances": 9,
+    "goals": 0,
+    "yellowCards": 2,
+    "redCards": 1,
+    "honour": null,
+    "transferFee": "Loan"
+  }
+]
