@@ -186,5 +186,46 @@
       "Shandong Luneng"
     ],
     "flaggedAt": "2026-09-01T09:43:07.860Z"
+  },
+  {
+    "date": "2026-09-04",
+    "playerId": 174,
+    "playerName": "C. Eriksen",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "VfL Wolfsburg"
+    ],
+    "flaggedAt": "2026-09-04T09:16:57.894Z"
+  },
+  {
+    "date": "2026-09-04",
+    "playerId": 2729,
+    "playerName": "J. Andersen",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Twente Res."
+    ],
+    "flaggedAt": "2026-09-04T09:17:09.185Z"
+  },
+  {
+    "date": "2026-09-04",
+    "playerId": 19319,
+    "playerName": "M. Olsson",
+    "reason": "2 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "BK Hacken",
+      "Malmo FF"
+    ],
+    "flaggedAt": "2026-09-04T09:17:23.356Z"
+  },
+  {
+    "date": "2026-09-04",
+    "playerId": 89051,
+    "playerName": "Z. Gera",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Ferencvarosi TC"
+    ],
+    "flaggedAt": "2026-09-04T09:17:46.689Z"
   }
 ]
