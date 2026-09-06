@@ -227,5 +227,18 @@
       "Ferencvarosi TC"
     ],
     "flaggedAt": "2026-09-04T09:17:46.689Z"
+  },
+  {
+    "date": "2026-09-06",
+    "playerId": 18816,
+    "playerName": "A. Masuaku",
+    "reason": "4 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Valenciennes",
+      "Olympiakos Piraeus",
+      "Beşiktaş",
+      "Konyaspor"
+    ],
+    "flaggedAt": "2026-09-06T09:07:02.857Z"
   }
 ]
