@@ -351,7 +351,7 @@
     "id": 114819,
     "name": "J. Carragher",
     "totalPlApps": 316,
-    "used": false
+    "used": true
   },
   {
     "id": 289,
@@ -1287,7 +1287,7 @@
     "id": 90493,
     "name": "Yaya Touré",
     "totalPlApps": 230,
-    "used": false
+    "used": true
   },
   {
     "id": 874,
@@ -2211,7 +2211,7 @@
     "id": 2289,
     "name": "Jorginho",
     "totalPlApps": 178,
-    "used": false
+    "used": true
   },
   {
     "id": 176,
@@ -2523,7 +2523,7 @@
     "id": 978,
     "name": "K. Havertz",
     "totalPlApps": 164,
-    "used": false
+    "used": true
   },
   {
     "id": 1439,
@@ -3273,7 +3273,7 @@
     "id": 19303,
     "name": "Benjamin Watson",
     "totalPlApps": 139,
-    "used": false
+    "used": true
   },
   {
     "id": 284,

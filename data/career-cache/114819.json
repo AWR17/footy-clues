@@ -1,0 +1,34 @@
+[
+  {
+    "clubName": "England",
+    "country": null,
+    "isNationalTeam": true,
+    "tierLabel": "national team",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 1999,
+    "yearsAtClub": 11,
+    "appearances": 22,
+    "goals": 0,
+    "yellowCards": 4,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": null
+  },
+  {
+    "clubName": "Liverpool",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "1st tier, England",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2002,
+    "yearsAtClub": 12,
+    "appearances": 317,
+    "goals": 1,
+    "yellowCards": 39,
+    "redCards": 1,
+    "honour": null,
+    "transferFee": null
+  }
+]

@@ -240,5 +240,45 @@
       "Konyaspor"
     ],
     "flaggedAt": "2026-09-06T09:07:02.857Z"
+  },
+  {
+    "date": "2026-09-08",
+    "playerId": 114819,
+    "playerName": "J. Carragher",
+    "reason": "Only 2 usable stint(s) found — below minimum of 3.",
+    "flaggedAt": "2026-09-08T09:18:51.457Z"
+  },
+  {
+    "date": "2026-09-08",
+    "playerId": 90493,
+    "playerName": "Yaya Touré",
+    "reason": "3 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Olympiakos Piraeus",
+      "Monaco",
+      "Barcelona"
+    ],
+    "flaggedAt": "2026-09-08T09:19:03.351Z"
+  },
+  {
+    "date": "2026-09-08",
+    "playerId": 2289,
+    "playerName": "Jorginho",
+    "reason": "2 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Hellas Verona",
+      "Flamengo"
+    ],
+    "flaggedAt": "2026-09-08T09:19:14.394Z"
+  },
+  {
+    "date": "2026-09-08",
+    "playerId": 19303,
+    "playerName": "Benjamin Watson",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Crystal Palace"
+    ],
+    "flaggedAt": "2026-09-08T09:19:23.886Z"
   }
 ]
