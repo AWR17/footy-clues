@@ -312,5 +312,31 @@
       "AIK Stockholm"
     ],
     "flaggedAt": "2026-09-12T08:59:02.328Z"
+  },
+  {
+    "date": "2026-09-14",
+    "playerId": 1460,
+    "playerName": "B. Saka",
+    "reason": "Only 2 usable stint(s) found — below minimum of 3.",
+    "flaggedAt": "2026-09-14T10:16:16.420Z"
+  },
+  {
+    "date": "2026-09-14",
+    "playerId": 114755,
+    "playerName": "Tony Hibbert",
+    "reason": "Only 1 usable stint(s) found — below minimum of 3.",
+    "flaggedAt": "2026-09-14T10:16:23.409Z"
+  },
+  {
+    "date": "2026-09-14",
+    "playerId": 633,
+    "playerName": "İ. Gündoğan",
+    "reason": "3 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "1. FC Nürnberg",
+      "Manchester City",
+      "Galatasaray"
+    ],
+    "flaggedAt": "2026-09-14T10:16:44.369Z"
   }
 ]

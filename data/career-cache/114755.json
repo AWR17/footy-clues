@@ -1,0 +1,18 @@
+[
+  {
+    "clubName": "Everton",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "1st tier, England",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2003,
+    "yearsAtClub": 14,
+    "appearances": 227,
+    "goals": 0,
+    "yellowCards": 32,
+    "redCards": 1,
+    "honour": null,
+    "transferFee": null
+  }
+]
