@@ -338,5 +338,36 @@
       "Galatasaray"
     ],
     "flaggedAt": "2026-09-14T10:16:44.369Z"
+  },
+  {
+    "date": "2026-09-15",
+    "playerId": 115955,
+    "playerName": "Robert  Pirès",
+    "reason": "2 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Arsenal",
+      "Villarreal"
+    ],
+    "flaggedAt": "2026-09-15T09:44:39.555Z"
+  },
+  {
+    "date": "2026-09-15",
+    "playerId": 18873,
+    "playerName": "R. Fraser",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Western Sydney Wanderers"
+    ],
+    "flaggedAt": "2026-09-15T09:44:51.503Z"
+  },
+  {
+    "date": "2026-09-15",
+    "playerId": 2677,
+    "playerName": "João Moutinho",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Sporting CP"
+    ],
+    "flaggedAt": "2026-09-15T09:45:12.608Z"
   }
 ]
