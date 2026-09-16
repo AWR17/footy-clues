@@ -237,7 +237,7 @@
     "id": 164,
     "name": "B. Davies",
     "totalPlApps": 336,
-    "used": false
+    "used": true
   },
   {
     "id": 174,
@@ -2895,7 +2895,7 @@
     "id": 30412,
     "name": "Kevin Mirallas",
     "totalPlApps": 151,
-    "used": false
+    "used": true
   },
   {
     "id": 138780,
@@ -3117,7 +3117,7 @@
     "id": 17828,
     "name": "D. Collins",
     "totalPlApps": 144,
-    "used": false
+    "used": true
   },
   {
     "id": 18878,

@@ -369,5 +369,28 @@
       "Sporting CP"
     ],
     "flaggedAt": "2026-09-15T09:45:12.608Z"
+  },
+  {
+    "date": "2026-09-16",
+    "playerId": 17828,
+    "playerName": "D. Collins",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Sunderland"
+    ],
+    "flaggedAt": "2026-09-16T09:38:22.106Z"
+  },
+  {
+    "date": "2026-09-16",
+    "playerId": 30412,
+    "playerName": "Kevin Mirallas",
+    "reason": "4 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Lille",
+      "Saint Etienne",
+      "Antwerp",
+      "AEL"
+    ],
+    "flaggedAt": "2026-09-16T09:38:33.490Z"
   }
 ]
