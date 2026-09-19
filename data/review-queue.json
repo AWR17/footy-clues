@@ -392,5 +392,27 @@
       "AEL"
     ],
     "flaggedAt": "2026-09-16T09:38:33.490Z"
+  },
+  {
+    "date": "2026-09-19",
+    "playerId": 18970,
+    "playerName": "P. Groß",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "1899 Hoffenheim"
+    ],
+    "flaggedAt": "2026-09-19T09:08:04.584Z"
+  },
+  {
+    "date": "2026-09-19",
+    "playerId": 18740,
+    "playerName": "Jonny",
+    "reason": "3 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Wolves",
+      "PAOK",
+      "Alaves"
+    ],
+    "flaggedAt": "2026-09-19T09:08:13.507Z"
   }
 ]
