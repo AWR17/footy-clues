@@ -1,0 +1,50 @@
+[
+  {
+    "clubName": "Sheffield Utd",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "an unspecified league",
+    "tierUnmapped": true,
+    "tierChangeNote": null,
+    "yearStart": 2008,
+    "yearsAtClub": 1,
+    "appearances": 43,
+    "goals": 1,
+    "yellowCards": 4,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": null
+  },
+  {
+    "clubName": "Tottenham",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "1st tier, England",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2009,
+    "yearsAtClub": 5,
+    "appearances": 37,
+    "goals": 0,
+    "yellowCards": 6,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": "€ 5.9M"
+  },
+  {
+    "clubName": "Swansea",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "1st tier, England",
+    "tierUnmapped": false,
+    "tierChangeNote": "relegated",
+    "yearStart": 2014,
+    "yearsAtClub": 11,
+    "appearances": 304,
+    "goals": 5,
+    "yellowCards": 29,
+    "redCards": 2,
+    "honour": null,
+    "transferFee": null
+  }
+]
