@@ -456,5 +456,47 @@
       "Leyton Orient"
     ],
     "flaggedAt": "2026-09-21T10:22:10.478Z"
+  },
+  {
+    "date": "2026-09-22",
+    "playerId": 19128,
+    "playerName": "J. Harrison",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Fiorentina"
+    ],
+    "flaggedAt": "2026-09-22T09:35:55.247Z"
+  },
+  {
+    "date": "2026-09-22",
+    "playerId": 19513,
+    "playerName": "S. Vokes",
+    "reason": "2 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Bournemouth",
+      "Gillingham"
+    ],
+    "flaggedAt": "2026-09-22T09:36:09.878Z"
+  },
+  {
+    "date": "2026-09-22",
+    "playerId": 19128,
+    "playerName": "J. Harrison",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Fiorentina"
+    ],
+    "flaggedAt": "2026-09-22T09:36:09.879Z"
+  },
+  {
+    "date": "2026-09-22",
+    "playerId": 115954,
+    "playerName": "D. Bentley",
+    "reason": "2 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Arsenal",
+      "Norwich"
+    ],
+    "flaggedAt": "2026-09-22T09:36:17.180Z"
   }
 ]

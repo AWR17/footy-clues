@@ -2007,7 +2007,7 @@
     "id": 18814,
     "name": "I. Diop",
     "totalPlApps": 186,
-    "used": false
+    "used": true
   },
   {
     "id": 18900,
@@ -2109,13 +2109,13 @@
     "id": 115954,
     "name": "D. Bentley",
     "totalPlApps": 182,
-    "used": false
+    "used": true
   },
   {
     "id": 19128,
     "name": "J. Harrison",
     "totalPlApps": 181,
-    "used": false
+    "used": true
   },
   {
     "id": 19698,
@@ -4335,7 +4335,7 @@
     "id": 19513,
     "name": "S. Vokes",
     "totalPlApps": 109,
-    "used": false
+    "used": true
   },
   {
     "id": 114900,
