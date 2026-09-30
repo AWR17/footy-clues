@@ -16,6 +16,7 @@ const crypto = require("crypto");
 
 const { getPlayerTeams, getPlayerSeasonStats, getPlayerSeasonAnyTeamLeague, getPlayerProfile, getPlayerTransfers, getPlayerTrophies, sleep } = require("../lib/api-football");
 const { tierFor, MANUAL_STINTS } = require("../lib/league-tiers");
+const { looksAbbreviated, buildFullName } = require("../lib/name-normalize");
 
 const POOL_PATH = path.join(__dirname, "../data/player-pool.json");
 const CACHE_DIR = path.join(__dirname, "../data/career-cache");
@@ -25,7 +26,23 @@ const PLAYERS_INDEX_PATH = path.join(__dirname, "../public/players-index.json");
 
 const REQUEST_PAUSE_MS = 300;
 const MIN_STINTS_TO_PUBLISH = 3;
-const MAX_THEME_ATTEMPTS = 5;
+
+// How many candidates findCandidateForToday() will draw and validate before
+// giving up. This budget covers TWO different jobs at once:
+//   1. Finding any candidate that's actually valid (enough usable stints,
+//      no unmapped league tier in the selected clues).
+//   2. Within that, preferring one that also matches the day's theme.
+// It used to be 5, tuned only with (2) in mind. But (1) alone can eat the
+// whole budget on a bad day — lib/league-tiers.js currently only covers a
+// dozen top-flight leagues, so a large share of draws get rejected purely
+// for an unmapped tier (see data/review-queue.json), independent of theme
+// matching. 5 straight rejections isn't rare enough to treat as "should
+// never happen", and when it does the job errors out and no puzzle gets
+// published at all (2026-09-20 was the first time this actually happened).
+// 20 gives (1) much more room before (2) even comes into play, without
+// meaningfully slowing the job down (each rejected candidate is normally
+// already cached from a previous day's attempt).
+const MAX_CANDIDATE_ATTEMPTS = 20;
 
 const THEME_DAYS = {
   1: {
@@ -88,7 +105,7 @@ function isYouthOrReserveTeam(teamName) {
 function normalizeClubKey(name) {
   if (!name) return "";
   const key = name
-    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .normalize("NFD").replace(/[̀-ͯ]/g, "")
     .toLowerCase()
     .replace(/[.]/g, "")
     .trim();
@@ -361,7 +378,7 @@ function formatClue(stint, order, isFinal) {
     stint.honour || null,
     stint.transferFee ? `signed for ${stint.transferFee}` : null,
     noteText || null,
-  ].filter(Boolean).join(" \u00b7 ");
+  ].filter(Boolean).join(" · ");
 
   return {
     order,
@@ -378,7 +395,7 @@ function formatClue(stint, order, isFinal) {
     honour: stint.honour || null,
     transferFee: stint.transferFee || null,
     note: stint.tierChangeNote || null,
-    text: `${stint.yearStart} \u00b7 joined ${isFinal ? stint.clubName : `a club in ${stint.tierLabel}`} \u00b7 ${stint.yearsAtClub} year(s) there \u00b7 ${stint.goals} goals in ${stint.appearances} appearances${extraText ? ` \u00b7 ${extraText}` : ""}`,
+    text: `${stint.yearStart} · joined ${isFinal ? stint.clubName : `a club in ${stint.tierLabel}`} · ${stint.yearsAtClub} year(s) there · ${stint.goals} goals in ${stint.appearances} appearances${extraText ? ` · ${extraText}` : ""}`,
   };
 }
 
@@ -394,11 +411,41 @@ async function findCandidateForToday(pool, date) {
 
   let fallback = null;
   const rejectedIds = [];
+  // Candidates already drawn THIS run (whether rejected, API-failed, or
+  // just seen). pickTodaysPlayer's hash-per-suffix scheme doesn't
+  // guarantee a different candidate on every attempt — two different
+  // suffixes can land on the same index — so without this, the same
+  // candidate can get redrawn and re-processed, wasting an attempt slot,
+  // an API call, and (for a rejected candidate) a duplicate review-queue
+  // entry. Confirmed happening in production on 2026-09-22 (J. Harrison
+  // flagged twice, 14 seconds apart, same day).
+  const triedIds = new Set();
 
-  for (let attempt = 0; attempt < MAX_THEME_ATTEMPTS; attempt++) {
+  for (let attempt = 0; attempt < MAX_CANDIDATE_ATTEMPTS; attempt++) {
     const suffix = attempt === 0 ? "" : `-alt${attempt}`;
     const candidate = pickTodaysPlayer(pool, date, suffix);
-    const stints = await getCareerHistory(candidate.id);
+
+    if (triedIds.has(candidate.id)) {
+      continue; // same candidate as an earlier attempt this run — skip re-fetching
+    }
+    triedIds.add(candidate.id);
+
+    let stints;
+    try {
+      stints = await getCareerHistory(candidate.id);
+    } catch (err) {
+      // A single candidate's API failure (rate limit, timeout, malformed
+      // response — anything) used to propagate all the way up and abort
+      // the ENTIRE day's job, even with other valid candidates untried in
+      // the pool. Treat it like any other "try the next candidate" case —
+      // but, unlike a genuine data-quality rejection (too few stints,
+      // unmapped tier), do NOT add it to rejectedIds: those get
+      // permanently marked `used` in the pool, and a transient network
+      // blip isn't a real reason to retire a player from the game forever.
+      // It'll simply be eligible to be drawn again another day.
+      console.warn(`[daily-puzzle] career history lookup failed for ${candidate.name} (id ${candidate.id}): ${err.message} — skipping this candidate for today.`);
+      continue;
+    }
 
     if (stints.length < MIN_STINTS_TO_PUBLISH) {
       flagForReview({
@@ -433,11 +480,11 @@ async function findCandidateForToday(pool, date) {
   }
 
   if (fallback) {
-    console.warn(`[daily-puzzle] no theme match found for ${date} after ${MAX_THEME_ATTEMPTS} attempts — publishing without a theme.`);
+    console.warn(`[daily-puzzle] no theme match found for ${date} after ${MAX_CANDIDATE_ATTEMPTS} attempts — publishing without a theme.`);
     return { ...fallback, theme: null, rejectedIds };
   }
 
-  throw new Error(`No usable candidate found for ${date} after ${MAX_THEME_ATTEMPTS} attempts.`);
+  throw new Error(`No usable candidate found for ${date} after ${MAX_CANDIDATE_ATTEMPTS} attempts.`);
 }
 
 function writePlayersIndex(pool) {
@@ -471,10 +518,11 @@ async function run(dateArg) {
     const profile = await getPlayerProfile(candidate.id, lastKnownSeason);
     if (profile.nationality || profile.position) hint = profile;
 
-    const looksAbbreviated = /^[A-Z]\.\s?[A-Z]/.test(candidate.name);
-    if (looksAbbreviated && profile.firstname && profile.lastname) {
-      const firstGivenName = profile.firstname.trim().split(/\s+/)[0];
-      displayName = `${firstGivenName} ${profile.lastname}`.trim();
+    // Pool names are normalized to "Firstname Lastname" at build time now
+    // (see build-player-pool.js / normalize-player-names.js), so this is
+    // normally a no-op — kept as a safety net for any straggler entry.
+    if (looksAbbreviated(candidate.name)) {
+      displayName = buildFullName(profile, candidate.name);
     }
   } catch (err) {
     console.warn(`[daily-puzzle] hint profile lookup failed for ${candidate.name}: ${err.message}`);

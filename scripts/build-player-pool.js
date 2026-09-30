@@ -13,12 +13,13 @@
 
 const fs = require("fs");
 const path = require("path");
-const { getPlayersForSeason, sleep } = require("../lib/api-football");
+const { getPlayersForSeason, getPlayerProfile, sleep } = require("../lib/api-football");
+const { looksAbbreviated, buildFullName } = require("../lib/name-normalize");
 
 const PL_LEAGUE_ID = 39;
 const START_SEASON = 1992;
 const CURRENT_SEASON = new Date().getFullYear();
-const MIN_PL_APPEARANCES = 100; // raised from 50 — a higher bar filters toward more established players, who are statistically more likely to have a well-documented career throughout (not just their PL years), reducing how often obscure early-career clubs hit data gaps like "unspecified league"
+const MIN_PL_APPEARANCES = 100;
 // Pause between requests, tuned to your API-Football plan's per-minute
 // rate limit (not the daily cap — a separate, faster-refilling limit).
 // Official limits: Free = 10/min, Pro = 300/min (5/sec), Ultra = 450/min,
@@ -28,6 +29,28 @@ const MIN_PL_APPEARANCES = 100; // raised from 50 — a higher bar filters towar
 const REQUEST_PAUSE_MS = 300;
 
 const OUTPUT_PATH = path.join(__dirname, "../data/player-pool.json");
+
+function loadExistingPool() {
+  if (!fs.existsSync(OUTPUT_PATH)) return new Map();
+  const existing = JSON.parse(fs.readFileSync(OUTPUT_PATH, "utf8"));
+  return new Map(existing.map((p) => [p.id, p]));
+}
+
+// Normalizes a newly-built pool entry's display name to "Firstname Lastname"
+// via a profile lookup — but only when the raw API name actually looks
+// abbreviated ("K. Tierney"), to avoid spending an extra API call on the
+// (majority of) names that are already in the target format.
+async function normalizeName(id, rawName) {
+  if (!looksAbbreviated(rawName)) return rawName;
+
+  try {
+    const profile = await getPlayerProfile(id, CURRENT_SEASON);
+    return buildFullName(profile, rawName);
+  } catch (err) {
+    console.warn(`[build-pool] name-normalize lookup failed for ${rawName} (id ${id}): ${err.message} — keeping original name.`);
+    return rawName;
+  }
+}
 
 async function buildPool() {
   const totals = {}; // playerId -> { name, totalApps }
@@ -50,12 +73,12 @@ async function buildPool() {
           totals[id].totalApps += apps;
         }
 
-        more = resp.length === 20; // API-Football pages at 20 results/page
+        more = resp.length === 20;
         page++;
       } catch (err) {
         console.error(`[build-pool] failed season ${season} page ${page}: ${err.message}`);
         failures.push({ season, page, error: err.message });
-        more = false; // move on to next season rather than looping forever
+        more = false;
       }
 
       await sleep(REQUEST_PAUSE_MS);
@@ -64,20 +87,38 @@ async function buildPool() {
     console.log(`[build-pool] finished season ${season}, players so far: ${Object.keys(totals).length}`);
   }
 
-  const pool = Object.entries(totals)
-    .filter(([, v]) => v.totalApps >= MIN_PL_APPEARANCES)
-    .map(([id, v]) => ({
-      id: Number(id),
-      name: v.name,
+  // Preserve `used` state (and any already-normalized name) for players
+  // already in the pool from a previous run — this script used to
+  // unconditionally set `used: false` for everyone on every re-run, which
+  // would silently wipe out the daily job's tracking of which players have
+  // already been featured, causing already-published players to reappear.
+  const existingPool = loadExistingPool();
+
+  const eligible = Object.entries(totals).filter(([, v]) => v.totalApps >= MIN_PL_APPEARANCES);
+
+  const pool = [];
+  for (const [id, v] of eligible) {
+    const numericId = Number(id);
+    const existing = existingPool.get(numericId);
+
+    const name = existing?.name ?? (await normalizeName(numericId, v.name));
+    await sleep(REQUEST_PAUSE_MS);
+
+    pool.push({
+      id: numericId,
+      name,
       totalPlApps: v.totalApps,
-      used: false,
-    }))
-    .sort((a, b) => b.totalPlApps - a.totalPlApps);
+      used: existing?.used ?? false,
+    });
+  }
+
+  pool.sort((a, b) => b.totalPlApps - a.totalPlApps);
 
   fs.mkdirSync(path.dirname(OUTPUT_PATH), { recursive: true });
   fs.writeFileSync(OUTPUT_PATH, JSON.stringify(pool, null, 2));
 
-  console.log(`[build-pool] wrote ${pool.length} eligible players to ${OUTPUT_PATH}`);
+  const newCount = pool.filter((p) => !existingPool.has(p.id)).length;
+  console.log(`[build-pool] wrote ${pool.length} eligible players to ${OUTPUT_PATH} (${newCount} new, ${pool.length - newCount} carried over with existing used/name state).`);
   if (failures.length) {
     console.warn(`[build-pool] ${failures.length} season/page requests failed — review and re-run if needed.`);
   }
