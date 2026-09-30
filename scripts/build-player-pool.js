@@ -14,7 +14,7 @@
 const fs = require("fs");
 const path = require("path");
 const { getPlayersForSeason, getPlayerProfile, sleep } = require("../lib/api-football");
-const { looksAbbreviated, buildFullName } = require("../lib/name-normalize");
+const { looksAbbreviated, findFullName } = require("../lib/name-normalize");
 
 const PL_LEAGUE_ID = 39;
 const START_SEASON = 1992;
@@ -39,17 +39,21 @@ function loadExistingPool() {
 // Normalizes a newly-built pool entry's display name to "Firstname Lastname"
 // via a profile lookup — but only when the raw API name actually looks
 // abbreviated ("K. Tierney"), to avoid spending an extra API call on the
-// (majority of) names that are already in the target format.
+// (majority of) names that are already in the target format. Tries several
+// recent seasons (not just the current one), since API-Football only
+// returns a profile for a season the player actually has stats in — a
+// newly-eligible player added by THIS run is likely still active, so this
+// mostly matters for anyone whose eligibility only became apparent after
+// their career had already wound down.
 async function normalizeName(id, rawName) {
   if (!looksAbbreviated(rawName)) return rawName;
 
-  try {
-    const profile = await getPlayerProfile(id, CURRENT_SEASON);
-    return buildFullName(profile, rawName);
-  } catch (err) {
-    console.warn(`[build-pool] name-normalize lookup failed for ${rawName} (id ${id}): ${err.message} — keeping original name.`);
-    return rawName;
-  }
+  return findFullName(id, rawName, {
+    getPlayerProfile,
+    sleep,
+    requestPauseMs: REQUEST_PAUSE_MS,
+    startSeason: CURRENT_SEASON,
+  });
 }
 
 async function buildPool() {
@@ -102,7 +106,6 @@ async function buildPool() {
     const existing = existingPool.get(numericId);
 
     const name = existing?.name ?? (await normalizeName(numericId, v.name));
-    await sleep(REQUEST_PAUSE_MS);
 
     pool.push({
       id: numericId,

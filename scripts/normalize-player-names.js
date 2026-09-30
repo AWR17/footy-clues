@@ -12,21 +12,30 @@
 // by future build-player-pool.js runs are normalized automatically going
 // forward — this script does not need to be re-run for those.
 //
-// Only makes an API call for names that actually look abbreviated, to
-// avoid spending calls on the names that are already in the target format
-// (roughly a third of the current ~800-player pool).
+// Only makes API calls for names that actually look abbreviated, to avoid
+// spending calls on the names that are already in the target format
+// (roughly a third of the current ~800-player pool). For each one, tries
+// several recent seasons (not just the current one) before giving up —
+// API-Football only returns a profile for a season the player actually
+// has registered stats in, so a single current-season lookup silently
+// misses anyone who's retired or winding down. See lib/name-normalize.js
+// for why this matters (confirmed in production: the players a
+// single-season lookup missed were consistently long-serving veterans,
+// not a random sample).
+//
+// Safe to re-run: it only ever looks up names that still look abbreviated,
+// so a second run just picks up whatever the first one couldn't resolve.
 //
 // Usage: API_FOOTBALL_KEY=xxx node scripts/normalize-player-names.js
 
 const fs = require("fs");
 const path = require("path");
 const { getPlayerProfile, sleep } = require("../lib/api-football");
-const { looksAbbreviated, buildFullName } = require("../lib/name-normalize");
+const { looksAbbreviated, findFullName } = require("../lib/name-normalize");
 
 const POOL_PATH = path.join(__dirname, "../data/player-pool.json");
 const PLAYERS_INDEX_PATH = path.join(__dirname, "../public/players-index.json");
 const REQUEST_PAUSE_MS = 300;
-const CURRENT_SEASON = new Date().getFullYear();
 
 function loadJSON(filePath, fallback) {
   if (!fs.existsSync(filePath)) return fallback;
@@ -45,34 +54,33 @@ async function normalizeNames() {
   }
 
   const toFix = pool.filter((p) => looksAbbreviated(p.name));
-  console.log(`[normalize-names] ${toFix.length} of ${pool.length} players look abbreviated and will be looked up. The rest are left untouched.`);
+  console.log(`[normalize-names] ${toFix.length} of ${pool.length} players look abbreviated and will be looked up (trying multiple seasons each). The rest are left untouched.`);
 
   let changed = 0;
-  let failed = 0;
+  let stillUnresolved = 0;
   let processed = 0;
 
   for (let i = 0; i < pool.length; i++) {
     const player = pool[i];
     if (!looksAbbreviated(player.name)) continue;
 
-    try {
-      const profile = await getPlayerProfile(player.id, CURRENT_SEASON);
-      const fullName = buildFullName(profile, player.name);
+    const fullName = await findFullName(player.id, player.name, {
+      getPlayerProfile,
+      sleep,
+      requestPauseMs: REQUEST_PAUSE_MS,
+    });
 
-      if (fullName !== player.name) {
-        console.log(`[normalize-names] ${player.name} -> ${fullName}`);
-        pool[i] = { ...player, name: fullName };
-        changed++;
-      }
-    } catch (err) {
-      console.warn(`[normalize-names] lookup failed for ${player.name} (id ${player.id}): ${err.message} — keeping original name.`);
-      failed++;
+    if (fullName !== player.name) {
+      console.log(`[normalize-names] ${player.name} -> ${fullName}`);
+      pool[i] = { ...player, name: fullName };
+      changed++;
+    } else {
+      console.warn(`[normalize-names] no usable profile found across the lookback window for ${player.name} (id ${player.id}) — keeping original name.`);
+      stillUnresolved++;
     }
 
     processed++;
-    await sleep(REQUEST_PAUSE_MS);
-
-    if (processed % 50 === 0) {
+    if (processed % 20 === 0) {
       console.log(`[normalize-names] progress: ${processed}/${toFix.length}`);
     }
   }
@@ -85,7 +93,7 @@ async function normalizeNames() {
   const index = pool.map((p) => ({ id: p.id, name: p.name }));
   saveJSON(PLAYERS_INDEX_PATH, index);
 
-  console.log(`[normalize-names] done. Changed: ${changed}, failed lookups (kept original): ${failed}, already fine: ${pool.length - toFix.length}.`);
+  console.log(`[normalize-names] done. Changed: ${changed}, still unresolved (kept original): ${stillUnresolved}, already fine: ${pool.length - toFix.length}.`);
 }
 
 normalizeNames().catch((err) => {
