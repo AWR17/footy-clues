@@ -498,5 +498,59 @@
       "Norwich"
     ],
     "flaggedAt": "2026-09-22T09:36:17.180Z"
+  },
+  {
+    "date": "2026-10-01",
+    "playerId": 19696,
+    "playerName": "Andrew Taylor",
+    "reason": "2 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Middlesbrough",
+      "Watford"
+    ],
+    "flaggedAt": "2026-10-01T11:18:31.239Z"
+  },
+  {
+    "date": "2026-10-01",
+    "playerId": 231000,
+    "playerName": "Darius Vassell",
+    "reason": "3 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Aston Villa",
+      "Manchester City",
+      "Ankaragücü"
+    ],
+    "flaggedAt": "2026-10-01T11:18:38.952Z"
+  },
+  {
+    "date": "2026-10-01",
+    "playerId": 114839,
+    "playerName": "Paul Scharner",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Wigan"
+    ],
+    "flaggedAt": "2026-10-01T11:18:47.480Z"
+  },
+  {
+    "date": "2026-10-01",
+    "playerId": 283,
+    "playerName": "Trent Alexander-Arnold",
+    "reason": "1 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Real Madrid"
+    ],
+    "flaggedAt": "2026-10-01T11:18:56.829Z"
+  },
+  {
+    "date": "2026-10-01",
+    "playerId": 2999,
+    "playerName": "Jan Bednarek",
+    "reason": "2 of the selected clue stint(s) have an unmapped league tier — would show as \"unspecified league.\" Consider adding to lib/league-tiers.js, or this player will keep getting skipped.",
+    "clubs": [
+      "Górnik Łęczna",
+      "FC Porto"
+    ],
+    "flaggedAt": "2026-10-01T11:19:07.800Z"
   }
 ]
