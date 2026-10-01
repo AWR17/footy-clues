@@ -7,27 +7,21 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%BD%3C/text%3E%3C/svg%3E" />
 <title>The Scouting Report — Daily Football Guessing Game</title>
 
-<!--
-  IMPORTANT: replace "https://example.com" below with your real deployed
-  domain once you have one. Social platforms (and Google) read these
-  values from the raw HTML without running JavaScript, so they must be
-  static here — they can't be generated per-puzzle client-side.
--->
 <meta name="description" content="Guess the mystery Premier League footballer from five career-path clues. One puzzle a day, since 1992. No login, no ads (yet) — just football knowledge." />
-<link rel="canonical" href="https://example.com/" />
+<link rel="canonical" href="https://footyclues.netlify.app/" />
 
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://example.com/" />
+<meta property="og:url" content="https://footyclues.netlify.app/" />
 <meta property="og:title" content="The Scouting Report — Daily Football Guessing Game" />
 <meta property="og:description" content="Guess the mystery Premier League footballer from five career-path clues. One puzzle a day, since 1992." />
-<meta property="og:image" content="https://example.com/og-image.png" />
+<meta property="og:image" content="https://footyclues.netlify.app/og-image.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="The Scouting Report — Daily Football Guessing Game" />
 <meta name="twitter:description" content="Guess the mystery Premier League footballer from five career-path clues. One puzzle a day, since 1992." />
-<meta name="twitter:image" content="https://example.com/og-image.png" />
+<meta name="twitter:image" content="https://footyclues.netlify.app/og-image.png" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -129,6 +123,7 @@
 
   .icon-toggle-left { left: 0; }
   .icon-toggle-right { right: 0; }
+  .icon-toggle-left-2 { left: 0; top: 36px; }
 
   .header-meta {
     display: flex;
@@ -313,6 +308,16 @@
     margin-top: 8px;
   }
 
+  .auto-hint {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    font-style: italic;
+  }
+
+  .auto-hint:empty {
+    display: none;
+  }
+
   .kicker {
     font-family: 'Oswald', sans-serif;
     font-weight: 600;
@@ -399,6 +404,39 @@
 
   .club-mode-toggle:active {
     opacity: 0.8;
+  }
+
+  .mode-caption {
+    font-size: 10px;
+    color: var(--ink-soft);
+    text-align: right;
+    margin: -6px 0 10px;
+    opacity: 0.75;
+  }
+
+  .clue-progress {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+
+  .progress-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--chip-bg);
+    border: 1.5px solid var(--line);
+  }
+
+  .progress-dot.dot-current {
+    background: var(--floodlight);
+    border-color: var(--floodlight);
+  }
+
+  .progress-dot.dot-done {
+    background: var(--turf);
+    border-color: var(--turf);
   }
 
   .dossier-inner {
@@ -620,6 +658,29 @@
     text-align: right;
   }
 
+  .tried-list {
+    display: none;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+
+  .tried-label {
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  .tried-chip {
+    background: var(--chip-bg);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 2px 8px;
+    text-decoration: line-through;
+    opacity: 0.85;
+  }
+
   .result-trigger {
     margin-top: 20px;
   }
@@ -707,6 +768,80 @@
     color: var(--ink);
   }
 
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0 6px;
+  }
+
+  .stat-block {
+    background: var(--chip-bg);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 10px 12px;
+    text-align: center;
+  }
+
+  .stat-block-value {
+    font-family: 'Oswald', sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    color: var(--floodlight);
+    display: block;
+  }
+
+  .stat-block-label {
+    font-size: 9.5px;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .stats-subtitle {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin: 20px 0 6px;
+    color: var(--floodlight);
+  }
+
+  .stats-hint {
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    line-height: 1.45;
+    margin: 0 0 10px;
+  }
+
+  .stats-code-box {
+    width: 100%;
+    box-sizing: border-box;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 8px;
+    border: 1.5px solid var(--ink);
+    border-radius: 3px;
+    background: var(--chip-fill);
+    color: var(--chip-ink);
+    resize: vertical;
+    min-height: 48px;
+    margin: 8px 0;
+  }
+
+  .stats-import-feedback {
+    font-size: 11px;
+    min-height: 14px;
+    margin: 6px 0 4px;
+  }
+
+  .stats-import-feedback.ok { color: var(--turf); }
+  .stats-import-feedback.err { color: var(--wrong); }
+
+  .stats-share-btn {
+    margin-top: 18px;
+  }
+
   .result-score {
     font-family: 'Oswald', sans-serif;
     font-size: 40px;
@@ -720,6 +855,23 @@
     display: block;
     color: var(--paper-dark);
     letter-spacing: 0.1em;
+  }
+
+  .result-meta {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 6px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--paper-dark);
+    flex-wrap: wrap;
+  }
+
+  .result-streak {
+    color: var(--floodlight);
   }
 
   .path {
@@ -736,18 +888,12 @@
     color: var(--ink);
   }
 
-  .share-grid {
-    text-align: center;
-    font-size: 20px;
-    letter-spacing: 4px;
-    margin: 12px 0;
-  }
 
   .share-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 8px;
-    margin-top: 14px;
+    margin-top: 8px;
   }
 
   .share-btn {
@@ -760,6 +906,19 @@
     margin-top: 8px;
     background: transparent;
     color: var(--ink);
+    border-color: var(--line);
+    font-size: 11px;
+  }
+
+  .share-native.share-primary {
+    margin-top: 14px;
+    font-size: 13px;
+    padding: 12px;
+  }
+
+  .share-row .share-btn {
+    font-size: 10.5px;
+    padding: 9px 6px;
   }
 
   .share-native { background: var(--ink); color: var(--paper); border-color: var(--ink); }
@@ -794,6 +953,21 @@
     opacity: 0.7;
   }
 
+  .footer-links {
+    margin-top: 8px;
+  }
+
+  .footer-links a {
+    color: var(--paper-dark);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .footer-links span {
+    margin: 0 6px;
+    opacity: 0.6;
+  }
+
   /* Narrow phones (e.g. iPhone SE, small Android) — tighten the tightest spots */
   @media (max-width: 380px) {
     .wrap { padding-left: 12px; padding-right: 12px; }
@@ -824,9 +998,11 @@
 <div class="wrap">
   <header>
     <button class="icon-toggle icon-toggle-left" id="helpToggle" aria-label="How to play">?</button>
+    <button class="icon-toggle icon-toggle-left-2" id="statsToggle" aria-label="View stats">📊</button>
     <button class="icon-toggle icon-toggle-right" id="themeToggle" aria-label="Toggle theme">☾</button>
     <div class="kicker">Daily Case File</div>
     <h1>The Scouting Report</h1>
+    <div class="subhead" id="dateSubhead"></div>
     <div class="header-meta" id="headerMeta"></div>
   </header>
 
@@ -851,6 +1027,7 @@
         <span class="file-no" id="fileNo">#000</span>
       </div>
 
+      <div class="clue-progress" id="clueProgress"></div>
       <div id="cluesList"></div>
       <div class="locked" id="lockedNotice"></div>
 
@@ -858,6 +1035,7 @@
         <div class="mode-row">
           <button class="club-mode-toggle" id="clubModeToggle">Clubs: Shown</button>
         </div>
+        <div class="mode-caption">Hide club names for an extra challenge</div>
         <div class="guess-row">
           <div class="guess-wrap">
             <input type="text" id="guessInput" placeholder="Name the player…" autocomplete="off" />
@@ -871,6 +1049,8 @@
           <button class="btn-hint" id="hintBtn">Reveal hint (−15 pts)</button>
         </div>
         <div class="hint-text" id="hintText"></div>
+        <div class="auto-hint" id="autoHintText"></div>
+        <div class="tried-list" id="triedList"></div>
         <div class="attempts" id="attemptsDisplay">8 guesses remaining today</div>
       </div>
 
@@ -884,15 +1064,38 @@
     <div class="modal-card" id="modalCard">
       <button class="modal-close" id="modalCloseBtn" aria-label="Close">×</button>
       <div class="result-score" id="resultScore">0<span>points scored</span></div>
+      <div class="result-meta" id="resultMeta"></div>
       <div class="path" id="pathList"></div>
-      <div class="share-grid" id="shareGrid"></div>
+      <button class="share-btn share-native share-primary" id="nativeShareBtn">Share result</button>
       <div class="share-row" id="shareRow">
-        <button class="share-btn share-native" id="nativeShareBtn">Share</button>
         <button class="share-btn share-x" id="xShareBtn">Post to X</button>
         <button class="share-btn share-wa" id="waShareBtn">WhatsApp</button>
         <button class="share-btn share-fb" id="fbShareBtn">Facebook</button>
       </div>
       <button class="share-btn secondary" id="shareBtn">Copy result</button>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="statsBackdrop">
+    <div class="modal-card" id="statsCard">
+      <button class="modal-close" id="statsCloseBtn" aria-label="Close">×</button>
+      <h2 class="how-to-title">Your stats</h2>
+
+      <div class="stats-grid" id="statsGrid"></div>
+
+      <h3 class="stats-subtitle">Transfer to another device</h3>
+      <p class="stats-hint">
+        This history lives only on this device — there's no login. To bring it to
+        your phone, laptop, or wherever else you play, generate a backup code here
+        and paste it into this same box over there. Importing merges with whatever
+        is already on that device — it won't erase progress that's already there.
+      </p>
+      <button class="secondary" id="statsExportBtn" style="width:100%">Copy backup code</button>
+      <textarea id="statsCodeBox" class="stats-code-box" placeholder="Paste a backup code here to import…"></textarea>
+      <button id="statsImportBtn" style="width:100%">Import backup code</button>
+      <div class="stats-import-feedback" id="statsImportFeedback"></div>
+
+      <button class="share-btn share-native share-primary stats-share-btn" id="statsShareBtn">Share my stats</button>
     </div>
   </div>
 
@@ -918,7 +1121,7 @@
 
       <div class="how-to-step">
         <strong>4. Hints cost points.</strong>
-        <p>Stuck? Reveal a hint (nationality + position) for −15 points off your eventual score. It doesn't use up a clue.</p>
+        <p>Stuck? Reveal a hint (nationality + position) for −15 points off your eventual score. It doesn't use up a clue. After 3 wrong guesses, we'll also show you their nationality for free.</p>
       </div>
 
       <div class="how-to-step">
@@ -945,13 +1148,23 @@
     <span class="ad-label">Advertisement</span>
   </div>
 
-  <footer>No login. No tracking beyond this device unless you accept ads/cookies below. New case file every day.</footer>
+  <footer>
+    No login. No tracking beyond this device unless you accept ads/cookies below. New case file every day.
+    <div class="footer-links">
+      <a href="about.html">About</a><span>·</span><a href="faq.html">FAQ</a><span>·</span><a href="privacy.html">Privacy</a>
+    </div>
+  </footer>
 </div>
 
 <script>
 (function () {
   const STORAGE_PREFIX = "scoutingReport:";
   const MAX_ATTEMPTS = 8;
+  // After this many wrong guesses, the player's nationality is shown for
+  // free — a small assist for anyone stuck, separate from the paid
+  // nationality+position hint button below. Suppressed once the paid hint
+  // has been used, since that already includes nationality.
+  const FREE_HINT_AFTER_ATTEMPTS = 3;
 
   // Fallback demo puzzle so the page is inspectable even without the
   // daily JSON deployed yet — replace by fetching /puzzles/latest.json.
@@ -1016,6 +1229,14 @@
     const m = Math.floor(seconds / 60);
     const s = seconds % 60;
     return `${m}:${String(s).padStart(2, "0")}`;
+  }
+
+  function formatDisplayDate(dateStr) {
+    if (dateStr === "demo") return "Demo puzzle";
+    const d = new Date(dateStr + "T00:00:00Z");
+    return d.toLocaleDateString("en-GB", {
+      weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC",
+    });
   }
 
   function currentElapsedSeconds() {
@@ -1143,6 +1364,13 @@
   }
 
   function bumpStreakIfNeeded() {
+    // "demo" isn't a real calendar date — previousCalendarDay() would throw
+    // trying to parse it. Only real fallback case this hits today: the site
+    // loads before puzzles/latest.json exists yet, or a fetch fails and
+    // loadPuzzle() falls back to DEMO_PUZZLE — solving that demo shouldn't
+    // touch the streak either way, so just skip it.
+    if (puzzle.date === "demo") return;
+
     const lastSolvedDate = localStorage.getItem(STORAGE_PREFIX + "lastSolvedDate");
 
     if (lastSolvedDate === puzzle.date) {
@@ -1170,6 +1398,296 @@
       dates.push(d.toISOString().slice(0, 10));
     }
     return dates;
+  }
+
+  // ---------- stats (all-time / weekly / monthly totals + cross-device backup) ----------
+  //
+  // Everything here reads localStorage directly rather than tracking its own
+  // running counters — the per-day records the game already saves (under
+  // scoutingReport:<date>) are the single source of truth, so totals can
+  // never drift out of sync with what's actually shown in the week strip.
+
+  function effectiveTodayStr() {
+    return puzzle.date === "demo" ? new Date().toISOString().slice(0, 10) : puzzle.date;
+  }
+
+  // Every scoutingReport:<date> entry for a finished game (solved or given
+  // up on) on this device — in-progress days are excluded, since a partial
+  // attempt shouldn't count toward totals or "games played".
+  function getFinishedDayEntries() {
+    const entries = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      const match = key && key.match(/^scoutingReport:(\d{4}-\d{2}-\d{2})$/);
+      if (!match) continue;
+      let parsed;
+      try {
+        parsed = JSON.parse(localStorage.getItem(key));
+      } catch (e) {
+        continue; // corrupt entry — skip rather than let it break stats entirely
+      }
+      if (!parsed || (!parsed.solved && !parsed.gaveUp)) continue;
+      entries.push({ date: match[1], ...parsed });
+    }
+    return entries;
+  }
+
+  function computeBestStreak(entries) {
+    const solvedDates = entries.filter((e) => e.solved).map((e) => e.date).sort();
+    let best = 0;
+    let current = 0;
+    let prevDate = null;
+    for (const d of solvedDates) {
+      current = prevDate && previousCalendarDay(d) === prevDate ? current + 1 : 1;
+      best = Math.max(best, current);
+      prevDate = d;
+    }
+    return best;
+  }
+
+  // The streak as of right now, derived purely from stored day entries
+  // rather than the incrementing scoutingReport:streak counter — used after
+  // an import merges in games played on another device, where that counter
+  // has no way of knowing what happened elsewhere.
+  function currentStreakFromEntries(entries, todayStr) {
+    const solvedSet = new Set(entries.filter((e) => e.solved).map((e) => e.date));
+    let anchor = null;
+    if (solvedSet.has(todayStr)) anchor = todayStr;
+    else {
+      const yesterday = previousCalendarDay(todayStr);
+      if (solvedSet.has(yesterday)) anchor = yesterday;
+    }
+    if (!anchor) return 0;
+    let streak = 0;
+    let cursor = anchor;
+    while (solvedSet.has(cursor)) {
+      streak++;
+      cursor = previousCalendarDay(cursor);
+    }
+    return streak;
+  }
+
+  function computeStats() {
+    const entries = getFinishedDayEntries();
+    const todayStr = effectiveTodayStr();
+    const weekDates = new Set(getWeekDates(todayStr));
+    const monthPrefix = todayStr.slice(0, 7); // "YYYY-MM"
+    const sumScore = (list) => list.reduce((sum, e) => sum + (e.solved ? (e.score || 0) : 0), 0);
+
+    return {
+      allTime: sumScore(entries),
+      weekTotal: sumScore(entries.filter((e) => weekDates.has(e.date))),
+      monthTotal: sumScore(entries.filter((e) => e.date.startsWith(monthPrefix))),
+      gamesPlayed: entries.length,
+      currentStreak: getStreak(),
+      bestStreak: computeBestStreak(entries),
+    };
+  }
+
+  function renderStats() {
+    const s = computeStats();
+    const blocks = [
+      { label: "All-time points", value: s.allTime.toLocaleString() },
+      { label: "This week", value: s.weekTotal.toLocaleString() },
+      { label: "This month", value: s.monthTotal.toLocaleString() },
+      { label: "Games played", value: s.gamesPlayed.toLocaleString() },
+      { label: "Current streak", value: `${s.currentStreak} day${s.currentStreak === 1 ? "" : "s"}` },
+      { label: "Best streak", value: `${s.bestStreak} day${s.bestStreak === 1 ? "" : "s"}` },
+    ];
+    document.getElementById("statsGrid").innerHTML = blocks
+      .map((b) => `<div class="stat-block"><span class="stat-block-value">${b.value}</span><span class="stat-block-label">${b.label}</span></div>`)
+      .join("");
+  }
+
+  function openStats() {
+    renderStats();
+    document.getElementById("statsBackdrop").classList.add("show");
+  }
+
+  function closeStats() {
+    document.getElementById("statsBackdrop").classList.remove("show");
+    document.getElementById("statsImportFeedback").textContent = "";
+    document.getElementById("statsImportFeedback").className = "stats-import-feedback";
+  }
+
+  // ---- backup code (manual cross-device transfer, no server involved) ----
+  //
+  // Only finished games travel — an in-progress attempt is tied to a live
+  // timer/session on the device it started on, and isn't meaningful to
+  // transplant elsewhere. btoa/atob only handle Latin1, so the JSON is
+  // UTF-8-escaped first (guesses can contain accented characters) via the
+  // standard encodeURIComponent/unescape round-trip.
+  const BACKUP_CODE_PREFIX = "SR1-";
+
+  function buildBackupPayload() {
+    const days = {};
+    for (const entry of getFinishedDayEntries()) {
+      days[entry.date] = {
+        solved: !!entry.solved,
+        gaveUp: !!entry.gaveUp,
+        score: entry.score || 0,
+        revealedUpTo: entry.revealedUpTo || 1,
+        hintUsed: !!entry.hintUsed,
+        elapsedSeconds: entry.elapsedSeconds ?? null,
+        attemptsUsed: entry.attemptsUsed || 0,
+      };
+    }
+    return { v: 1, days };
+  }
+
+  function encodeBackupCode(payload) {
+    const json = JSON.stringify(payload);
+    return BACKUP_CODE_PREFIX + btoa(unescape(encodeURIComponent(json)));
+  }
+
+  function decodeBackupCode(code) {
+    const trimmed = (code || "").trim();
+    if (!trimmed.startsWith(BACKUP_CODE_PREFIX)) {
+      throw new Error("That doesn't look like a Scouting Report backup code.");
+    }
+    let payload;
+    try {
+      const json = decodeURIComponent(escape(atob(trimmed.slice(BACKUP_CODE_PREFIX.length))));
+      payload = JSON.parse(json);
+    } catch (e) {
+      throw new Error("Couldn't read that code — check it was copied in full.");
+    }
+    if (!payload || payload.v !== 1 || typeof payload.days !== "object") {
+      throw new Error("That code isn't in a format I recognise.");
+    }
+    return payload;
+  }
+
+  // Decides which of two records for the same day "wins": solved beats
+  // given-up beats still-in-progress; if both sides solved the same day,
+  // the better score wins, and a tie is broken by whichever was faster.
+  function mergeDayEntry(existing, incoming) {
+    if (!existing) return incoming;
+    if (!incoming) return existing;
+    const rank = (e) => (e.solved ? 2 : e.gaveUp ? 1 : 0);
+    const rExisting = rank(existing);
+    const rIncoming = rank(incoming);
+    if (rIncoming > rExisting) return incoming;
+    if (rExisting > rIncoming) return existing;
+    if (existing.solved && incoming.solved) {
+      if (incoming.score !== existing.score) return incoming.score > existing.score ? incoming : existing;
+      const existingTime = existing.elapsedSeconds ?? Infinity;
+      const incomingTime = incoming.elapsedSeconds ?? Infinity;
+      return incomingTime < existingTime ? incoming : existing;
+    }
+    return existing; // both in-progress/given-up at the same level — keep this device's own record
+  }
+
+  function handleStatsExport() {
+    const payload = buildBackupPayload();
+    const dayCount = Object.keys(payload.days).length;
+    const code = encodeBackupCode(payload);
+
+    const box = document.getElementById("statsCodeBox");
+    box.value = code;
+    box.focus();
+    box.select();
+    navigator.clipboard?.writeText(code).catch(() => {});
+
+    const btn = document.getElementById("statsExportBtn");
+    const original = btn.textContent;
+    btn.textContent = dayCount > 0 ? `Copied (${dayCount} day${dayCount === 1 ? "" : "s"})` : "Copied (no finished games yet)";
+    setTimeout(() => (btn.textContent = original), 2200);
+  }
+
+  function handleStatsImport() {
+    const box = document.getElementById("statsCodeBox");
+    const feedback = document.getElementById("statsImportFeedback");
+    let payload;
+    try {
+      payload = decodeBackupCode(box.value);
+    } catch (err) {
+      feedback.className = "stats-import-feedback err";
+      feedback.textContent = err.message;
+      return;
+    }
+
+    let added = 0;
+    let updated = 0;
+    for (const [date, incoming] of Object.entries(payload.days)) {
+      const key = STORAGE_PREFIX + date;
+      let existing = null;
+      const existingRaw = localStorage.getItem(key);
+      if (existingRaw) {
+        try { existing = JSON.parse(existingRaw); } catch (e) { existing = null; }
+      }
+
+      const winner = mergeDayEntry(existing, incoming);
+      if (winner === existing) continue; // nothing changed for this day
+
+      localStorage.setItem(key, JSON.stringify({
+        revealedUpTo: incoming.revealedUpTo,
+        solved: incoming.solved,
+        gaveUp: incoming.gaveUp,
+        score: incoming.score,
+        attemptsUsed: incoming.attemptsUsed,
+        wrongGuesses: existing?.wrongGuesses || [],
+        hintUsed: incoming.hintUsed,
+        accumulatedMs: existing?.accumulatedMs || 0,
+        sessionStartTimestamp: null,
+        elapsedSeconds: incoming.elapsedSeconds,
+      }));
+      if (existing) updated++; else added++;
+    }
+
+    // Recompute this device's streak bookkeeping from the merged history —
+    // its own scoutingReport:streak counter only knows about games played
+    // ON this device, so it can't be trusted once games from elsewhere are
+    // merged in.
+    const allEntries = getFinishedDayEntries();
+    const todayStr = effectiveTodayStr();
+    const solvedDates = allEntries.filter((e) => e.solved).map((e) => e.date).sort();
+    if (solvedDates.length > 0) {
+      localStorage.setItem(STORAGE_PREFIX + "lastSolvedDate", solvedDates[solvedDates.length - 1]);
+    }
+    localStorage.setItem(STORAGE_PREFIX + "streak", String(currentStreakFromEntries(allEntries, todayStr)));
+
+    feedback.className = "stats-import-feedback ok";
+    feedback.textContent = added + updated === 0
+      ? "Nothing new to bring in — already up to date."
+      : `Imported — ${added} new day${added === 1 ? "" : "s"}, ${updated} updated.`;
+    box.value = "";
+
+    renderStats();
+
+    // If today's own record just changed underneath the live game, reload
+    // it so the main screen reflects the merge immediately.
+    const todayKey = STORAGE_PREFIX + puzzle.date;
+    if (puzzle.date !== "demo" && localStorage.getItem(todayKey)) {
+      try {
+        state = JSON.parse(localStorage.getItem(todayKey));
+        render();
+      } catch (e) {
+        renderWeekStrip();
+      }
+    } else {
+      renderWeekStrip();
+    }
+  }
+
+  function statsShareText() {
+    const s = computeStats();
+    return `The Scouting Report — my stats\n` +
+      `🏆 ${s.allTime.toLocaleString()} pts all-time\n` +
+      `📅 ${s.weekTotal.toLocaleString()} pts this week · ${s.monthTotal.toLocaleString()} pts this month\n` +
+      `🔥 ${s.currentStreak}-day streak (best: ${s.bestStreak})`;
+  }
+
+  function handleStatsShare() {
+    if (navigator.share) {
+      navigator.share({ text: statsShareText(), url: SITE_URL }).catch(() => {});
+      return;
+    }
+    navigator.clipboard?.writeText(`${statsShareText()}\n${SITE_URL}`).catch(() => {});
+    const btn = document.getElementById("statsShareBtn");
+    const original = btn.textContent;
+    btn.textContent = "Copied!";
+    setTimeout(() => (btn.textContent = original), 1500);
   }
 
   function renderWeekStrip() {
@@ -1251,11 +1769,38 @@
       .trim().toLowerCase().replace(/[^a-z\s]/g, "");
   }
 
+  // Wrong guesses get echoed back into the "already tried" list below the
+  // input, so they have to be escaped before going into innerHTML \u2014 they're
+  // arbitrary free text the player typed, not trusted content.
+  function escapeHtml(str) {
+    const div = document.createElement("div");
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function renderClueProgress() {
+    const total = puzzle.clues.length;
+    const dots = [];
+    for (let i = 1; i <= total; i++) {
+      let cls = "progress-dot";
+      if (i < state.revealedUpTo || ((state.solved || state.gaveUp) && i === state.revealedUpTo)) {
+        cls += " dot-done";
+      } else if (i === state.revealedUpTo) {
+        cls += " dot-current";
+      }
+      dots.push(`<span class="${cls}"></span>`);
+    }
+    document.getElementById("clueProgress").innerHTML = dots.join("");
+  }
+
   function render() {
     renderWeekStrip();
+    renderClueProgress();
 
     document.getElementById("fileNo").textContent =
       "#" + (puzzle.date === "demo" ? "000" : puzzle.date.replace(/-/g, ""));
+
+    document.getElementById("dateSubhead").textContent = formatDisplayDate(puzzle.date);
 
     const metaEl = document.getElementById("headerMeta");
     const streak = getStreak();
@@ -1331,9 +1876,23 @@
     document.getElementById("controls").style.display = finished ? "none" : "flex";
     document.getElementById("resultTrigger").style.display = finished ? "block" : "none";
 
-    document.getElementById("nextClueBtn").disabled = state.revealedUpTo >= puzzle.clues.length;
+    const nextClueBtn = document.getElementById("nextClueBtn");
+    const upcomingClue = puzzle.clues[state.revealedUpTo]; // first not-yet-revealed clue
+    nextClueBtn.textContent = upcomingClue ? `Reveal next clue (${upcomingClue.points} pts)` : "Reveal next clue";
+    nextClueBtn.disabled = state.revealedUpTo >= puzzle.clues.length;
+
     document.getElementById("attemptsDisplay").textContent =
       `${MAX_ATTEMPTS - state.attemptsUsed} guesses remaining today`;
+
+    const triedEl = document.getElementById("triedList");
+    if (state.wrongGuesses.length > 0) {
+      triedEl.style.display = "flex";
+      triedEl.innerHTML = `<span class="tried-label">Already tried:</span>` +
+        state.wrongGuesses.map((g) => `<span class="tried-chip">${escapeHtml(g)}</span>`).join("");
+    } else {
+      triedEl.style.display = "none";
+      triedEl.innerHTML = "";
+    }
 
     const hintBtn = document.getElementById("hintBtn");
     const hintTextEl = document.getElementById("hintText");
@@ -1343,6 +1902,16 @@
     } else {
       hintTextEl.textContent = "";
       hintBtn.disabled = !puzzle.hint;
+    }
+
+    // Free nationality-only assist once you've missed a few guesses —
+    // separate from the paid hint above, which also covers position and
+    // already shows nationality once it's used, so this stays quiet then.
+    const autoHintEl = document.getElementById("autoHintText");
+    if (!finished && !state.hintUsed && puzzle.hint?.nationality && state.attemptsUsed >= FREE_HINT_AFTER_ATTEMPTS) {
+      autoHintEl.textContent = `Nationality: ${puzzle.hint.nationality}`;
+    } else {
+      autoHintEl.textContent = "";
     }
 
     if (finished) {
@@ -1355,30 +1924,57 @@
     }
   }
 
+  // Countdown to the next UTC calendar day, matching checkStale()'s own
+  // UTC-based notion of "today" — so this lines up with when a new
+  // puzzles/latest.json actually appears, not the player's local midnight.
+  function nextPuzzleCountdownText() {
+    const now = new Date();
+    const tomorrowUTC = new Date(Date.UTC(
+      now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0
+    ));
+    const msLeft = Math.max(0, tomorrowUTC - now);
+    const hours = Math.floor(msLeft / 3600000);
+    const mins = Math.floor((msLeft % 3600000) / 60000);
+    return `${hours}h ${String(mins).padStart(2, "0")}m`;
+  }
+
+  let resultCountdownInterval = null;
+
+  function renderResultMeta() {
+    const streak = getStreak();
+    const parts = [`<span class="result-streak">🔥 ${streak} day${streak === 1 ? "" : "s"} running</span>`];
+    if (puzzle.date !== "demo") {
+      parts.push(`<span class="result-next">Next case in ${nextPuzzleCountdownText()}</span>`);
+    }
+    document.getElementById("resultMeta").innerHTML = parts.join("");
+  }
+
   function renderResult() {
     document.getElementById("resultScore").innerHTML =
       `${state.score}<span>points scored · solved in ${formatElapsed(state.elapsedSeconds ?? 0)}</span>`;
+
+    renderResultMeta();
 
     const pathList = document.getElementById("pathList");
     pathList.innerHTML = puzzle.fullCareerPath.map(p =>
       `<div class="path-row"><span>${p.years} · ${p.club}</span><span>${p.goals}g / ${p.appearances}a</span></div>`
     ).join("");
-
-    const grid = puzzle.clues.map((c, i) => {
-      if (state.solved && i === state.revealedUpTo - 1) return "🟩";
-      if (i < state.revealedUpTo) return "⬛";
-      return "⬜";
-    }).join("");
-    document.getElementById("shareGrid").textContent = grid;
   }
 
   function openModal() {
     renderResult(); // make sure content is current before showing
     document.getElementById("modalBackdrop").classList.add("show");
+    // Keep the "next case in Xh Ym" line ticking while the modal is open,
+    // same pattern as the in-game elapsed timer.
+    clearInterval(resultCountdownInterval);
+    if (puzzle.date !== "demo") {
+      resultCountdownInterval = setInterval(renderResultMeta, 60000);
+    }
   }
 
   function closeModal() {
     document.getElementById("modalBackdrop").classList.remove("show");
+    clearInterval(resultCountdownInterval);
   }
 
   function openHowTo() {
@@ -1440,10 +2036,9 @@
   const SITE_URL = window.location.origin + window.location.pathname;
 
   function shareText() {
-    const grid = document.getElementById("shareGrid").textContent;
-    const label = puzzle.date === "demo" ? "Demo" : puzzle.date;
     const timeLine = state.solved ? `\nSolved in ${formatElapsed(state.elapsedSeconds ?? 0)}` : "";
-    return `The Scouting Report — ${label}\n${grid}\nScore: ${state.score}/100${timeLine}\nStreak: ${getStreak()} days`;
+    const streak = getStreak();
+    return `The Scouting Report\n${formatDisplayDate(puzzle.date)}\nScore: ${state.score}/100${timeLine}\nStreak: ${streak} day${streak === 1 ? "" : "s"}`;
   }
 
   function handleShare() {
@@ -1463,22 +2058,41 @@
     }
   }
 
+  // window.open(url, "_blank", "noopener,noreferrer") is the textbook way
+  // to do this, but "noopener"/"noreferrer" in that third argument are
+  // window-FEATURES syntax (like "width=600"), not the same thing as the
+  // rel="noopener" you'd put on a link — most browsers quietly ignore the
+  // ones they don't recognise there, but iOS Safari has a known bug where
+  // it can instead leave you looking at an empty about:blank tab that never
+  // navigates anywhere. Building a real, briefly-inserted <a rel="noopener
+  // noreferrer" target="_blank"> and clicking it sidesteps the bug entirely
+  // — it's what the window-features string was trying to imitate anyway.
+  function openInNewTab(url) {
+    const a = document.createElement("a");
+    a.href = url;
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+
   function handleXShare() {
     const url = "https://twitter.com/intent/tweet?text=" +
       encodeURIComponent(shareText() + "\n") + "&url=" + encodeURIComponent(SITE_URL);
-    window.open(url, "_blank", "noopener,noreferrer");
+    openInNewTab(url);
   }
 
   function handleWaShare() {
     const url = "https://wa.me/?text=" + encodeURIComponent(shareText() + "\n" + SITE_URL);
-    window.open(url, "_blank", "noopener,noreferrer");
+    openInNewTab(url);
   }
 
   function handleFbShare() {
     // Facebook's share dialog only reliably accepts a URL parameter, not
-    // custom text — the grid/score won't appear in the post body itself.
+    // custom text — the score won't appear in the post body itself.
     const url = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(SITE_URL);
-    window.open(url, "_blank", "noopener,noreferrer");
+    openInNewTab(url);
   }
 
   // ---------- autocomplete ----------
@@ -1593,6 +2207,15 @@
     document.getElementById("xShareBtn").addEventListener("click", handleXShare);
     document.getElementById("waShareBtn").addEventListener("click", handleWaShare);
     document.getElementById("fbShareBtn").addEventListener("click", handleFbShare);
+
+    document.getElementById("statsToggle").addEventListener("click", openStats);
+    document.getElementById("statsCloseBtn").addEventListener("click", closeStats);
+    document.getElementById("statsBackdrop").addEventListener("click", (e) => {
+      if (e.target.id === "statsBackdrop") closeStats();
+    });
+    document.getElementById("statsExportBtn").addEventListener("click", handleStatsExport);
+    document.getElementById("statsImportBtn").addEventListener("click", handleStatsImport);
+    document.getElementById("statsShareBtn").addEventListener("click", handleStatsShare);
 
     document.getElementById("helpToggle").addEventListener("click", openHowTo);
     document.getElementById("howToCloseBtn").addEventListener("click", closeHowTo);

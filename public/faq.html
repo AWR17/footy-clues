@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#1B1E15" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%BD%3C/text%3E%3C/svg%3E" />
+<title>FAQ — The Scouting Report</title>
+<meta name="description" content="Frequently asked questions about playing The Scouting Report, scoring, hints, streaks, and cross-device backup." />
+<link rel="canonical" href="https://footyclues.netlify.app/faq.html" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+
+  :root {
+    --pitch-night: #1B1E15;
+    --paper: #242820;
+    --paper-dark: #A9AE93;
+    --ink: #F2F0DE;
+    --ink-soft: #A9AE93;
+    --floodlight: #E0A83D;
+    --turf: #7FAE80;
+    --wrong: #E2604B;
+    --line: rgba(242,240,222,0.14);
+    --bg-glow-1: rgba(127,174,128,0.12);
+    --bg-glow-2: rgba(127,174,128,0.08);
+    --chip-bg: rgba(0,0,0,0.3);
+    --on-accent: #241F14;
+  }
+
+  html[data-theme="light"] {
+    --pitch-night: #F2F0DE;
+    --paper: #FDFCF6;
+    --paper-dark: #736F55;
+    --ink: #2B2A1F;
+    --ink-soft: #736F55;
+    --floodlight: #C98A2E;
+    --turf: #4F7A55;
+    --wrong: #B23B2E;
+    --line: rgba(43,42,31,0.14);
+    --bg-glow-1: rgba(79,122,85,0.06);
+    --bg-glow-2: rgba(79,122,85,0.04);
+    --chip-bg: rgba(255,255,255,0.6);
+    --on-accent: #2B2A1F;
+  }
+
+  @media (prefers-color-scheme: light) {
+    html:not([data-theme]) {
+      --pitch-night: #F2F0DE;
+      --paper: #FDFCF6;
+      --paper-dark: #736F55;
+      --ink: #2B2A1F;
+      --ink-soft: #736F55;
+      --floodlight: #C98A2E;
+      --turf: #4F7A55;
+      --wrong: #B23B2E;
+      --line: rgba(43,42,31,0.14);
+      --bg-glow-1: rgba(79,122,85,0.06);
+      --bg-glow-2: rgba(79,122,85,0.04);
+      --chip-bg: rgba(255,255,255,0.6);
+      --on-accent: #2B2A1F;
+    }
+  }
+
+  body {
+    margin: 0;
+    background: var(--pitch-night);
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .page-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+      radial-gradient(circle at 15% 10%, var(--bg-glow-1), transparent 40%),
+      radial-gradient(circle at 85% 90%, var(--bg-glow-2), transparent 45%);
+  }
+
+  .wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 24px max(16px, env(safe-area-inset-right)) 64px max(16px, env(safe-area-inset-left));
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .icon-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 13px;
+    background: transparent;
+    color: var(--paper-dark);
+    border: 1.5px solid var(--paper-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .kicker {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    font-size: 11px;
+    color: var(--floodlight);
+    text-transform: uppercase;
+  }
+
+  h1 {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: clamp(24px, 7.5vw, 34px);
+    letter-spacing: 0.02em;
+    margin: 6px 0 4px;
+    text-transform: uppercase;
+    color: var(--floodlight);
+  }
+
+  nav.top-nav {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 10px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  nav.top-nav a {
+    color: var(--paper-dark);
+    text-decoration: none;
+    border-bottom: 1.5px solid transparent;
+    padding-bottom: 2px;
+  }
+
+  nav.top-nav a.current {
+    color: var(--floodlight);
+    border-bottom-color: var(--floodlight);
+  }
+
+  nav.top-nav a:hover {
+    color: var(--floodlight);
+  }
+
+  main {
+    background: var(--paper);
+    color: var(--ink);
+    border: 1.5px solid var(--line);
+    border-radius: 6px;
+    padding: 26px 22px;
+    margin-top: 20px;
+  }
+
+  main h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--floodlight);
+    margin: 28px 0 10px;
+  }
+
+  main h2:first-child {
+    margin-top: 0;
+  }
+
+  main p {
+    font-size: 13.5px;
+    color: var(--ink);
+    margin: 0 0 12px;
+  }
+
+  main ul, main ol {
+    font-size: 13.5px;
+    margin: 0 0 12px;
+    padding-left: 20px;
+  }
+
+  main li {
+    margin-bottom: 6px;
+  }
+
+  main a {
+    color: var(--turf);
+  }
+
+  .lede {
+    font-size: 14.5px;
+    color: var(--ink);
+    opacity: 0.92;
+  }
+
+  details.faq-item {
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    background: var(--chip-bg);
+  }
+
+  details.faq-item summary {
+    font-family: 'Oswald', sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    color: var(--ink);
+    list-style: none;
+  }
+
+  details.faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+
+  details.faq-item summary::before {
+    content: "+ ";
+    color: var(--floodlight);
+    font-weight: 700;
+  }
+
+  details.faq-item[open] summary::before {
+    content: "\2212 ";
+  }
+
+  details.faq-item p {
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .back-home {
+    display: inline-block;
+    margin-top: 22px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--floodlight);
+    text-decoration: none;
+    border: 1.5px solid var(--floodlight);
+    border-radius: 3px;
+    padding: 9px 16px;
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 28px;
+    font-size: 11px;
+    color: var(--paper-dark);
+    opacity: 0.7;
+  }
+
+  footer a {
+    color: var(--paper-dark);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  footer span {
+    margin: 0 6px;
+    opacity: 0.6;
+  }
+
+  @media (min-width: 768px) {
+    .wrap { max-width: 720px; padding-top: 40px; }
+    body { font-size: 15px; }
+    main { padding: 32px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-bg"></div>
+<div class="wrap">
+  <header>
+    <button class="icon-toggle" id="themeToggle" aria-label="Toggle theme">&#9788;</button>
+    <div class="kicker">Daily Case File</div>
+    <h1>The Scouting Report</h1>
+    <nav class="top-nav">
+      <a href="index.html">Play</a>
+      <a href="about.html">About</a>
+      <a href="faq.html" class="current">FAQ</a>
+      <a href="privacy.html">Privacy</a>
+    </nav>
+  </header>
+
+  <main>
+    <details class="faq-item">
+      <summary>What is The Scouting Report?</summary>
+      <p>A daily guessing game: one real Premier League player, five real clues from their career, revealed earliest-first. Guess the player from as few clues as you can.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How do I play?</summary>
+      <p>Read the first clue, then either take a guess or reveal the next one. You can guess after any clue — you're never forced to reveal more first. The club name only appears on the final clue (or earlier, if you switch on "Clubs: Shown" mode).</p>
+    </details>
+    <details class="faq-item">
+      <summary>How is my score calculated?</summary>
+      <p>Clue 1 is worth 100 points, dropping to 80, 60, 40, then 20 on the final clue — so the fewer clues you need, the higher your score. Using the paid hint costs 15 points off whatever you eventually score.</p>
+    </details>
+    <details class="faq-item">
+      <summary>What are hints, and do they cost anything?</summary>
+      <p>There are two kinds. A paid hint (nationality + position) costs 15 points and is optional — reveal it any time. There's also a free hint: after three wrong guesses, the player's nationality is shown automatically at no cost.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How many guesses do I get?</summary>
+      <p>Eight per day. Wrong guesses don't cost you any points, but running out ends that day's puzzle.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How does the daily streak work?</summary>
+      <p>Solve the puzzle on consecutive calendar days and your streak climbs by one each day. Miss a day without solving it, and the streak resets the next time you visit.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Why don't some famous one-club players ever appear?</summary>
+      <p>The player pool only includes those with 100+ Premier League appearances across at least three different clubs — that's what makes a five-stint career path possible. A player who spent their whole career at one club won't be eligible for that reason, however well-known they are.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Is my progress saved? Do I need an account?</summary>
+      <p>There's no account and no login. Your results, streak, and settings are saved only in your own browser's local storage on that device — nothing is sent to a server.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Can I play on more than one device?</summary>
+      <p>Each device keeps its own separate history by default. If you play on your phone and a laptop, you can bring one device's history to the other using a backup code — open the stats view (the chart icon in the header) and use "Copy backup code" on one device, then "Import backup code" on the other. It merges your progress rather than overwriting it.</p>
+    </details>
+    <details class="faq-item">
+      <summary>How often is there a new puzzle?</summary>
+      <p>Once a day, published automatically in the early hours (UK time). If you ever see the same player two days running, the daily update hasn't landed yet — check back later.</p>
+    </details>
+    <details class="faq-item">
+      <summary>I think a clue or career path looks wrong — what do I do?</summary>
+      <p>It happens occasionally with any data-driven game pulling from a third-party football database. There's no contact form yet, but feedback is always welcome — see the Privacy page for how to get in touch.</p>
+    </details>
+    <details class="faq-item">
+      <summary>Does this site use ads or cookies?</summary>
+      <p>See the Privacy page for the full detail — in short, no account and no tracking beyond your own device by default, and if ads are ever enabled, you'll be asked for consent first where required.</p>
+    </details>
+
+    <a class="back-home" href="index.html">&larr; Back to today's puzzle</a>
+  </main>
+
+  <footer>
+    The Scouting Report
+    <div>
+      <a href="about.html">About</a><span>&middot;</span><a href="faq.html">FAQ</a><span>&middot;</span><a href="privacy.html">Privacy</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var KEY = "scoutingReport:theme";
+  function apply(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.style.colorScheme = theme;
+    var btn = document.getElementById("themeToggle");
+    if (btn) btn.textContent = theme === "light" ? "\u2600" : "\u263E";
+  }
+  var saved = localStorage.getItem(KEY);
+  var prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+  apply(saved || (prefersLight ? "light" : "dark"));
+  document.addEventListener("DOMContentLoaded", function () {
+    var btn = document.getElementById("themeToggle");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var current = document.documentElement.getAttribute("data-theme");
+      var next = current === "light" ? "dark" : "light";
+      apply(next);
+      localStorage.setItem(KEY, next);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

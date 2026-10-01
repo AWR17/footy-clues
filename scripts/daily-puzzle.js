@@ -536,13 +536,22 @@ async function run(dateArg) {
     theme,
     hint,
     clues,
-    fullCareerPath: stints.map((s) => ({
-      club: s.clubName,
-      years: s.yearStart,
-      duration: s.yearsAtClub,
-      goals: s.goals,
-      appearances: s.appearances,
-    })),
+    // National-team caps (e.g. "Morocco") are a real entry in the raw
+    // career data — getCareerHistory() keeps them (flagged
+    // isNationalTeam) because selectClueWorthyStints() needs to exclude
+    // them from the clue cards specifically. fullCareerPath is the
+    // full-career list shown on the result screen once you've solved it,
+    // and a country appearing there next to actual clubs reads as a data
+    // bug, not a feature — so it gets the same filter applied here.
+    fullCareerPath: stints
+      .filter((s) => !s.isNationalTeam)
+      .map((s) => ({
+        club: s.clubName,
+        years: s.yearStart,
+        duration: s.yearsAtClub,
+        goals: s.goals,
+        appearances: s.appearances,
+      })),
   };
 
   saveJSON(path.join(PUZZLES_DIR, `${date}.json`), puzzle);
