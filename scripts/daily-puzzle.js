@@ -118,6 +118,29 @@ function normalizeClubKey(name) {
   return words.join(" ");
 }
 
+// Loose equality for club names coming from two different API-Football
+// endpoints (/players/teams vs /transfers), which don't always spell a
+// club the same way ("Hull City" vs "Hull", "Manchester Utd" vs
+// "Manchester United"). Exact match after normalizeClubKey(), or one name
+// fully containing the other once common abbreviations are expanded,
+// counts as the same club. Deliberately permissive — this backs a check
+// (below) that REJECTS a candidate, so a missed match (false "they're
+// different") is far more costly than an over-eager one (false "they're
+// the same").
+function expandCommonAbbreviations(key) {
+  return key
+    .split(" ")
+    .map((w) => (w === "utd" ? "united" : w))
+    .join(" ");
+}
+
+function clubNamesLooselyMatch(a, b) {
+  const keyA = expandCommonAbbreviations(normalizeClubKey(a));
+  const keyB = expandCommonAbbreviations(normalizeClubKey(b));
+  if (!keyA || !keyB) return false;
+  return keyA === keyB || keyA.includes(keyB) || keyB.includes(keyA);
+}
+
 function todayISO(argDate) {
   return argDate || new Date().toISOString().slice(0, 10);
 }
@@ -260,11 +283,53 @@ async function getCareerHistory(playerId) {
   }
   const mergedStints = [...mergedByClub.values()];
 
-  const enrichedStints = await attachTrophiesAndTransfers(playerId, mergedStints);
+  const { stints: enrichedStints, transfers } = await attachTrophiesAndTransfers(playerId, mergedStints);
   const manual = MANUAL_STINTS[playerId] || [];
   const allStints = [...manual, ...enrichedStints].sort((a, b) => a.yearStart - b.yearStart);
 
+  // Cross-check against transfer history. /players/teams (what the stints
+  // above are built from) silently dropped Michael Dawson's first
+  // Nottingham Forest spell on 2026-10-01 — it just wasn't in the response,
+  // no error, no gap to notice. /transfers is a different, independently
+  // sourced endpoint, and it still named the club (and date) each transfer
+  // was to/from.
+  //
+  // This has to be year-aware, not just "is this club name present
+  // somewhere in the stints" — Dawson's case is exactly a player who
+  // RETURNS to a club they have a later stint for (Forest 2001, then
+  // Forest 2018). A name-only check would see "Nottingham Forest" already
+  // in the stints list and wave the 2001 gap straight through. So for
+  // each transfer, a matching stint has to cover roughly the right years,
+  // not just carry the right name.
+  const clubStints = allStints.filter((s) => !s.isNationalTeam);
+  const stintCoversYear = (stint, clubName, year) =>
+    clubNamesLooselyMatch(stint.clubName, clubName) &&
+    year >= stint.yearStart - 1 &&
+    year <= stint.yearStart + stint.yearsAtClub;
+
+  const missingClubs = [];
+  transfers.forEach((t) => {
+    if (!t.date) return;
+    const transferYear = parseInt(t.date.slice(0, 4), 10);
+    if (Number.isNaN(transferYear)) return;
+
+    if (t.clubIn && !clubStints.some((s) => stintCoversYear(s, t.clubIn, transferYear))) {
+      missingClubs.push(`${t.clubIn} (joined ~${transferYear})`);
+    }
+    if (t.clubOut && !clubStints.some((s) => stintCoversYear(s, t.clubOut, transferYear))) {
+      missingClubs.push(`${t.clubOut} (left ~${transferYear})`);
+    }
+  });
+
   saveJSON(cachePath, allStints);
+  if (missingClubs.length > 0) {
+    const err = new Error(
+      `Transfer history mentions ${missingClubs.join(", ")} but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/${playerId}.json to force a rebuild.`
+    );
+    err.isMissingClubFlag = true;
+    err.missingClubs = missingClubs;
+    throw err;
+  }
   return allStints;
 }
 
@@ -286,7 +351,7 @@ async function attachTrophiesAndTransfers(playerId, stints) {
     console.warn(`[daily-puzzle] transfers lookup failed for player ${playerId}: ${err.message}`);
   }
 
-  return stints.map((s) => {
+  const enriched = stints.map((s) => {
     const stintEndYear = s.yearStart + s.yearsAtClub - 1;
 
     const wonTrophy = trophies.find((t) => {
@@ -314,6 +379,8 @@ async function attachTrophiesAndTransfers(playerId, stints) {
       transferFee: meaningfulFee,
     };
   });
+
+  return { stints: enriched, transfers };
 }
 
 function selectClueWorthyStints(allStints) {
@@ -434,12 +501,29 @@ async function findCandidateForToday(pool, date) {
     try {
       stints = await getCareerHistory(candidate.id);
     } catch (err) {
-      // A single candidate's API failure (rate limit, timeout, malformed
-      // response — anything) used to propagate all the way up and abort
-      // the ENTIRE day's job, even with other valid candidates untried in
-      // the pool. Treat it like any other "try the next candidate" case —
-      // but, unlike a genuine data-quality rejection (too few stints,
-      // unmapped tier), do NOT add it to rejectedIds: those get
+      if (err.isMissingClubFlag) {
+        // getCareerHistory() found a club in /transfers with no matching
+        // built stint — the Michael Dawson bug signature (see the comment
+        // there). Treat this as a real data-quality rejection, same as
+        // too-few-stints or an unmapped tier below: flag it, retire the
+        // candidate (rejectedIds -> used: true) so it can't silently slip
+        // through once getCareerHistory()'s cache makes this check a
+        // no-op on a future draw, and move on to the next candidate.
+        flagForReview({
+          date,
+          playerId: candidate.id,
+          playerName: candidate.name,
+          reason: err.message,
+          clubs: err.missingClubs,
+        });
+        rejectedIds.push(candidate.id);
+        continue;
+      }
+      // Any other failure (rate limit, timeout, malformed response) used
+      // to propagate all the way up and abort the ENTIRE day's job, even
+      // with other valid candidates untried in the pool. Treat it like
+      // any other "try the next candidate" case — but, unlike a genuine
+      // data-quality rejection, do NOT add it to rejectedIds: those get
       // permanently marked `used` in the pool, and a transient network
       // blip isn't a real reason to retire a player from the game forever.
       // It'll simply be eligible to be drawn again another day.
