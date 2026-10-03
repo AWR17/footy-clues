@@ -552,5 +552,127 @@
       "FC Porto"
     ],
     "flaggedAt": "2026-10-01T11:19:07.800Z"
+  },
+  {
+    "date": "2026-10-03",
+    "playerId": 19147,
+    "playerName": "Craig Dawson",
+    "reason": "Transfer history mentions West Ham (left ~2023), Watford (left ~2021), Watford (joined ~2021), Bolton (joined ~2013) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/19147.json to force a rebuild.",
+    "clubs": [
+      "West Ham (left ~2023)",
+      "Watford (left ~2021)",
+      "Watford (joined ~2021)",
+      "Bolton (joined ~2013)"
+    ],
+    "flaggedAt": "2026-10-03T10:10:39.836Z"
+  },
+  {
+    "date": "2026-10-03",
+    "playerId": 18932,
+    "playerName": "Fraser Forster",
+    "reason": "Transfer history mentions Celtic (left ~2020), Celtic (joined ~2019), Newcastle (left ~2011), Newcastle (joined ~2011), Norwich (joined ~2009), Stockport County (joined ~2008), Tottenham (left ~2026) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/18932.json to force a rebuild.",
+    "clubs": [
+      "Celtic (left ~2020)",
+      "Celtic (joined ~2019)",
+      "Newcastle (left ~2011)",
+      "Newcastle (joined ~2011)",
+      "Norwich (joined ~2009)",
+      "Stockport County (joined ~2008)",
+      "Tottenham (left ~2026)"
+    ],
+    "flaggedAt": "2026-10-03T10:10:55.590Z"
+  },
+  {
+    "date": "2026-10-03",
+    "playerId": 2932,
+    "playerName": "Jordan Pickford",
+    "reason": "Transfer history mentions Sunderland (left ~2017), Preston (left ~2016), Preston (joined ~2015), Bradford (left ~2015), Bradford (joined ~2014), Carlisle (joined ~2014), Burton Albion (left ~2013), Burton Albion (joined ~2013) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/2932.json to force a rebuild.",
+    "clubs": [
+      "Sunderland (left ~2017)",
+      "Preston (left ~2016)",
+      "Preston (joined ~2015)",
+      "Bradford (left ~2015)",
+      "Bradford (joined ~2014)",
+      "Carlisle (joined ~2014)",
+      "Burton Albion (left ~2013)",
+      "Burton Albion (joined ~2013)"
+    ],
+    "flaggedAt": "2026-10-03T10:11:09.548Z"
+  },
+  {
+    "date": "2026-10-03",
+    "playerId": 37162,
+    "playerName": "Robin van Persie",
+    "reason": "Transfer history mentions Fenerbahce (left ~2018), Feyenoord (left ~2004) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/37162.json to force a rebuild.",
+    "clubs": [
+      "Fenerbahce (left ~2018)",
+      "Feyenoord (left ~2004)"
+    ],
+    "flaggedAt": "2026-10-03T10:11:25.617Z"
+  },
+  {
+    "date": "2026-10-03",
+    "playerId": 18742,
+    "playerName": "Matthew Doherty",
+    "reason": "Transfer history mentions Tottenham (left ~2023), Bury (joined ~2012), Hibernian (joined ~2012), Doherty Matt (joined ~2026), Wolves (left ~2026), Wolves (left ~2026) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/18742.json to force a rebuild.",
+    "clubs": [
+      "Tottenham (left ~2023)",
+      "Bury (joined ~2012)",
+      "Hibernian (joined ~2012)",
+      "Doherty Matt (joined ~2026)",
+      "Wolves (left ~2026)",
+      "Wolves (left ~2026)"
+    ],
+    "flaggedAt": "2026-10-03T10:11:39.901Z"
+  },
+  {
+    "date": "2026-10-03",
+    "playerId": 90492,
+    "playerName": "Stephen Ireland",
+    "reason": "Transfer history mentions Aston Villa (left ~2014), Newcastle (joined ~2011) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/90492.json to force a rebuild.",
+    "clubs": [
+      "Aston Villa (left ~2014)",
+      "Newcastle (joined ~2011)"
+    ],
+    "flaggedAt": "2026-10-03T10:11:50.114Z"
+  },
+  {
+    "date": "2026-10-03",
+    "playerId": 19465,
+    "playerName": "David Raya",
+    "reason": "Transfer history mentions Brentford (left ~2024), Brentford (joined ~2024), Southport (joined ~2014) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/19465.json to force a rebuild.",
+    "clubs": [
+      "Brentford (left ~2024)",
+      "Brentford (joined ~2024)",
+      "Southport (joined ~2014)"
+    ],
+    "flaggedAt": "2026-10-03T10:11:59.845Z"
+  },
+  {
+    "date": "2026-10-03",
+    "playerId": 114759,
+    "playerName": "Steven Reid",
+    "reason": "Transfer history mentions Blackburn (left ~2010), Blackburn (left ~2010), QPR (joined ~2009), Millwall (left ~2003) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/114759.json to force a rebuild.",
+    "clubs": [
+      "Blackburn (left ~2010)",
+      "Blackburn (left ~2010)",
+      "QPR (joined ~2009)",
+      "Millwall (left ~2003)"
+    ],
+    "flaggedAt": "2026-10-03T10:12:12.241Z"
+  },
+  {
+    "date": "2026-10-03",
+    "playerId": 935,
+    "playerName": "Rodrigo",
+    "reason": "Transfer history mentions Al-Gharafa (joined ~2024), Leeds (left ~2023), Benfica (left ~2015), Al-Gharafa (left ~2025), Al-Gharafa (left ~2025) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/935.json to force a rebuild.",
+    "clubs": [
+      "Al-Gharafa (joined ~2024)",
+      "Leeds (left ~2023)",
+      "Benfica (left ~2015)",
+      "Al-Gharafa (left ~2025)",
+      "Al-Gharafa (left ~2025)"
+    ],
+    "flaggedAt": "2026-10-03T10:12:26.951Z"
   }
 ]

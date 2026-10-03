@@ -183,7 +183,7 @@
     "id": 2932,
     "name": "Jordan Pickford",
     "totalPlApps": 361,
-    "used": false
+    "used": true
   },
   {
     "id": 108,
@@ -501,7 +501,7 @@
     "id": 19147,
     "name": "Craig Dawson",
     "totalPlApps": 294,
-    "used": false
+    "used": true
   },
   {
     "id": 635,
@@ -627,7 +627,7 @@
     "id": 37162,
     "name": "Robin van Persie",
     "totalPlApps": 278,
-    "used": false
+    "used": true
   },
   {
     "id": 87077,
@@ -1401,7 +1401,7 @@
     "id": 90492,
     "name": "Stephen Ireland",
     "totalPlApps": 223,
-    "used": false
+    "used": true
   },
   {
     "id": 114772,
@@ -1851,7 +1851,7 @@
     "id": 114759,
     "name": "Steven Reid",
     "totalPlApps": 192,
-    "used": false
+    "used": true
   },
   {
     "id": 18872,
@@ -1887,7 +1887,7 @@
     "id": 18742,
     "name": "Matthew Doherty",
     "totalPlApps": 190,
-    "used": false
+    "used": true
   },
   {
     "id": 19179,
@@ -2763,7 +2763,7 @@
     "id": 18932,
     "name": "Fraser Forster",
     "totalPlApps": 155,
-    "used": false
+    "used": true
   },
   {
     "id": 25352,
@@ -3411,7 +3411,7 @@
     "id": 19465,
     "name": "David Raya",
     "totalPlApps": 132,
-    "used": false
+    "used": true
   },
   {
     "id": 115938,
@@ -4509,7 +4509,7 @@
     "id": 935,
     "name": "Rodrigo",
     "totalPlApps": 105,
-    "used": false
+    "used": true
   },
   {
     "id": 2905,
@@ -4749,7 +4749,7 @@
     "id": 356041,
     "name": "Carlos Quomah Baleba",
     "totalPlApps": 101,
-    "used": false
+    "used": true
   },
   {
     "id": 8598,
