@@ -674,5 +674,225 @@
       "Al-Gharafa (left ~2025)"
     ],
     "flaggedAt": "2026-10-03T10:12:26.951Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 1436,
+    "playerName": "Petr Čech",
+    "reason": "Transfer history mentions Rennes (left ~2004), Rennes (joined ~2002), Sparta Praha (left ~2002), Sparta Praha (joined ~2001) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/1436.json to force a rebuild.",
+    "clubs": [
+      "Rennes (left ~2004)",
+      "Rennes (joined ~2002)",
+      "Sparta Praha (left ~2002)",
+      "Sparta Praha (joined ~2001)"
+    ],
+    "flaggedAt": "2026-10-04T10:51:16.681Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 19586,
+    "playerName": "Eberechi Eze",
+    "reason": "Transfer history mentions Wycombe (left ~2018), Wycombe (joined ~2017) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/19586.json to force a rebuild.",
+    "clubs": [
+      "Wycombe (left ~2018)",
+      "Wycombe (joined ~2017)"
+    ],
+    "flaggedAt": "2026-10-04T10:51:24.223Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 2291,
+    "playerName": "Mateo Kovačić",
+    "reason": "Transfer history mentions Real Madrid (left ~2019), Dinamo Zagreb (left ~2013) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/2291.json to force a rebuild.",
+    "clubs": [
+      "Real Madrid (left ~2019)",
+      "Dinamo Zagreb (left ~2013)"
+    ],
+    "flaggedAt": "2026-10-04T10:51:37.952Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 90657,
+    "playerName": "Xabier Alonso Olano",
+    "reason": "Transfer history mentions Bayern Munich (joined ~2014), Eibar (joined ~2000), Real Sociedad (left ~2000) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/90657.json to force a rebuild.",
+    "clubs": [
+      "Bayern Munich (joined ~2014)",
+      "Eibar (joined ~2000)",
+      "Real Sociedad (left ~2000)"
+    ],
+    "flaggedAt": "2026-10-04T10:51:51.201Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 2281,
+    "playerName": "Gary Cahill",
+    "reason": "Transfer history mentions Bolton (left ~2012), Aston Villa (left ~2008), Sheffield Utd (joined ~2007), Burnley (joined ~2004) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/2281.json to force a rebuild.",
+    "clubs": [
+      "Bolton (left ~2012)",
+      "Aston Villa (left ~2008)",
+      "Sheffield Utd (joined ~2007)",
+      "Burnley (joined ~2004)"
+    ],
+    "flaggedAt": "2026-10-04T10:52:03.832Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 18786,
+    "playerName": "Onyinye Ndidi",
+    "reason": "Transfer history mentions Genk (left ~2017) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/18786.json to force a rebuild.",
+    "clubs": [
+      "Genk (left ~2017)"
+    ],
+    "flaggedAt": "2026-10-04T10:52:16.143Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 51199,
+    "playerName": "Chinedum Onuoha",
+    "reason": "Transfer history mentions Manchester City (left ~2012) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/51199.json to force a rebuild.",
+    "clubs": [
+      "Manchester City (left ~2012)"
+    ],
+    "flaggedAt": "2026-10-04T10:52:25.223Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 305,
+    "playerName": "Divock Okoth Origi",
+    "reason": "Transfer history mentions AC Milan (joined ~2024), VfL Wolfsburg (left ~2018), VfL Wolfsburg (joined ~2017) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/305.json to force a rebuild.",
+    "clubs": [
+      "AC Milan (joined ~2024)",
+      "VfL Wolfsburg (left ~2018)",
+      "VfL Wolfsburg (joined ~2017)"
+    ],
+    "flaggedAt": "2026-10-04T10:52:35.498Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 2678,
+    "playerName": "Diogo Jota",
+    "reason": "Transfer history mentions Atletico Madrid (left ~2018), Atletico Madrid (left ~2016), Atletico Madrid (joined ~2016) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/2678.json to force a rebuild.",
+    "clubs": [
+      "Atletico Madrid (left ~2018)",
+      "Atletico Madrid (left ~2016)",
+      "Atletico Madrid (joined ~2016)"
+    ],
+    "flaggedAt": "2026-10-04T10:52:44.120Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 3106,
+    "playerName": "Saido Berahino",
+    "reason": "Transfer history mentions Charleroi (left ~2021), Charleroi (joined ~2020), West Brom (left ~2017), Peterborough (left ~2012), Peterborough (joined ~2012), Brentford (left ~2012), Brentford (joined ~2012), Northampton (joined ~2011) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/3106.json to force a rebuild.",
+    "clubs": [
+      "Charleroi (left ~2021)",
+      "Charleroi (joined ~2020)",
+      "West Brom (left ~2017)",
+      "Peterborough (left ~2012)",
+      "Peterborough (joined ~2012)",
+      "Brentford (left ~2012)",
+      "Brentford (joined ~2012)",
+      "Northampton (joined ~2011)"
+    ],
+    "flaggedAt": "2026-10-04T10:52:55.370Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 18960,
+    "playerName": "Jason Steele",
+    "reason": "Transfer history mentions Sunderland (left ~2018), Sunderland (joined ~2017), Middlesbrough (left ~2015) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/18960.json to force a rebuild.",
+    "clubs": [
+      "Sunderland (left ~2018)",
+      "Sunderland (joined ~2017)",
+      "Middlesbrough (left ~2015)"
+    ],
+    "flaggedAt": "2026-10-04T10:53:05.359Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 1485,
+    "playerName": "Bruno Fernandes",
+    "reason": "Transfer history mentions Sporting CP (left ~2020), Sampdoria (left ~2017), Sampdoria (joined ~2016) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/1485.json to force a rebuild.",
+    "clubs": [
+      "Sporting CP (left ~2020)",
+      "Sampdoria (left ~2017)",
+      "Sampdoria (joined ~2016)"
+    ],
+    "flaggedAt": "2026-10-04T10:53:16.549Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 138815,
+    "playerName": "Tariq Nii-Lante Lamptey",
+    "reason": "Transfer history mentions Chelsea (left ~2020), Lamptey Tariq (joined ~2026) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/138815.json to force a rebuild.",
+    "clubs": [
+      "Chelsea (left ~2020)",
+      "Lamptey Tariq (joined ~2026)"
+    ],
+    "flaggedAt": "2026-10-04T10:53:22.774Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 36788,
+    "playerName": "Vurnon Anita",
+    "reason": "Transfer history mentions Willem II (joined ~2018) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/36788.json to force a rebuild.",
+    "clubs": [
+      "Willem II (joined ~2018)"
+    ],
+    "flaggedAt": "2026-10-04T10:53:35.602Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 18963,
+    "playerName": "Lewis Dunk",
+    "reason": "Transfer history mentions Bristol City (left ~2013), Bristol City (joined ~2013), Dunk Lewis (joined ~2026) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/18963.json to force a rebuild.",
+    "clubs": [
+      "Bristol City (left ~2013)",
+      "Bristol City (joined ~2013)",
+      "Dunk Lewis (joined ~2026)"
+    ],
+    "flaggedAt": "2026-10-04T10:53:45.539Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 18753,
+    "playerName": "Adama Traoré",
+    "reason": "Transfer history mentions Barcelona (left ~2022), Barcelona (joined ~2022), Traore Adama (joined ~2026), Fulham (left ~2026) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/18753.json to force a rebuild.",
+    "clubs": [
+      "Barcelona (left ~2022)",
+      "Barcelona (joined ~2022)",
+      "Traore Adama (joined ~2026)",
+      "Fulham (left ~2026)"
+    ],
+    "flaggedAt": "2026-10-04T10:53:53.418Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 18921,
+    "playerName": "Robert Brady",
+    "reason": "Transfer history mentions Norwich (left ~2017), Manchester United (left ~2013), Manchester United (left ~2012), Brady Robbie (joined ~2026) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/18921.json to force a rebuild.",
+    "clubs": [
+      "Norwich (left ~2017)",
+      "Manchester United (left ~2013)",
+      "Manchester United (left ~2012)",
+      "Brady Robbie (joined ~2026)"
+    ],
+    "flaggedAt": "2026-10-04T10:54:07.204Z"
+  },
+  {
+    "date": "2026-10-04",
+    "playerId": 115025,
+    "playerName": "Michael Ballack",
+    "reason": "Transfer history mentions Bayern Munich (left ~2006), Bayern Munich (joined ~2002), Bayer Leverkusen (left ~2002), Bayer Leverkusen (joined ~1999), FC Kaiserslautern (left ~1999), FC Kaiserslautern (joined ~1997), Chemnitzer FC (left ~1997) but no matching stint was built from /players/teams — likely a missing club (same bug that hid Michael Dawson's first Nottingham Forest spell, 2026-10-01). Check manually; if real, add it to MANUAL_STINTS in lib/league-tiers.js, then delete data/career-cache/115025.json to force a rebuild.",
+    "clubs": [
+      "Bayern Munich (left ~2006)",
+      "Bayern Munich (joined ~2002)",
+      "Bayer Leverkusen (left ~2002)",
+      "Bayer Leverkusen (joined ~1999)",
+      "FC Kaiserslautern (left ~1999)",
+      "FC Kaiserslautern (joined ~1997)",
+      "Chemnitzer FC (left ~1997)"
+    ],
+    "flaggedAt": "2026-10-04T10:54:16.757Z"
   }
 ]

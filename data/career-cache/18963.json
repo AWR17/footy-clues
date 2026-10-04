@@ -1,0 +1,34 @@
+[
+  {
+    "clubName": "Brighton",
+    "country": null,
+    "isNationalTeam": false,
+    "tierLabel": "2nd tier, England",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2009,
+    "yearsAtClub": 18,
+    "appearances": 432,
+    "goals": 27,
+    "yellowCards": 86,
+    "redCards": 5,
+    "honour": null,
+    "transferFee": null
+  },
+  {
+    "clubName": "England",
+    "country": null,
+    "isNationalTeam": true,
+    "tierLabel": "national team",
+    "tierUnmapped": false,
+    "tierChangeNote": null,
+    "yearStart": 2018,
+    "yearsAtClub": 3,
+    "appearances": 3,
+    "goals": 0,
+    "yellowCards": 0,
+    "redCards": 0,
+    "honour": null,
+    "transferFee": null
+  }
+]
